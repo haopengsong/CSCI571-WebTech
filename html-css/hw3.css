@@ -2,7 +2,7 @@ body {
     font-family: 'Muli', 'Questrial', sans-serif;
     font-style: normal;
     font-weight: 400;
-    max-width: 100vh;
+    /* max-width: 100vh; */
     margin: auto;
     overflow: hidden;
 }
@@ -156,7 +156,7 @@ body {
     padding: 8vh;
     position: relative;
     margin-top:-8.5%;
-    width: 85vh;
+    /* width: 85vh; */
 }
 
 .snow2-container img {
