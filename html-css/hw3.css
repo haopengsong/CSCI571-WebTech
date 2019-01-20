@@ -10,11 +10,13 @@ body {
 .main-container {
     perspective: 1px;
     transform-style: preserve-3d;
-    height: 110vh;
+    height: 103vh;
+    width: 95vh;
     overflow-x: hidden;
     overflow-y: auto;
-    margin-top: -2.1%;
+    /* margin-top: -2.1%; */
     position: relative;
+    margin: auto;
 }
 
 .snow1-container {
@@ -37,9 +39,9 @@ body {
     color: white; 
     font-size: 38px;
     font-weight: 800;
-    margin-left: 8%;
+    margin-left: 7%;
     margin-top: 4%;
-    letter-spacing: 5px;
+    letter-spacing: 4px;
 }
 
 .snow1-container li {
@@ -49,13 +51,12 @@ body {
 .snow1-container li a {
     letter-spacing: 2px;
     font-size: 14px;
-    font-weight: 608;
+    font-weight: 600;
     color: white;
     text-align: center;
-    padding: 8px 8px;
+    padding: 6px 6px;
     float: right;
     text-decoration: none;
-    margin-right: 20px;
     position: absolute;
     
 }
