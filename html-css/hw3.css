@@ -11,19 +11,20 @@ body {
 .main-container {
     perspective: 1px;
     transform-style: preserve-3d;
-    height: 1200px;
+    height: 1603px;
     width: 1000px;
     overflow-x: hidden;
     overflow-y: auto;
     /* margin-top: -2.1%; */
     position: relative;
-    margin: auto;
-    bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 100px;
 }
 
 .snow1-container {
     background: url(snow1.jpg);
-    height: 900px;
+    height: 973px;
     width: 1000px;
     background-repeat: no-repeat;
     background-position: 50%;
@@ -33,6 +34,15 @@ body {
     background-size: cover;
     bottom: 14%;
     
+}
+.snow1-container::before {  
+    content: '';
+    background-color: #000;
+    opacity: 0.1;
+    width: 100%;
+    display: block;
+    position: absolute;
+    height: 973px;
 }
 
 .snow1-container h1 {
@@ -62,15 +72,7 @@ body {
     
 }
 
-.snow1-container::before {  
-    content: '';
-    background-color: #000;
-    opacity: 0.1;
-    width: 100%;
-    display: block;
-    position: absolute;
-    height: 900px;
-}
+
 
 .nav-bar-container {
     position: absolute;
@@ -181,7 +183,7 @@ body {
 
 .snow3-container {
     background-image: url(snow6.jpg);
-    height: 950px;
+    height: 973px;
     background-repeat: no-repeat;
     background-position: 50%;
     transform: translateZ(-1px) scale(1.8);
@@ -198,7 +200,7 @@ body {
     width: 100%;
     display: block;
     position: absolute;
-    height: 950px;
+    height: 973px;
 }
 
 .snow3-text {
