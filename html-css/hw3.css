@@ -11,28 +11,28 @@ body {
 .main-container {
     perspective: 1px;
     transform-style: preserve-3d;
-    height: 1603px;
-    width: 1000px;
+    height: 1100px;
+    width: 950px;
     overflow-x: hidden;
     overflow-y: auto;
     /* margin-top: -2.1%; */
     position: relative;
     margin-left: auto;
     margin-right: auto;
-    bottom: 100px;
+    bottom: 129px;
 }
 
 .snow1-container {
     background: url(snow1.jpg);
-    height: 973px;
-    width: 1000px;
+    height: 950px;
+    width: 950px;
     background-repeat: no-repeat;
-    background-position: 50%;
+    background-position: 59% 17px;
     transform: translateZ(-1px) scale(1.8);
     z-index: -1;
     position: relative;
     background-size: cover;
-    bottom: 14%;
+    
     
 }
 .snow1-container::before {  
@@ -42,7 +42,7 @@ body {
     width: 100%;
     display: block;
     position: absolute;
-    height: 973px;
+    height: 950px;
 }
 
 .snow1-container h1 {
@@ -90,7 +90,7 @@ body {
     position: absolute;
     width: 100%;
     text-align: center;
-    top: 21%;
+    top: 28%;
 }
 
 .up-caption i {
@@ -155,18 +155,19 @@ body {
 
 .snow2-container {
     background-color: white;
-    padding: 30px;
+    padding: 65px;
     position: relative;
-    margin-top:-8.5%;
+    margin-top:-10.5%;
+    height: 830px;
     /* width: 85vh; */
 }
 
 .snow2-container img {
-    width: 401px;
-    padding: 0.5%;
-    height: 363px;
-    margin-left: 4%;
-    margin-bottom: 2%;
+    width: 376px;
+    padding: 10px;
+    height: 341px;
+    margin-left: 1%;
+    
 }
 
 .snow2-text {
@@ -175,6 +176,7 @@ body {
     margin-left: 20%;
     color: rgb(66, 58, 58);
     font-size: 12px;
+    margin-bottom: 20%;
 }
 
 .snow2-text p {
@@ -183,7 +185,8 @@ body {
 
 .snow3-container {
     background-image: url(snow6.jpg);
-    height: 973px;
+    height: 675px;
+    width: 870px;
     background-repeat: no-repeat;
     background-position: 50%;
     transform: translateZ(-1px) scale(1.8);
@@ -200,20 +203,16 @@ body {
     width: 100%;
     display: block;
     position: absolute;
-    height: 973px;
+    height: 675px;
 }
 
 .snow3-text {
-    
-    font-size: 18px;
+    font-size: 19px;
     color: white;
     text-align: center;
     position: absolute;
     font-weight: 300;
-    
-    top: 2200px;
-    right: 250px;
+    right: 170px;
     line-height: 20px;
-    padding-bottom: 550px;
-
+    top: 291px;
 }
