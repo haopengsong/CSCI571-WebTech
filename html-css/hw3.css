@@ -19,7 +19,7 @@ body {
     position: relative;
     margin-left: auto;
     margin-right: auto;
-    bottom: 129px;
+    bottom: 100px;
 }
 
 .snow1-container {
@@ -32,7 +32,7 @@ body {
     z-index: -1;
     position: relative;
     background-size: cover;
-    
+    bottom: 14%;
     
 }
 .snow1-container::before {  
@@ -153,19 +153,18 @@ body {
 
 .snow2-container {
     background-color: white;
-    padding: 65px;
+    padding: 30px;
     position: relative;
-    margin-top:-10.5%;
-    height: 830px;
+    margin-top:-8.5%;
     /* width: 85vh; */
 }
 
 .snow2-container img {
-    width: 376px;
-    padding: 10px;
-    height: 341px;
-    margin-left: 1%;
-    
+    width: 401px;
+    padding: 0.5%;
+    height: 363px;
+    margin-left: 4%;
+    margin-bottom: 2%;
 }
 
 .snow2-text {
@@ -174,7 +173,6 @@ body {
     margin-left: 20%;
     color: rgb(66, 58, 58);
     font-size: 12px;
-    margin-bottom: 20%;
 }
 
 .snow2-text p {
@@ -204,12 +202,16 @@ body {
 }
 
 .snow3-text {
-    font-size: 19px;
+    
+    font-size: 18px;
     color: white;
     text-align: center;
     position: absolute;
     font-weight: 300;
-    right: 170px;
+    
+    top: 2200px;
+    right: 250px;
     line-height: 20px;
-    top: 291px;
+    padding-bottom: 550px;
+
 }
