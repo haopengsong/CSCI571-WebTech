@@ -11,15 +11,15 @@ body {
 .main-container {
     perspective: 1px;
     transform-style: preserve-3d;
-    height: 1103px;
+    height: 1121px;
     width: 1000px;
     overflow-x: hidden;
     overflow-y: auto;
-    /* margin-top: -2.1%; */
+    margin-top: 10px;
     position: relative;
     margin-left: auto;
     margin-right: auto;
-    bottom: 100px;
+    bottom: 120px;
 }
 
 .snow1-container {
@@ -181,7 +181,7 @@ body {
 
 .snow3-container {
     background-image: url(snow6.jpg);
-    height: 873px;
+    height: 833px;
     background-repeat: no-repeat;
     background-position: 50%;
     transform: translateZ(-1px) scale(1.8);
@@ -198,7 +198,7 @@ body {
     width: 100%;
     display: block;
     position: absolute;
-    height: 873px;
+    height: 833px;
 }
 
 .snow3-text {
