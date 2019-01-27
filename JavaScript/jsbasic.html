@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+        </title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            function alertUser (argument) {
+                // body... 
+                alert('alert user haha')
+            }
+            
+            function confirmUser() {
+                var msg = '\n please confirm that you want to \n'
+                + 'test this button'
+                if(confirm(msg)) {
+                    document.write('<h2> you selected OK </h2>')
+                } else {
+                    document.write('<h2> you selected Cancel </h2>')
+                }
+            }
+            function promptUser() {
+                name1 = prompt('what is your name ? ',' ')
+                document.write('<h2> welcome to this page' + name1 + '</h2>')
+            }
+        </script>
+
+
+        <h1>
+            Test
+        </h1>
+        <form>
+            <input type="button" name="" value="click here to test alert" onclick="alertUser()"><br>
+            <input type="button" name="" value="click here to test confirm" onclick="confirmUser()"><br>
+            <input type="button" name="" value="click here to test prompt" onclick="promptUser()">
+        </form>
+    </body>
+</html>
