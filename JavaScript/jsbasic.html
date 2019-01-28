@@ -39,20 +39,69 @@
             }
             jsonObject = loadJSONFile(URL);
             generateContent(jsonObject);
-            nWindow = window.open("","HW 4 JSON Content", "height = 800, width = 800");
+            nWindow = window.open("","HW 4 JSON Content", "height = 1000, width = 1000");
             nWindow.document.write(htmlContent);
             nWindow.document.close();
         }
 
         function generateContent(jsObj) {
             //root = jsObj.DocumentElement;
+            console.log(jsObj);
             htmlContent = "<html><head><title>JSON Parse Result</title></head></body>";
-            htmlContent += "<table border='3' align='center'>";
+            htmlContent += "<table border='5' align='center'>";
             caption = jsObj.catalog.title;
             htmlContent += "<caption align='center'><h1>" + caption + "</h1></caption>";
             planesJsonArray = jsObj.catalog.aircraft;
             planesNodeList = planesJsonArray[0];
-            
+            htmlContent += "<tbody>";
+            htmlContent += "<tr>";
+            x=0; y=0;
+            var header_keys = Object.keys(planesNodeList);
+            for(i = 0; i < header_keys.length; i++) {
+                header = header_keys[i];
+                if(header == 'Airbus') {
+                    header = 'Family';
+                    x = 230;
+                    y = 95;
+                }
+                if(header == 'Boeing') {
+                    header = 'Family';
+                    x = 110;
+                    y = 60;
+                }
+                if(header == 'seats') {
+                    header = 'Seats';
+                }
+                if(header == 'Wingspan') {
+                    header = 'Wing Span';
+                }
+                if(header == 'height') {
+                    header = 'Height';
+                }
+                htmlContent += "<th>" + header + "</th>"
+            }
+            htmlContent += "</tr>";
+
+            //output data
+            for(i = 0 ; i < planesJsonArray.length; i++) {
+                //one array object per row
+                planesNodeList = planesJsonArray[i];
+                htmlContent += "<tr>";
+                var aircraft_keys = Object.keys(planesNodeList);
+                for(j = 0; j < aircraft_keys.length; j++) {
+                    entry = aircraft_keys[j];
+                    if(entry == 'Image') {
+                        htmlContent += "<td><img src='" + planesNodeList[entry]+"'width='"+x+"'height'"+y+"'></td>";            
+
+                    } else {
+                        htmlContent += "<td>" + planesNodeList[entry] + "</td>";
+                    }
+                }
+                htmlContent += "</tr>";
+            }
+            htmlContent += "</tbody>";
+            htmlContent += "</table>";
+            htmlContent += "</body></html>";
         }
         
     </script>
