@@ -2,42 +2,70 @@
 <html>
 
 <head>
-    <title>
-    </title>
+    <title>Homework 4</title>
+    <style>
+        body {
+            margin: auto;
+        }
+        .query-box {
+            width: 800px;
+            height: 100vh;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            margin-top: 300px;
+        }
+
+        .submit-box {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 
 <body>
     <script type="text/javascript">
-        function alertUser(argument) {
-            // body... 
-            alert('alert user haha')
-        }
-
-        function confirmUser() {
-            var msg = '\n please confirm that you want to \n' +
-                'test this button'
-            if (confirm(msg)) {
-                document.write('<h2> you selected OK </h2>')
-            } else {
-                document.write('<h2> you selected Cancel </h2>')
+        function JSONViewer(data) {
+            var URL = data.URL.value;
+            function loadJSONFile(URL) {
+                if(window.XMLHttpRequest) { // check if using ff/safari/chrome
+                    xmlhttp = new XMLHttpRequest();
+                } else {
+                    alert('not using FireFox!');
+                }
+                xmlhttp.open('GET', URL, false); //sync : does not return until the response is received.
+                xmlhttp.send();
+                jsonObject = JSON.parse(xmlhttp.responseText);
+                return jsonObject;
             }
+            jsonObject = loadJSONFile(URL);
+            generateContent(jsonObject);
+            nWindow = window.open("","HW 4 JSON Content", "height = 800, width = 800");
+            nWindow.document.write(htmlContent);
+            nWindow.document.close();
         }
 
-        function promptUser() {
-            name1 = prompt('what is your name ? ', ' ')
-            document.write('<h2> welcome to this page' + name1 + '</h2>')
+        function generateContent(jsObj) {
+            //root = jsObj.DocumentElement;
+            htmlContent = "<html><head><title>JSON Parse Result</title></head></body>";
+            htmlContent += "<table border='3' align='center'>";
+            caption = jsObj.catalog.title;
+            htmlContent += "<caption align='center'><h1>" + caption + "</h1></caption>";
+            planesJsonArray = jsObj.catalog.aircraft;
+            planesNodeList = planesJsonArray[0];
+            
         }
+        
     </script>
 
-
-    <h1>
-        Test
-    </h1>
-    <form>
-        <input type="button" name="" value="click here to test alert" onclick="alertUser()"><br>
-        <input type="button" name="" value="click here to test confirm" onclick="confirmUser()"><br>
-        <input type="button" name="" value="click here to test prompt" onclick="promptUser()">
-    </form>
+    <div class = "query-box"> 
+        <h2> Enter URL for Highest-grossing films List JSON File </h2>
+        <br>
+        <form action="" name="queryform" method="POST" id="querylocation">
+            <input type="text" name="URL" maxlength="200" size="30" value="">
+            <br>
+            <input class="submit-box" type="button" name="submit" value="Submit Query" 
+            onclick="JSONViewer(this.form)">
+        </form>
+    </div>
 </body>
-
 </html>

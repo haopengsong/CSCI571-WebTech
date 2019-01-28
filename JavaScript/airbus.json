@@ -1,0 +1,47 @@
+{
+    "catalog": {
+        "title": "Airbus Aircraft Families",
+        "aircraft": [
+            {
+                "Airbus":"A380",
+                "Aircraft":"A380 ",
+                "seats": "555",
+                "Range": "15000km ",
+                "Wingspan": "79.80m",
+                "Length": "73.00m",
+                "Height": "24.1m",
+                "Image": "http://www.traveller.com.au/content/dam/images/g/u/i/d/n/k/image.related.socialLead.620x349.h18qoj.png/1544051036782.jpg"
+            },
+            {
+                "Airbus":"A330/A340",
+                "Aircraft":"A340-600 ",
+                "seats": "380",
+                "Range": "14600km ",
+                "Wingspan": "63.45m",
+                "Length": "75.30m",
+                "Height": "17.30m",
+                "Image": "https://duibe7slt06r7.cloudfront.net/Live/Binaries/ww-WW/images/Airbus-A330-200-large_tcm87-3653.jpg"
+            },
+            {
+                "Airbus":"A300/A310",
+                "Aircraft":"A300-600 ",
+                "seats": "266",
+                "Range": "7500km ",
+                "Wingspan": "44.84m",
+                "Length": "54.10m",
+                "Height": "16.54m",
+                "Image": "https://airbus-h.assetsadobe2.com/is/image/content/dam/channel-specific/website-/products-and-services/aircraft/header/aircraft-families/commercial-aircraft-stage_A300-600F.jpg?wid=1920&fit=fit,1&qlt=85,0"
+            },
+            {
+                "Airbus":"A320",
+                "Aircraft":"A321 ",
+                "seats": "185",
+                "Range": "5600km ",
+                "Wingspan": "34.09m",
+                "Length": "44.51m",
+                "Height": "11.76m",
+                "Image": "https://store.x-plane.org/assets/images/files/peterhager/a321_271_pp/scrap07.jpg"
+            }
+        ]
+    }
+}
