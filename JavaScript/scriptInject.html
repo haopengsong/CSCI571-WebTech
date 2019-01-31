@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+    <script type="text/javascript">
+        function JSONScriptInjection(url) {
+            this.url = url;
+            this.scriptLocation = document.getElementsByTagName('body').item[0];
+            this.jsiId = 'id1';
+
+        }
+        JSONScriptInjection.prototype.generateScriptTag = function () {
+            this.tagObj = document.createElement('script');
+            this.tagObj.setAttribute('type', 'text/javascript');
+            this.tagObj.setAttribute('charset', 'utf-8');
+            this.tagObj.setAttribute('src', this.url);
+            this.tagObj.setAttribute('id', this.jsiId);
+        }
+        JSONScriptInjection.prototype.addScriptTag = function () {
+            this.scriptLocation.appendChild(this.tagObj);
+        }
+
+        function createJSIObj(data) {
+            scriptObj = new JSONScriptInjection(data);
+            scriptObj.generateScriptTag();
+            scriptObj.addScriptTag();
+        }
+    </script>
+
+    <div class="query-box">
+        <h2> Enter URL for Highest-grossing films List JSON File </h2>
+        <br>
+        <form action="" name="queryform" method="POST" id="querylocation">
+            <input type="text" name="URL" maxlength="200" size="30" value="">
+            <br>
+            <input class="submit-box" type="button" name="submit" value="Submit Query" onclick="JSONViewer(this.form)">
+        </form>
+    </div>
+
+
+</body>
+
+</html>
