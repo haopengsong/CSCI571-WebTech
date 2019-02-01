@@ -10,37 +10,56 @@
 
 <body>
     <script type="text/javascript">
-        function JSONScriptInjection(url) {
-            this.url = url;
-            this.scriptLocation = document.getElementsByTagName('body').item[0];
-            this.jsiId = 'id1';
+        // function JSONScriptInjection(url) {
+        //     this.url = url;
+        //     this.scriptLocation = document.getElementsByTagName('body').item(0);
+        //     this.jsiId = 'id1';
 
-        }
-        JSONScriptInjection.prototype.generateScriptTag = function () {
-            this.tagObj = document.createElement('script');
-            this.tagObj.setAttribute('type', 'text/javascript');
-            this.tagObj.setAttribute('charset', 'utf-8');
-            this.tagObj.setAttribute('src', this.url);
-            this.tagObj.setAttribute('id', this.jsiId);
-        }
-        JSONScriptInjection.prototype.addScriptTag = function () {
-            this.scriptLocation.appendChild(this.tagObj);
+        // }
+        // JSONScriptInjection.prototype.generateScriptTag = function () {
+        //     this.tagObj = document.createElement('script');
+        //     this.tagObj.setAttribute('type', 'text/javascript');
+        //     this.tagObj.setAttribute('charset', 'utf-8');
+        //     this.tagObj.setAttribute('src', this.url);
+        //     this.tagObj.setAttribute('id', this.jsiId);
+        // }
+        // JSONScriptInjection.prototype.addScriptTag = function () {
+        //     this.scriptLocation.appendChild(this.tagObj);
+        // }
+
+        // function createJSIObj(data) {
+        //     var url_ = data.value.URL;
+        //     scriptObj = new JSONScriptInjection(url_);
+        //     scriptObj.generateScriptTag();
+        //     scriptObj.addScriptTag();
+            
+        // }
+        
+        function myData() {
+            var formInput = document.getElementById('url_');
+            var url_ = formInput.value;
+            console.log(url_);
+
+            //generate script tag
+            var tagObj = document.createElement('script');
+        
+            tagObj.setAttribute('src', url_);
+            tagObj.setAttribute('id', 'tag1');
+
+            var tagLocation = document.getElementsByTagName('body').item(0);
+            tagLocation.appendChild(tagObj);
         }
 
-        function createJSIObj(data) {
-            scriptObj = new JSONScriptInjection(data);
-            scriptObj.generateScriptTag();
-            scriptObj.addScriptTag();
-        }
     </script>
 
     <div class="query-box">
         <h2> Enter URL for Highest-grossing films List JSON File </h2>
         <br>
         <form action="" name="queryform" method="POST" id="querylocation">
-            <input type="text" name="URL" maxlength="200" size="30" value="">
+            <input id="url_" type="text" name="URL" maxlength="200" size="30" value="">
             <br>
-            <input class="submit-box" type="button" name="submit" value="Submit Query" onclick="JSONViewer(this.form)">
+            <input class="submit-box" type="button" name="submit" value="Submit Query" 
+            onclick="myData(this.form)">
         </form>
     </div>
 
