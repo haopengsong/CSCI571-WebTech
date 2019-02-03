@@ -13,7 +13,7 @@
             margin-left: auto;
             margin-right: auto;
             text-align: center;
-            margin-top: 300px;
+            margin-top: 150px;
         }
 
         .submit-box {
@@ -95,7 +95,7 @@
                         if (entryValue === "" || entryValue.length == 0 || entryValue === null) {
                             htmlContent += "<td>" + " " + "</td>";
                         } else {
-                            htmlContent += "<td width = 310px><ul>";
+                            htmlContent += "<td width = 280px><ul>";
                             for (h = 0; h < entryValue['Hub'].length; h++) {
                                 if (h == 0) {
                                     htmlContent += "<li><strong>" + entryValue['Hub'][h] + "</li></strong>";
@@ -104,6 +104,12 @@
                                 }
                             }
                             htmlContent += "</ul></td>";
+                        }
+                    } else if(entry == 'Title') {
+                        if(entryValue !== "" || entryValue !== null) {
+                            htmlContent += "<td width = 50px>" + entryValue + "</td>";
+                        } else {
+                            htmlContent += "<td></td>";
                         }
                     } else {
                         if (entryValue !== "" || entryValue !== null) {
