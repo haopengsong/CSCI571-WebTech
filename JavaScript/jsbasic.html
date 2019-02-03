@@ -92,7 +92,8 @@
                     entry = dataKeys[j];
                     entryValue = dataNodeList[entry];
                     if (entry == 'Hubs') {
-                        if (entryValue === "" || entryValue.length == 0 || entryValue === null) {
+                        if (entryValue === "" || entryValue.length == 0 || entryValue === null || 
+                        entryValue['Hub'] === null || entryValue['Hub'] === "" || entryValue['Hub'].length == 0) {
                             htmlContent += "<td>" + " " + "</td>";
                         } else {
                             htmlContent += "<td width = 280px><ul>";
