@@ -45,11 +45,12 @@
                 //error: no such file
                 try {
                     xmlhttp.send();
+                    jsonObject = JSON.parse(xmlhttp.responseText);
                 } catch (error) {
                     alert('Error: No Such File Exist!');
                     return;
                 }
-                jsonObject = JSON.parse(xmlhttp.responseText);
+                
                 return jsonObject;
             }
             jsonObject = loadJSONFile(URL);
