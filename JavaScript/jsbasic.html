@@ -63,6 +63,7 @@
                 return;
             }
             nWindow = window.open("", "Highest-grossing films", "height = 1350, width = 1400");
+
             nWindow.document.write(htmlContent);
             nWindow.document.close();
         }
@@ -70,6 +71,7 @@
         function generateContent(jsObj) {
             //root = jsObj.DocumentElement;
             htmlContent = "<html><head><title>JSON Parse Result</title></head></body>";
+            
             htmlContent += "<table border='1' align='center'>";
             dataField = jsObj.Mainline.Table.Header.Data;
 
