@@ -13,7 +13,7 @@
             margin-left: auto;
             margin-right: auto;
             text-align: center;
-            margin-top: 300px;
+            margin-top: 150px;
         }
 
         .submit-box {
@@ -49,7 +49,13 @@
                     alert('Error: No Such File Exist!');
                     return;
                 }
+
+                if(xmlhttp.status == 404) {
+                    alert('Error: No Such File Exist! ');
+                    return;
+                }
                 jsonObject = JSON.parse(xmlhttp.responseText);
+                
                 return jsonObject;
             }
             jsonObject = loadJSONFile(URL);
@@ -57,6 +63,7 @@
                 return;
             }
             nWindow = window.open("", "Highest-grossing films", "height = 1350, width = 1400");
+
             nWindow.document.write(htmlContent);
             nWindow.document.close();
         }
@@ -64,6 +71,7 @@
         function generateContent(jsObj) {
             //root = jsObj.DocumentElement;
             htmlContent = "<html><head><title>JSON Parse Result</title></head></body>";
+            
             htmlContent += "<table border='1' align='center'>";
             dataField = jsObj.Mainline.Table.Header.Data;
 
@@ -92,10 +100,11 @@
                     entry = dataKeys[j];
                     entryValue = dataNodeList[entry];
                     if (entry == 'Hubs') {
-                        if (entryValue === "" || entryValue.length == 0 || entryValue === null) {
+                        if (entryValue === "" || entryValue.length == 0 || entryValue === null || 
+                        entryValue['Hub'] === null || entryValue['Hub'] === "" || entryValue['Hub'].length == 0) {
                             htmlContent += "<td>" + " " + "</td>";
                         } else {
-                            htmlContent += "<td width = 310px><ul>";
+                            htmlContent += "<td width = 280px><ul>";
                             for (h = 0; h < entryValue['Hub'].length; h++) {
                                 if (h == 0) {
                                     htmlContent += "<li><strong>" + entryValue['Hub'][h] + "</li></strong>";
@@ -105,13 +114,25 @@
                             }
                             htmlContent += "</ul></td>";
                         }
-                    } else {
-                        if (entryValue !== "" || entryValue !== null) {
+                    } else if(entry == 'Title') {
+                        if(entryValue !== "" && entryValue !== null) {
+                            htmlContent += "<td width = 55px>" + entryValue + "</td>";
+                        } else {
+                            htmlContent += "<td></td>";
+                        }
+                    } else if(entry == 'Year') {
+                        if(entryValue !== "" && entryValue !== null) {
+                            htmlContent += "<td width = 57px>" + entryValue + "</td>";
+                        } else {
+                            htmlContent += "<td></td>";
+                        }
+                    }  else {
+                        if (entryValue !== null && entryValue !== "") {
                             if (entry == 'HomePage') {
                                 htmlContent += "<td><div><a href = '" + entryValue + "'>" + entryValue +
                                     "</a></div></td>";
                             } else if (entry == 'Logo') {
-                                htmlContent += "<td><img src = '" + entryValue + "'width='" + 210 + "'height='" + 225 +
+                                htmlContent += "<td><img src = '" + entryValue + "'width='" + 190 + "'height='" + 225 +
                                     "'></td>";
                             } else {
                                 htmlContent += "<td>" + entryValue + "</td>";
