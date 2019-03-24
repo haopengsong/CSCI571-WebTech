@@ -1,20 +1,132 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div class="container">
+    <h2 class="text-center pt-4 pb-4"> Product Search </h2>
+    <form>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Keyword</label>
+        <div class="col-sm-9">
+          <input type="text" placeholder="Enter Product Name (eg. iPhone 8)" class="form-control">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Category</label>
+        <div class="col-sm-9">
+          <select  name="categories" class="form-control CategorySelect">
+            <option value="" selected> All Categories</option>
+            <option value="550">Art</option>
+            <option value="2984">Baby</option>
+            <option value="267">Books</option>
+            <option value="11450">Clothing, Shoes & Accessories</option>
+            <option value="58058">Computers/Tablets & Networking</option>
+            <option value="26395">Health & Beauty</option>
+            <option value="11233">Music</option>
+            <option value="1249"> Video Games & Consoles</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Condition</label>
+        <div class="col-sm-9 col-form-label">
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input">
+            <label class="form-check-label">New</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input">
+            <label class="form-check-label">Used</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input">
+            <label class="form-check-label">Unspecified</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Shipping Options</label>
+        <div class="col-sm-9 col-form-label">
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input">
+            <label class="form-check-label">Local Pickup</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input">
+            <label class="form-check-label">Free Shipping</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Distance (Miles)</label>
+        <div class="col-sm-9">
+          <input type="text" placeholder="10" class="form-control CategorySelect">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">From</label>
+        <div class="col-sm-9 col-form-label">
+          <div class="form-check pb-1">
+            <input type="radio" class="form-check-input" checked>
+            <label class="form-check-label">Current Location</label>
+          </div>
+          <div class="form-check pb-2">
+            <input type="radio" class="form-check-input">
+            <label class="form-check-label">Other. Please specify zip code:</label>
+          </div>
+          <input type="text" class="form-control">
+        </div>
+      </div>
+      <div class="form-group row">
+        <button class="btn btn-light col-sm-1 ml-3 mr-4">Search</button>
+        <button class="btn btn-light col-sm-1">Clear</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
 
+<!--
+    <div class="row">
+      <div class="col-lg-5 col-md-4 col-sm-3 col-xl-6 pt-3">
+        <ul class="list-group">
+          <li class="list-group-item pb-3">Keyword</li>
+          <li class="list-group-item pb-3">Category</li>
+          <li class="list-group-item pb-3">Condition</li>
+          <li class="list-group-item pb-3">Shipping Options</li>
+          <li class="list-group-item pb-3">Distance (Miles)</li>
+          <li class="list-group-item pb-3">From</li>
+        </ul>
+      </div>
+      <div class="col-lg-7 col-md-8 col-sm-9 col-xl-6">
+        <ul class="list-group">
+          <li class="list-group-item">
+            <input type="text" placeholder="Enter Product Name (eg. iPhone 8)" class="form-control">
+          </li>
+          <li class="list-group-item">
+            <select name="categories" id="" class="form-control">
+              <option value="" selected> All Categories</option>
+              <option value="550">Art</option>
+              <option value="2984">Baby</option>
+              <option value="267">Books</option>
+              <option value="11450">Clothing, Shoes & Accessories</option>
+              <option value="58058">Computers/Tablets & Networking</option>
+              <option value="26395">Health & Beauty</option>
+              <option value="11233">Music</option>
+              <option value="1249"> Video Games & Consoles</option>
+            </select>
+          </li>
+          <li class="list-group-item"></li>
+          <li class="list-group-item"></li>
+          <li class="list-group-item"></li>
+          <li class="list-group-item"></li>
+        </ul>
+      </div>
+    </div>
+-->
