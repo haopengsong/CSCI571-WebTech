@@ -7,3 +7,25 @@ body {
 .CategorySelect {
   width: 30%;
 }
+
+.formBody {
+  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.btn {
+  position: relative;
+  width: 95px;
+  padding-right: 1px;
+
+}
+.btnIcon {
+  position: absolute;
+  left: 5px;
+  top: 6px;
+}
+
+.required_field::after {
+  content: "*";
+  color: red;
+}

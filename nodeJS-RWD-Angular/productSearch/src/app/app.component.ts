@@ -6,5 +6,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'productSearch';
+
+
+  keywordValidation: boolean = false;
+  keywordInput : string = "";
+
+  onUserInput() {
+
+  }
+
+  onKeyWordValidation() {
+    if (this.keywordInput !== "") {
+      this.keywordValidation = true;
+    }
+  }
 }
