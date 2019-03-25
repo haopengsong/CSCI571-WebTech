@@ -23,8 +23,9 @@
           <input class="form-control"
                  type="text"
                  placeholder="Enter Product Name (eg. iPhone 8)"
-                 (input)="onUserInput()"
-                 (blur)="onKeyWordValidation()">
+                 (input)="onUserInput($event)"
+                 (focusout)="onKeyWordValidation()">
+
           <div *ngIf="keywordValidation == true" style="display: block"
                class="invalid-feedback">
             Please enter a keyword
@@ -99,7 +100,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <button class="btn btn-light ml-3 mr-4" type="submit" [disabled]="onValidation()">
+        <button class="btn btn-light ml-3 mr-4" type="submit">
           <i class="material-icons md-24 btnIcon">search</i>
            Search
         </button>

@@ -11,12 +11,19 @@ export class AppComponent {
   keywordValidation: boolean = false;
   keywordInput : string = "";
 
-  onUserInput() {
+  onValidation() {
 
   }
 
+
+  onUserInput(event : any) {
+    this.keywordInput = event.target.value;
+  }
+
   onKeyWordValidation() {
-    if (this.keywordInput !== "") {
+    if (this.keywordInput != "") {
+      this.keywordValidation = false;
+    } else {
       this.keywordValidation = true;
     }
   }
