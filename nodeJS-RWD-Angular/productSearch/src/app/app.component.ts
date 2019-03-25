@@ -18,6 +18,9 @@ export class AppComponent {
 
   onUserInput(event : any) {
     this.keywordInput = event.target.value;
+    if (this.keywordInput != "") {
+      this.keywordValidation = false;
+    }
   }
 
   onKeyWordValidation() {
