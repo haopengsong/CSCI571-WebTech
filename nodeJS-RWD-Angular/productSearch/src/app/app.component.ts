@@ -60,17 +60,22 @@ export class AppComponent {
    */
 
   locationInput : string = "";
-
-  locationSelect: boolean = false;
+  zipCodeSelect: boolean = false;
 
 
 
   onLocationSelect() {
     if (!this.keywordValidation) {
       //has keyword
-      //
+      this.SearchButton = false;
     } else {
       //no keyword
+
+    }
+  }
+
+  onZipSelect() {
+    if (!this.keywordValidation) {
 
     }
   }

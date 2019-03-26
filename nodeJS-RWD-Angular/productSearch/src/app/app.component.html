@@ -93,7 +93,7 @@
             <label class="form-check-label">Current Location</label>
           </div>
           <div class="form-check pb-2">
-            <input type="radio" class="form-check-input" name="Location">
+            <input type="radio" class="form-check-input" name="Location" (change)="onZipSelect()">
             <label class="form-check-label">Other. Please specify zip code:</label>
           </div>
           <input type="text" class="form-control" disabled>
@@ -110,7 +110,6 @@
         </button>
       </div>
     </form>
-
   </div>
 </body>
 </html>
