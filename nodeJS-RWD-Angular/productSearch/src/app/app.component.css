@@ -15,13 +15,13 @@ body {
 }
 .btn {
   position: relative;
-  width: 95px;
-  padding-right: 1px;
+  width: 97px;
+  padding-right: 0px;
 
 }
 .btnIcon {
   position: absolute;
-  left: 5px;
+  left: 9px;
   top: 6px;
 }
 
