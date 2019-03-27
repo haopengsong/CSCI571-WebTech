@@ -84,7 +84,7 @@ export class AppComponent {
   //3.1.2 AutoComplete
   myControl = new FormControl();
   zipCodeOptions: string[];
-
+  //call autocomplete method here
 
 }
 
