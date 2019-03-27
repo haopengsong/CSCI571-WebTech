@@ -24,7 +24,9 @@
                  type="text"
                  placeholder="Enter Product Name (eg. iPhone 8)"
                  (input)="onUserInput($event)"
-                 (focusout)="onKeyWordValidation()">
+                 (focusout)="onKeyWordValidation()"
+                 (focus)="onKeywordFocus()"
+          >
 
           <div *ngIf="keywordValidation == true" style="display: block"
                class="invalid-feedback">
@@ -96,16 +98,17 @@
             <input type="radio" class="form-check-input" name="Location" (change)="onZipSelect()">
             <label class="form-check-label">Other. Please specify zip code:</label>
           </div>
-          <input type="text" class="form-control" disabled>
+          <input type="text" class="form-control" [disabled]="!zipCodeSelect">
         </div>
       </div>
       <div class="form-group row">
-        <button class="btn btn-light ml-3 mr-4" type="submit" [disabled]="!(SearchButton && locationAcquired)">
+        <button class="btn btn-light ml-3 mr-4"
+                type="submit" [disabled]="!(SearchButton && locationAcquired && !zipCodeSelect)">
           <i class="material-icons md-24 btnIcon">search</i>
            Search
         </button>
-        <button class="btn btn-light" type="reset">
-          <i class="material-icons md-24 btnIcon">clear_all</i>
+        <button class="btn btn-light" type="reset" (click)="onReset()">
+          <i class="material-icons md-24 btnIcon" >clear_all</i>
           Clear
         </button>
       </div>

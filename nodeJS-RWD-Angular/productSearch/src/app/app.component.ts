@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {ServerService} from "./server.service";
-
+import { FormControl} from "@angular/forms";
 
 
 @Component({
@@ -19,6 +19,12 @@ export class AppComponent {
   keywordInput : string = "";
   SearchButton : boolean = false;
 
+  //3.1.4
+  constructor(private apiService : ServerService) {}
+  locationAcquired: boolean = false;
+  resError : string = "";
+  zipCode = "";
+
   onUserInput(event : any) {
     console.log(event);
     this.keywordInput = event.target.value;
@@ -28,57 +34,56 @@ export class AppComponent {
     }
   }
 
-  //3.1.4
-  constructor(private apiService : ServerService) {}
-  locationAcquired: boolean = false;
-  resError : string = "";
-  zipCode = "";
+  onKeywordFocus() {
+    console.log('focus');
+    this.apiService.getZipCodeAPI()
+      .subscribe(
+        (response) => {
+          this.zipCode = response['zip'];
+          this.locationAcquired = true;
+          console.log('focus');
+        },
+        //todo #1: error message when unable to get zipcode
+        (error) => console.log(error)
+      );
+  }
 
   onKeyWordValidation() {
     console.log('here :' + this.keywordInput);
     if (this.keywordInput != "") {
       this.keywordValidation = false;
-      //try get user location based on IP
-
-      this.apiService.getZipCodeAPI()
-        .subscribe(
-          (response) => {
-            this.zipCode = response['zip'];
-            this.locationAcquired = true;
-          },
-          //todo #1: error message when unable to get zipcode
-          (error) => console.log(error)
-        );
-      //console.log(this.ipApiRes);
     } else {
       this.keywordValidation = true;
       this.SearchButton = false;
     }
   }
-  /*
-
-   */
 
   locationInput : string = "";
   zipCodeSelect: boolean = false;
 
-
-
   onLocationSelect() {
+
     if (!this.keywordValidation) {
       //has keyword
-      this.SearchButton = false;
-    } else {
-      //no keyword
-
+      this.zipCodeSelect = false;
     }
   }
 
   onZipSelect() {
     if (!this.keywordValidation) {
-
+      this.zipCodeSelect = true;
     }
   }
 
+  onReset() {
+    //todo #2: on reset has more actions to perform
+    this.SearchButton = false;
+  }
+
+
+  //3.1.2 AutoComplete
+  myControl = new FormControl();
+
 
 }
+

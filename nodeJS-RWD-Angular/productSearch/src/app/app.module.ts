@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import {FormsModule} from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import {ServerService} from "./server.service";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import {ServerService} from "./server.service";
   imports: [
     BrowserModule,
     HttpClientModule,
+    ReactiveFormsModule,
     FormsModule
   ],
   providers: [ServerService],
