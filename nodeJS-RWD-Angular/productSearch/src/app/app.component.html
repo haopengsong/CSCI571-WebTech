@@ -91,11 +91,19 @@
         <label class="col-sm-3 col-form-label required_field">From</label>
         <div class="col-sm-9 col-form-label">
           <div class="form-check pb-1">
-            <input type="radio" class="form-check-input" name="Location" (change)="onLocationSelect()" checked>
+            <input type="radio"
+                   class="form-check-input"
+                   name="Location"
+                   (change)="onLocationSelect()" checked>
             <label class="form-check-label">Current Location</label>
           </div>
           <div class="form-check pb-2">
-            <input type="radio" class="form-check-input" name="Location" (change)="onZipSelect()">
+            <input type="radio"
+                   class="form-check-input"
+                   name="Location"
+                   (change)="onZipSelect($event)"
+
+            >
             <label class="form-check-label">Other. Please specify zip code:</label>
           </div>
 
@@ -103,12 +111,14 @@
                    class="form-control"
                    disabled
                    (input)="onZipInput($event)"
+
                    [formControl]="myControl"
                    [matAutocomplete]="auto"
                    (focusout) = "onZipCodeEntered()"
             >
 
-            <mat-autocomplete #auto="matAutocomplete">
+            <mat-autocomplete #auto="matAutocomplete"
+                              (optionSelected) = "onZipCodeSelected($event)">
               <mat-option *ngFor="let zipCode of zipCodeOptions" [value]="zipCode">
                 {{zipCode}}
               </mat-option>

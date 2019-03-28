@@ -36,7 +36,7 @@ export class AppComponent {
   }
 
   onKeywordFocus() {
-    console.log('focus');
+
     this.apiService.getZipCodeAPI()
       .subscribe(
         (response) => {
@@ -66,12 +66,20 @@ export class AppComponent {
     if (!this.keywordValidation) {
       //has keyword
       this.zipCodeSelect = false;
+      // if (this.zipCodeSelect == true) {
+      //
+      // } else {
+      //   this.zipCodeSelect = true;
+      // }
       this.myControl.disable();
     }
     this.zipCodeEntered = false;
   }
 
-  onZipSelect() {
+
+  onZipSelect(event : any) {
+    console.log(event);
+
     if (!this.keywordValidation) {
       this.zipCodeSelect = true;
       this.myControl.enable();
@@ -90,6 +98,7 @@ export class AppComponent {
   zipCodeOptions: string[] = [];
   zipPrefix: string = "";
   zipCodeEntered: boolean = false;
+
   //call autocomplete method here
   onZipInput(event : any) {
     this.zipPrefix = event.target.value;
@@ -108,15 +117,26 @@ export class AppComponent {
           (error) => { console.log(error) }
         );
     }
-    if (event.target.value.length == 5) {
+    //todo: need to check input zip code & once the input is valid, store
+    //todo: the value into 'validZip' used as the latest value when user check
+    //todo: CurrentLocation back and forth.
+
+  }
+
+  onZipCodeSelected(event : any) {
+    console.log(event);
+    if (event.option.value.length == 5) {
+      console.log('5 digit zip');
       this.zipCodeSelect = false;
     }
   }
   onZipCodeEntered() {
     if (this.zipPrefix == "") {
       this.zipCodeEntered = true;
+      this.zipCodeSelect = true;
     } else {
       this.zipCodeEntered = false;
+      // todo : check zip code validity
     }
   }
 }
