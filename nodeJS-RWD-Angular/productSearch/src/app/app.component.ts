@@ -93,11 +93,14 @@ export class AppComponent {
   //call autocomplete method here
   onZipInput(event : any) {
     this.zipPrefix = event.target.value;
+    console.log(this.zipPrefix);
     if (this.zipPrefix.length >= 3) {
+      //console.log(this.zipPrefix);
       this.apiService.getAutoCompleteZip(this.zipPrefix)
         .subscribe(
           (response) => {
             console.log(response);
+            this.zipCodeOptions = [];
             for (let i = 0; i < response['postalCodes'].length; i++) {
               this.zipCodeOptions.push(response['postalCodes'][i].postalCode);
             }
