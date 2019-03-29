@@ -4,7 +4,7 @@ import {HttpClient} from "@angular/common/http";
 @Injectable()
 export class ServerService {
   ipApiUrl: string = 'http://ip-api.com/json';
-  serverZip: string = 'http://localhost:5555/api/zipauto/'; // needs prefix zip here
+  serverZip: string = 'http://localhost:3000/api/zipauto/'; // needs prefix zip here
   constructor(private http: HttpClient) {}
 
 

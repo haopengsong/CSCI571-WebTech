@@ -79,7 +79,6 @@ export class AppComponent {
 
   onZipSelect(event : any) {
     console.log(event);
-
     if (!this.keywordValidation) {
       this.zipCodeSelect = true;
       this.myControl.enable();
@@ -98,6 +97,8 @@ export class AppComponent {
   zipCodeOptions: string[] = [];
   zipPrefix: string = "";
   zipCodeEntered: boolean = false;
+  validZipInput : string = "";
+  zipValid : boolean = true;
 
   //call autocomplete method here
   onZipInput(event : any) {
@@ -120,6 +121,14 @@ export class AppComponent {
     //todo: need to check input zip code & once the input is valid, store
     //todo: the value into 'validZip' used as the latest value when user check
     //todo: CurrentLocation back and forth.
+    const validatorZip = /^[0-9]{5}$/;
+    if (!validatorZip.test(this.zipPrefix)) {
+      this.zipValid = false;
+    } else {
+      this.validZipInput = event.target.value;
+      this.zipValid = true;
+    }
+
 
   }
 
@@ -128,6 +137,7 @@ export class AppComponent {
     if (event.option.value.length == 5) {
       console.log('5 digit zip');
       this.zipCodeSelect = false;
+      this.zipValid = true;
     }
   }
   onZipCodeEntered() {
