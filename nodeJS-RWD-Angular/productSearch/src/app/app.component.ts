@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ServerService} from "./server.service";
 import { FormControl} from "@angular/forms";
-import {error} from "@angular/compiler/src/util";
+import {FormData} from "./formdata";
+
 
 
 @Component({
@@ -12,7 +13,11 @@ import {error} from "@angular/compiler/src/util";
 
 
 
-export class AppComponent {
+export class AppComponent   {
+
+
+
+
 
   myControl = new FormControl();
   //3.1.1
@@ -21,7 +26,23 @@ export class AppComponent {
   SearchButton : boolean = false;
 
   //3.1.4
-  constructor(private apiService : ServerService) {}
+  constructor(
+    private apiService : ServerService,
+
+
+  ) {}
+
+  formInput = new FormData(
+    '',
+    '',
+    {new: false ,used: false, unspecified: false},
+    {localPickup: false, freeShipping: false},
+    '',
+    ''
+
+    );
+
+
   locationAcquired: boolean = false;
   resError : string = "";
   zipCode = "";
@@ -66,12 +87,9 @@ export class AppComponent {
     if (!this.keywordValidation) {
       //has keyword
       this.zipCodeSelect = false;
-      // if (this.zipCodeSelect == true) {
-      //
-      // } else {
-      //   this.zipCodeSelect = true;
-      // }
+      this.selectedZipCode = "";
       this.myControl.disable();
+      console.log("selected zip code : " + this.selectedZipCode);
     }
     this.zipCodeEntered = false;
   }
@@ -104,19 +122,27 @@ export class AppComponent {
   onZipInput(event : any) {
     this.zipPrefix = event.target.value;
     console.log(this.zipPrefix);
+
     if (this.zipPrefix.length >= 3) {
-      //console.log(this.zipPrefix);
-      this.apiService.getAutoCompleteZip(this.zipPrefix)
-        .subscribe(
-          (response) => {
-            console.log(response);
-            this.zipCodeOptions = [];
-            for (let i = 0; i < response['postalCodes'].length; i++) {
-              this.zipCodeOptions.push(response['postalCodes'][i].postalCode);
+      const validatorZipAPI = /^[0-9]{3,5}$/;
+      if (validatorZipAPI.test(this.zipPrefix)) {
+        //console.log(this.zipPrefix);
+        this.apiService.getAutoCompleteZip(this.zipPrefix)
+          .subscribe(
+            (response) => {
+              console.log('api: ');
+              console.log(response);
+              this.zipCodeOptions = [];
+              for (let i = 0; i < response['postalCodes'].length; i++) {
+                this.zipCodeOptions.push(response['postalCodes'][i].postalCode);
+              }
+            },
+            (error) => {
+              console.log('error: ');
+              console.log(error);
             }
-          },
-          (error) => { console.log(error) }
-        );
+          );
+      }
     }
     //todo: need to check input zip code & once the input is valid, store
     //todo: the value into 'validZip' used as the latest value when user check
@@ -128,16 +154,17 @@ export class AppComponent {
       this.validZipInput = event.target.value;
       this.zipValid = true;
     }
-
-
   }
 
+  selectedZipCode : string = "";
   onZipCodeSelected(event : any) {
     console.log(event);
     if (event.option.value.length == 5) {
-      console.log('5 digit zip');
+      this.selectedZipCode = event.option.value;
+      console.log("selected zip code : " + this.selectedZipCode);
       this.zipCodeSelect = false;
       this.zipValid = true;
+      this.zipCodeEntered = false;
     }
   }
   onZipCodeEntered() {
@@ -148,6 +175,12 @@ export class AppComponent {
       this.zipCodeEntered = false;
       // todo : check zip code validity
     }
+  }
+
+  //fix the distance radio issue
+
+  searchForProduct(myform: any) {
+    console.log(myform.value);
   }
 }
 

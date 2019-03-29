@@ -16,29 +16,35 @@
         <h2 class="text-center pt-4 pb-4"> Product Search</h2>
       </div>
     </div>
-    <form class="formBody">
+    <form class="formBody"
+          #myform="ngForm"
+          (ngSubmit)="searchForProduct(myform)">
       <div class="form-group row pb-3">
         <label class="col-sm-3 col-form-label required_field">Keyword</label>
         <div class="col-sm-9">
           <input class="form-control"
+                 name="keyword"
                  type="text"
                  placeholder="Enter Product Name (eg. iPhone 8)"
                  (input)="onUserInput($event)"
                  (focusout)="onKeyWordValidation()"
                  (focus)="onKeywordFocus()"
+                 [ngStyle]="keywordValidation == true && {'border-color': 'red'}"
+                  [(ngModel)]="formInput.keyword"
           >
-
           <div *ngIf="keywordValidation == true" style="display: block"
                class="invalid-feedback">
             Please enter a keyword
           </div>
         </div>
-
       </div>
       <div class="form-group row pb-3">
         <label class="col-sm-3 col-form-label">Category</label>
         <div class="col-sm-9">
-          <select  name="categories" class="form-control CategorySelect">
+          <select  name="categories"
+                   class="form-control CategorySelect"
+                   [(ngModel)]="formInput.categories"
+          >
             <option value="" selected> All Categories</option>
             <option value="550">Art</option>
             <option value="2984">Baby</option>
@@ -55,15 +61,30 @@
         <label class="col-sm-3 col-form-label">Condition</label>
         <div class="col-sm-9 col-form-label">
           <div class="form-check form-check-inline">
-            <input type="checkbox" class="form-check-input">
+            <input type="checkbox"
+                   class="form-check-input"
+                   value="new"
+                   name="new"
+                   [(ngModel)]="formInput.conditions.new"
+            >
             <label class="form-check-label">New</label>
           </div>
           <div class="form-check form-check-inline">
-            <input type="checkbox" class="form-check-input">
+            <input type="checkbox"
+                   class="form-check-input"
+                   value="used"
+                   name="used"
+                   [(ngModel)]="formInput.conditions.used"
+            >
             <label class="form-check-label">Used</label>
           </div>
           <div class="form-check form-check-inline">
-            <input type="checkbox" class="form-check-input">
+            <input type="checkbox"
+                   class="form-check-input"
+                   name="unspecified"
+                   [(ngModel)]="formInput.conditions.unspecified"
+                   value="unspecified"
+            >
             <label class="form-check-label">Unspecified</label>
           </div>
         </div>
@@ -72,11 +93,19 @@
         <label class="col-sm-3 col-form-label">Shipping Options</label>
         <div class="col-sm-9 col-form-label">
           <div class="form-check form-check-inline">
-            <input type="checkbox" class="form-check-input">
+            <input type="checkbox"
+                   class="form-check-input"
+                   name="localpickup"
+                   [(ngModel)]="formInput.shippingOptions.localPickup"
+            >
             <label class="form-check-label">Local Pickup</label>
           </div>
           <div class="form-check form-check-inline">
-            <input type="checkbox" class="form-check-input">
+            <input type="checkbox"
+                   class="form-check-input"
+                   name="freeshipping"
+                   [(ngModel)]="formInput.shippingOptions.freeShipping"
+            >
             <label class="form-check-label">Free Shipping</label>
           </div>
         </div>
@@ -84,7 +113,12 @@
       <div class="form-group row pb-3">
         <label class="col-sm-3 col-form-label">Distance (Miles)</label>
         <div class="col-sm-9">
-          <input type="text" placeholder="10" class="form-control CategorySelect">
+          <input type="text"
+                 placeholder="10"
+                 class="form-control CategorySelect"
+                 name="Distance"
+                 [(ngModel)]="formInput.Distance"
+          >
         </div>
       </div>
       <div class="form-group row pb-3">
@@ -94,7 +128,11 @@
             <input type="radio"
                    class="form-check-input"
                    name="Location"
-                   (change)="onLocationSelect()" checked>
+                   (change)="onLocationSelect()"
+                    checked
+
+            >
+            <!--[(ngModel)]="formInput.Location"-->
             <label class="form-check-label">Current Location</label>
           </div>
           <div class="form-check pb-2">
@@ -104,6 +142,7 @@
                    (change)="onZipSelect($event)"
 
             >
+            <!--[(ngModel)]="formInput.Location"-->
             <label class="form-check-label">Other. Please specify zip code:</label>
           </div>
 
@@ -111,14 +150,15 @@
                    class="form-control"
                    disabled
                    (input)="onZipInput($event)"
-
                    [formControl]="myControl"
                    [matAutocomplete]="auto"
                    (focusout) = "onZipCodeEntered()"
-            >
+                   [ngStyle]="zipCodeEntered == true && {'border-color': 'red'}"
 
+            >
             <mat-autocomplete #auto="matAutocomplete"
-                              (optionSelected) = "onZipCodeSelected($event)">
+                              (optionSelected) = "onZipCodeSelected($event)"
+            >
               <mat-option *ngFor="let zipCode of zipCodeOptions" [value]="zipCode">
                 {{zipCode}}
               </mat-option>
@@ -127,7 +167,6 @@
                class="invalid-feedback">
             Please enter a zip code
           </div>
-
         </div>
       </div>
       <div class="form-group row">
