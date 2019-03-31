@@ -5,7 +5,7 @@ export class FormData {
     public conditions,
     public shippingOptions,
     public Distance,
-    public otherZip
+    public Zip
 
   ) { }
 }

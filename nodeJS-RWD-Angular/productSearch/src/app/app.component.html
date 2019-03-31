@@ -10,7 +10,7 @@
   <title>Document</title>
 </head>
 <body>
-  <div class="container">
+  <div class="container pb-3 MainMenu">
     <div class="row">
       <div class="col">
         <h2 class="text-center pt-4 pb-4"> Product Search</h2>
@@ -117,8 +117,7 @@
                  placeholder="10"
                  class="form-control CategorySelect"
                  name="Distance"
-                 [(ngModel)]="formInput.Distance"
-          >
+                 [(ngModel)]="formInput.Distance">
         </div>
       </div>
       <div class="form-group row pb-3">
@@ -129,20 +128,14 @@
                    class="form-check-input"
                    name="Location"
                    (change)="onLocationSelect()"
-                    checked
-
-            >
-            <!--[(ngModel)]="formInput.Location"-->
+                    checked>
             <label class="form-check-label">Current Location</label>
           </div>
           <div class="form-check pb-2">
             <input type="radio"
                    class="form-check-input"
                    name="Location"
-                   (change)="onZipSelect($event)"
-
-            >
-            <!--[(ngModel)]="formInput.Location"-->
+                   (change)="onZipSelect($event)">
             <label class="form-check-label">Other. Please specify zip code:</label>
           </div>
 
@@ -152,13 +145,10 @@
                    (input)="onZipInput($event)"
                    [formControl]="myControl"
                    [matAutocomplete]="auto"
-                   (focusout) = "onZipCodeEntered()"
-                   [ngStyle]="zipCodeEntered == true && {'border-color': 'red'}"
-
-            >
+                   (blur) = "onZipCodeEntered()"
+                   [ngStyle]="zipCodeEntered == true && {'border-color': 'red'}">
             <mat-autocomplete #auto="matAutocomplete"
-                              (optionSelected) = "onZipCodeSelected($event)"
-            >
+                              (optionSelected) = "onZipCodeSelected($event)">
               <mat-option *ngFor="let zipCode of zipCodeOptions" [value]="zipCode">
                 {{zipCode}}
               </mat-option>
@@ -170,22 +160,68 @@
         </div>
       </div>
       <div class="form-group row">
-        <button class="btn btn-light ml-3 mr-4"
+        <button class="btn btn-light ml-3 mr-4 btnSearchClear"
                 type="submit"
                 [disabled]="!(SearchButton &&
                 locationAcquired &&
                 !zipCodeSelect &&
-                zipValid)">
+                zipValid)"
+                (click)="onSearchButtonClick()">
           <i class="material-icons md-24 btnIcon">search</i>
            Search
         </button>
-        <button class="btn btn-light" type="reset" (click)="onReset()">
+        <button class="btn btn-light btnSearchClear"
+                type="reset"
+                (click)="onReset()">
           <i class="material-icons md-24 btnIcon" >clear_all</i>
           Clear
         </button>
       </div>
     </form>
   </div>
+    <!-- Progress Bar -->
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div *ngIf="showProgressBar" class="col-sm-8 mt-5">
+        <div class="progress">
+          <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated"
+               style="width:50%;"></div>
+        </div>
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+
+    <!-- Results & Wish List -->
+    <div class="row mt-3">
+      <div class="col text-center">
+        <button [ngClass]="{'btn-dark': resultWishListButton, 'btn-light btnResultWish' : !resultWishListButton}"
+                class="btn"
+                (click)="onResultsBtnClicked()"
+        >
+          Results
+        </button>
+        <button [ngClass]="{'btn-dark': !resultWishListButton, 'btn-light btnResultWish' : resultWishListButton}"
+                class="btn ml-3"
+                (click)="onWishListBtnClicked()"
+        >
+          Wish List</button>
+      </div>
+    </div>
+
+    <!-- No Records -->
+    <div  class="row mt-3" >
+      <div class="col">
+        <div *ngIf="showErrorMessage" class="noRecords">No Records.</div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <app-result-tab [itemElements]="items">
+          </app-result-tab>
+        </div>
+      </div>
+    </div>
 </body>
 </html>
 

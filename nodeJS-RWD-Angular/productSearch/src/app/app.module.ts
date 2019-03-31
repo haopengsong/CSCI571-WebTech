@@ -10,12 +10,14 @@ import {MatAutocompleteModule} from "@angular/material";
 import {MatFormFieldModule} from "@angular/material";
 import {MatInputModule} from "@angular/material";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { ResultTabComponent } from './result-tab/result-tab.component';
 
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ResultTabComponent
   ],
   imports: [
     BrowserModule,
