@@ -24,6 +24,7 @@ export class AppComponent   {
   //     'BTC', '20,000','BlockChain','90007','Coinbase')
   // ];
   items: Item[] = [];
+
   myControl = new FormControl();
   //3.1.1
   keywordValidation: boolean = false;
@@ -227,9 +228,11 @@ export class AppComponent   {
           } else if (response['findItemsAdvancedResponse'][0]['searchResult'][0]['@count'] == '0') {
             this.noRecords = true;
             this.onShowErrorMessage();
+          } else {
+            this.itemExtractor(response)
           }
           // extract items from response
-          this.itemExtractor(response)
+
         },
         (error) => {
           //todo : if finding service fails
@@ -250,11 +253,12 @@ export class AppComponent   {
   //show result tab
   showResultTab: boolean = false;
   itemExtractor(response) {
+
     this.items = [];
     const itemArray = response['findItemsAdvancedResponse'][0]['searchResult'][0]['item'];
     for (let i = 0; i < itemArray.length; i++) {
       let newItem = new Item(0,'','','','',
-        '','','');
+        '','','','','');
       //index
       newItem.indexNumber = i+1;
       //image
@@ -322,6 +326,13 @@ export class AppComponent   {
       } else {
         newItem.seller = 'N/A';
       }
+      //itemID
+      if (itemArray[i].hasOwnProperty('itemId') == true) {
+        newItem.itemID = itemArray[i]['itemId'][0];
+      } else {
+        newItem.itemID = 'noID';
+      }
+      newItem.inList = 'add_shopping_cart';
       this.items.push(newItem);
     }
     this.showResultTab = true;
@@ -354,7 +365,7 @@ export class AppComponent   {
   onShowErrorMessage() {
     if (this.noRecords) {
       setTimeout(()=> this.showErrorMessage = true, 50);
-
+      return;
     } else {
       console.log('good');
     }

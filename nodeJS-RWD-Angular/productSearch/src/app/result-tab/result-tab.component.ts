@@ -16,4 +16,12 @@ export class ResultTabComponent implements OnInit {
   ngOnInit() {
   }
 
+  @Input() wishList: Map<string, Item> = new Map<string, Item>();
+
+
+  onWishListClicked(item: Item) {
+    if (this.wishList.has(item.itemID)) {
+
+    }
+  }
 }

@@ -33,7 +33,11 @@
         <td>{{item.shippingOption}}</td>
         <td>{{item.zip}}</td>
         <td>{{item.seller}}</td>
-        <td width="100" style="padding-left: 40px;">add</td>
+        <td width="100" style="padding-left: 40px;">
+          <button class="btn btn-light" style="height: 35px" (click)="onWishListClicked(item)">
+            <i class="material-icons ">{{item.inList}}</i>
+          </button>
+        </td>
       </tr>
       </tbody>
     </table>

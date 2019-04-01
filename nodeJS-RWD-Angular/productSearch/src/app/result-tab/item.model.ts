@@ -8,5 +8,7 @@ export class Item {
     public zip: string,
     public seller: string,
     public titleCutted: string,
+    public itemID: string,
+    public inList: string
   ) {}
 }
