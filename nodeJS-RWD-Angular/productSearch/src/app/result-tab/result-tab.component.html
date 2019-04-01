@@ -14,12 +14,21 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let item of itemElements; let i = index; let odd = odd; let even = even"
+      <tr *ngFor="let item of itemElements | paginate: {itemsPerPage: 10, currentPage: page};
+      let i = index;
+      let odd = odd;
+      let even = even;
+      "
           [ngClass]="{'lightRow': even}"
       >
-        <th scope="row">{{i+1}}</th>
+        <th scope="row">{{item.indexNumber}}</th>
         <td><img src="{{item.imagePath}}" width="100" height="110"></td>
-        <td>{{item.title}}</td>
+        <td width="350">
+          <button class="btn btn-link" type="button"
+             matTooltip="{{item.title}}">
+            {{item.titleCutted}}
+          </button>
+        </td>
         <td>{{item.price}}</td>
         <td>{{item.shippingOption}}</td>
         <td>{{item.zip}}</td>
@@ -28,5 +37,7 @@
       </tr>
       </tbody>
     </table>
+    <pagination-controls class="my-pagination" (pageChange)="page = $event"
+                         style="text-align: center"></pagination-controls>
   </div>
 </div>

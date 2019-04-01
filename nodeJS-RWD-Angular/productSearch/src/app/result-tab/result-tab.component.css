@@ -2,3 +2,16 @@
   background-color: #41434e;
 }
 
+tbody {
+  font-size: 14px;
+}
+
+.btn-link:hover {
+  cursor: n-resize;
+  text-decoration: underline;
+  color: #007bff;;
+}
+
+.my-pagination /deep/ .ngx-pagination .current {
+  background-color: black;
+}

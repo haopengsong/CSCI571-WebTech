@@ -10,6 +10,7 @@
   <title>Document</title>
 </head>
 <body>
+
   <div class="container pb-3 MainMenu">
     <div class="row">
       <div class="col">
@@ -32,6 +33,7 @@
                  [ngStyle]="keywordValidation == true && {'border-color': 'red'}"
                   [(ngModel)]="formInput.keyword"
           >
+
           <div *ngIf="keywordValidation == true" style="display: block"
                class="invalid-feedback">
             Please enter a keyword
@@ -214,7 +216,7 @@
         <div *ngIf="showErrorMessage" class="noRecords">No Records.</div>
       </div>
     </div>
-    <div class="container">
+    <div class="container" *ngIf="showResultTab">
       <div class="row">
         <div class="col-sm-12">
           <app-result-tab [itemElements]="items">

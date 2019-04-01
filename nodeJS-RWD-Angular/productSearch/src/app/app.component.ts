@@ -210,11 +210,12 @@ export class AppComponent   {
     //1: call ebay API
     //encode keyword
     console.log(myform);
-    myform.value.keyword = escape( myform.value.keyword );
+    myform.value.keyword = encodeURI( this.formInput.keyword );
+
 
     this.apiService.getEbayFindingService(myform.value)
       .subscribe(
-        (response) =>{
+        (response) => {
           //receive json result
           console.log(response);
           if (response.hasOwnProperty('findItemsAdvancedResponse') == false) {
@@ -234,13 +235,96 @@ export class AppComponent   {
           //todo : if finding service fails
         }
       );
-
+    // this.formInput = new FormData(
+    //   '',
+    //   '',
+    //   {new: false ,used: false, unspecified: false},
+    //   {localPickup: false, freeShipping: false},
+    //   '',
+    //   ''
+    //
+    // );
     console.log(myform.value);
   }
 
+  //show result tab
+  showResultTab: boolean = false;
   itemExtractor(response) {
     this.items = [];
-
+    const itemArray = response['findItemsAdvancedResponse'][0]['searchResult'][0]['item'];
+    for (let i = 0; i < itemArray.length; i++) {
+      let newItem = new Item(0,'','','','',
+        '','','');
+      //index
+      newItem.indexNumber = i+1;
+      //image
+      if (itemArray[i].hasOwnProperty('galleryURL') == true) {
+        newItem.imagePath = itemArray[i]['galleryURL'];
+      } else {
+        newItem.imagePath = '#';
+      }
+      //title
+      if (itemArray[i].hasOwnProperty('title') == true) {
+        newItem.title = itemArray[i]['title'][0];
+        if (newItem.title.length >= 35) {
+          if (newItem.title[34] != ' ') {
+            let cutPos = newItem.title.substring(0, 35).lastIndexOf(' ');
+            newItem.titleCutted = newItem.title.substring(0, cutPos) + '...';
+          } else {
+            newItem.titleCutted = newItem.title.substring(0, 34) + '...';
+          }
+        } else {
+          newItem.titleCutted = itemArray[i]['title'];
+        }
+      } else {
+        newItem.title = 'N/A';
+      }
+      //price
+      if (itemArray[i].hasOwnProperty('sellingStatus') == true) {
+        if (itemArray[i]['sellingStatus'][0].hasOwnProperty('currentPrice') == true) {
+          newItem.price = '$ '  + itemArray[i]['sellingStatus'][0]['currentPrice'][0]['__value__'];
+        } else {
+          newItem.price = 'N/A';
+        }
+      } else {
+        newItem.price = 'N/A';
+      }
+      //shipping
+      if (itemArray[i].hasOwnProperty('shippingInfo') == true) {
+        if (itemArray[i]['shippingInfo'][0].hasOwnProperty('shippingServiceCost')== true) {
+          if (itemArray[i]['shippingInfo'][0]['shippingServiceCost'][0]['__value__'] == "0.0") {
+            newItem.shippingOption = 'Free Shipping';
+          } else if (itemArray[i]['shippingInfo'][0]['shippingServiceCost'][0]['__value__'] != "" &&
+            itemArray[i]['shippingInfo'][0]['shippingServiceCost'][0]['__value__'] != null) {
+            newItem.shippingOption =  itemArray[i]['shippingInfo'][0]['shippingServiceCost'][0]['__value__'];
+          } else {
+            newItem.shippingOption = 'N/A';
+          }
+        } else {
+          newItem.shippingOption = 'N/A';
+        }
+      } else {
+        newItem.shippingOption = 'N/A';
+      }
+      //zip
+      if (itemArray[i].hasOwnProperty('postalCode') == true) {
+        newItem.zip = itemArray[i]['postalCode'][0];
+      } else {
+        newItem.zip = 'N/A';
+      }
+      //seller
+      if (itemArray[i].hasOwnProperty('sellerInfo') == true) {
+        if (itemArray[i]['sellerInfo'][0].hasOwnProperty('sellerUserName') == true) {
+          newItem.seller = itemArray[i]['sellerInfo'][0]['sellerUserName'][0];
+        } else {
+          newItem.seller = 'N/A';
+        }
+      } else {
+        newItem.seller = 'N/A';
+      }
+      this.items.push(newItem);
+    }
+    this.showResultTab = true;
   }
 
   //progress bar
@@ -250,10 +334,11 @@ export class AppComponent   {
   //no records
   noRecords: boolean = false;
   showErrorMessage: boolean = false;
+
   onSearchButtonClick() {
     this.showErrorMessage = false;
     this.showProgressBar = true;
-    console.log('here');
+    console.log('Search Button Clicked');
     setTimeout(() => this.showProgressBar = false, 500);
 
   }

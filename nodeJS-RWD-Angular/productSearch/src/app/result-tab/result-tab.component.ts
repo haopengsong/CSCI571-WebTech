@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+
 import {Item} from "./item.model";
 
 @Component({
@@ -8,7 +9,8 @@ import {Item} from "./item.model";
 })
 export class ResultTabComponent implements OnInit {
   @Input() itemElements: Item[] = [];
-
+  page: number = 1;
+  pageSize: number = 10;
   constructor() { }
 
   ngOnInit() {
