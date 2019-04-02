@@ -3,12 +3,14 @@ import {ServerService} from "./server.service";
 import { FormControl} from "@angular/forms";
 import {FormData} from "./formdata";
 import {Item} from "./result-tab/item.model";
+import {slideInAnimation} from "./animation";
 
 //todo: finish wish list
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  animations: [slideInAnimation]
 })
 
 export class AppComponent   {

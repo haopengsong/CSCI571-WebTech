@@ -38,6 +38,8 @@
                   type="button"
                   matTooltip="{{item.title}}"
                   (click)="onTitleClicked(item)"
+                  routerLink="/product-detail"
+                  routerLinkActive="active"
           >
             {{item.titleCutted}}
           </button>
@@ -61,3 +63,5 @@
                          style="text-align: center"></pagination-controls>
   </div>
 </div>
+<router-outlet></router-outlet>
+

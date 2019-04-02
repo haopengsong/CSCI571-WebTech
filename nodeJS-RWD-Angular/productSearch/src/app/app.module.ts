@@ -13,13 +13,23 @@ import {MatInputModule} from "@angular/material";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { ResultTabComponent } from './result-tab/result-tab.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { RouterModule, Routes } from '@angular/router';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 
 
+const appRoutes: Routes = [
+
+  {path: 'result-tab', component: ResultTabComponent},
+  {path: 'product-detail', component: ProductDetailComponent},
+];
 
 @NgModule({
   declarations: [
     AppComponent,
-    ResultTabComponent
+    ResultTabComponent,
+    ProductDetailComponent,
+    ProgressBarComponent
   ],
   imports: [
     BrowserModule,
@@ -28,11 +38,14 @@ import {NgxPaginationModule} from 'ngx-pagination';
     MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
+    RouterModule.forRoot(
+      appRoutes
+    ),
     BrowserAnimationsModule,
     FormsModule,
     MatTooltipModule,
     MatPaginatorModule,
-    NgxPaginationModule
+    NgxPaginationModule,
   ],
   providers: [ServerService],
   bootstrap: [AppComponent]

@@ -1,11 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ServerService} from "../server.service";
 import {Item} from "./item.model";
+import {slideInAnimation} from "../animation";
 
 @Component({
   selector: 'app-result-tab',
   templateUrl: './result-tab.component.html',
-  styleUrls: ['./result-tab.component.css']
+  styleUrls: ['./result-tab.component.css'],
+  animations: [slideInAnimation]
 })
 export class ResultTabComponent implements OnInit {
   @Input() itemElements: Item[] = [];
@@ -42,4 +44,7 @@ export class ResultTabComponent implements OnInit {
         }
       );
   }
+
+  //router modification
+  showErrorMessage: boolean = false;
 }
