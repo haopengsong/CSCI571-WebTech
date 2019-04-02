@@ -131,6 +131,28 @@ app.get('/api/finding?', (req, res) => {
 
 });
 
+app.get('/api/shopping?', (req, res) => {
+
+    let id = req.query.itemId;
+    let serviceShopping = "http://open.api.ebay.com/shopping?";
+    serviceShopping += "callname=GetSingleItem";
+    serviceShopping += "&responseencoding=JSON&appid=jasonson-571hw-PRD-016e08212-81d2fca4";
+    serviceShopping += "&siteid=0";
+    serviceShopping += "&version=967";
+    serviceShopping += "&ItemID=" + id;
+    serviceShopping += "&IncludeSelector=Description,Details,ItemSpecifics";
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", serviceShopping, false);
+    try {
+        xhr.send();
+    } catch (error) {
+        res.send('ERROR');
+        return;
+    }
+    res.send(xhr.responseText);
+
+});
+
 
 // PORT
 const port = process.env.PORT || 3000;
