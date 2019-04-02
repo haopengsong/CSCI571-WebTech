@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-
+import {ServerService} from "../server.service";
 import {Item} from "./item.model";
 
 @Component({
@@ -11,17 +11,35 @@ export class ResultTabComponent implements OnInit {
   @Input() itemElements: Item[] = [];
   page: number = 1;
   pageSize: number = 10;
-  constructor() { }
+  constructor(private apiService: ServerService) { }
 
   ngOnInit() {
   }
 
-  @Input() wishList: Map<string, Item> = new Map<string, Item>();
+  wishList: Map<string, Item> = new Map<string, Item>();
 
 
   onWishListClicked(item: Item) {
-    if (this.wishList.has(item.itemID)) {
-
+    if (!this.wishList.has(item.itemID)) {
+      this.wishList.set(item.itemID, item);
+      item.inList = 'remove_shopping_cart';
+      item.inListFlag = true;
+    } else {
+      this.wishList.delete(item.itemID);
+      item.inList = 'add_shopping_cart';
+      item.inListFlag = false;
     }
+  }
+
+  onTitleClicked(item: Item) {
+    this.apiService.getEbayShoppingService(item.itemID)
+      .subscribe(
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
+
+        }
+      );
   }
 }

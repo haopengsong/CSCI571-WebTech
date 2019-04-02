@@ -4,6 +4,7 @@ import { FormControl} from "@angular/forms";
 import {FormData} from "./formdata";
 import {Item} from "./result-tab/item.model";
 
+//todo: finish wish list
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -258,7 +259,7 @@ export class AppComponent   {
     const itemArray = response['findItemsAdvancedResponse'][0]['searchResult'][0]['item'];
     for (let i = 0; i < itemArray.length; i++) {
       let newItem = new Item(0,'','','','',
-        '','','','','');
+        '','','','','', false);
       //index
       newItem.indexNumber = i+1;
       //image

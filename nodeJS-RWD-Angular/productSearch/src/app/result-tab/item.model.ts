@@ -9,6 +9,7 @@ export class Item {
     public seller: string,
     public titleCutted: string,
     public itemID: string,
-    public inList: string
+    public inList: string,
+    public inListFlag: boolean
   ) {}
 }

@@ -10,6 +10,8 @@ export class ServerService {
   serverFinding : string = 'http://localhost:3000/api/finding?';
   serverFindingFlag : string =  'http://localhost:3000/api/finding?';
 
+
+
   constructor(private http: HttpClient) {}
 
   getZipCodeAPI() {
@@ -81,9 +83,14 @@ export class ServerService {
 
     console.log(this.serverFinding);
     return this.http.get(this.serverFinding);
-
-
   }
+
+  getEbayShoppingService(itemId) {
+    let serviceShopping = 'http://localhost:3000/api/shopping?' + 'itemId=' + itemId;
+    console.log(serviceShopping);
+    return this.http.get(serviceShopping);
+  }
+
 }
 
 class itemFilter {

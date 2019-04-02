@@ -15,3 +15,15 @@ tbody {
 .my-pagination /deep/ .ngx-pagination .current {
   background-color: black;
 }
+
+.btnDetailIcon /deep/ {
+  position: absolute;
+  bottom: 23px;
+
+  right: 15px;
+}
+
+.btnDetail {
+  float: right;
+  padding-right: 20px;
+}
