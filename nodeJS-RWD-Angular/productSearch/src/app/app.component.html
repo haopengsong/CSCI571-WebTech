@@ -181,17 +181,7 @@
       </div>
     </form>
   </div>
-    <!-- Progress Bar -->
-    <div class="row">
-      <div class="col-sm-2"></div>
-      <div *ngIf="showProgressBar" class="col-sm-8 mt-5">
-        <div class="progress">
-          <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated"
-               style="width:50%;"></div>
-        </div>
-      </div>
-      <div class="col-sm-2"></div>
-    </div>
+
 
     <!-- Results & Wish List -->
     <div class="row mt-3">
@@ -210,21 +200,15 @@
       </div>
     </div>
 
-    <!-- No Records -->
-    <div  class="row mt-3" >
-      <div class="col">
-        <div *ngIf="showErrorMessage" class="noRecords">No Records.</div>
-      </div>
-    </div>
-    <div class="container" *ngIf="showResultTab">
-      <div class="row">
-        <div class="col-sm-12">
-          <app-result-tab [itemElements]="items">
-          </app-result-tab>
-        </div>
-      </div>
-    </div>
 
+    <!--<div class="container" *ngIf="showResultTab">-->
+      <!--<div class="row">-->
+        <!--<div class="col-sm-12">-->
+          <!--<app-result-tab [itemElements]="items"></app-result-tab>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <router-outlet></router-outlet>
 
 
 </body>

@@ -2,8 +2,9 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ServerService} from "./server.service";
 import { FormControl} from "@angular/forms";
 import {FormData} from "./formdata";
-import {Item} from "./result-tab/item.model";
+
 import {slideInAnimation} from "./animation";
+import {Router} from "@angular/router";
 
 //todo: finish wish list
 @Component({
@@ -14,19 +15,7 @@ import {slideInAnimation} from "./animation";
 })
 
 export class AppComponent   {
-  // items: Item[] = [
-  //   new Item('https://i-invdn-com.akamaized.net/content/pic787e8da1786a3b37b541d0bb4b211baa.jpg',
-  //     'BTC', '20,000','BlockChain','90007','Coinbase'),
-  //   new Item('https://i-invdn-com.akamaized.net/content/pic787e8da1786a3b37b541d0bb4b211baa.jpg',
-  //     'BTC', '20,000','BlockChain','90007','Coinbase'),
-  //   new Item('https://i-invdn-com.akamaized.net/content/pic787e8da1786a3b37b541d0bb4b211baa.jpg',
-  //     'BTC', '20,000','BlockChain','90007','Coinbase'),
-  //   new Item('https://i-invdn-com.akamaized.net/content/pic787e8da1786a3b37b541d0bb4b211baa.jpg',
-  //     'BTC', '20,000','BlockChain','90007','Coinbase'),
-  //   new Item('https://i-invdn-com.akamaized.net/content/pic787e8da1786a3b37b541d0bb4b211baa.jpg',
-  //     'BTC', '20,000','BlockChain','90007','Coinbase')
-  // ];
-  items: Item[] = [];
+
 
   myControl = new FormControl();
   //3.1.1
@@ -37,6 +26,7 @@ export class AppComponent   {
   //3.1.4
   constructor(
     private apiService : ServerService,
+    private router: Router
   ) {}
 
   formInput = new FormData(
@@ -51,7 +41,6 @@ export class AppComponent   {
 
 
   locationAcquired: boolean = false;
-  resError : string = "";
   currentZipCode = "";
 
   onUserInput(event : any) {
@@ -210,151 +199,19 @@ export class AppComponent   {
         myform.value.Zip = this.validZipInput;
       }
     }
-    //3.2 results tab
-    //1: call ebay API
-    //encode keyword
-    console.log(myform);
+
     myform.value.keyword = encodeURI( this.formInput.keyword );
+    console.log(myform);
+    //send form data to result-tab
+    this.router.navigate(['/result-tab', {userInput : JSON.stringify(myform.value)}]);
 
-
-    this.apiService.getEbayFindingService(myform.value)
-      .subscribe(
-        (response) => {
-          //receive json result
-          console.log(response);
-          if (response.hasOwnProperty('findItemsAdvancedResponse') == false) {
-            this.noRecords = true;
-            this.onShowErrorMessage();
-          } else if (response['findItemsAdvancedResponse'][0]['ack'] != 'Success') {
-            this.noRecords = true;
-            this.onShowErrorMessage();
-          } else if (response['findItemsAdvancedResponse'][0]['searchResult'][0]['@count'] == '0') {
-            this.noRecords = true;
-            this.onShowErrorMessage();
-          } else {
-            this.itemExtractor(response)
-          }
-          // extract items from response
-
-        },
-        (error) => {
-          //todo : if finding service fails
-        }
-      );
-    // this.formInput = new FormData(
-    //   '',
-    //   '',
-    //   {new: false ,used: false, unspecified: false},
-    //   {localPickup: false, freeShipping: false},
-    //   '',
-    //   ''
-    //
-    // );
-    console.log(myform.value);
   }
 
-  //show result tab
-  showResultTab: boolean = false;
-  itemExtractor(response) {
-
-    this.items = [];
-    const itemArray = response['findItemsAdvancedResponse'][0]['searchResult'][0]['item'];
-    for (let i = 0; i < itemArray.length; i++) {
-      let newItem = new Item(0,'','','','',
-        '','','','','', false);
-      //index
-      newItem.indexNumber = i+1;
-      //image
-      if (itemArray[i].hasOwnProperty('galleryURL') == true) {
-        newItem.imagePath = itemArray[i]['galleryURL'];
-      } else {
-        newItem.imagePath = '#';
-      }
-      //title
-      if (itemArray[i].hasOwnProperty('title') == true) {
-        newItem.title = itemArray[i]['title'][0];
-        if (newItem.title.length >= 35) {
-          if (newItem.title[34] != ' ') {
-            let cutPos = newItem.title.substring(0, 35).lastIndexOf(' ');
-            newItem.titleCutted = newItem.title.substring(0, cutPos) + '...';
-          } else {
-            newItem.titleCutted = newItem.title.substring(0, 34) + '...';
-          }
-        } else {
-          newItem.titleCutted = itemArray[i]['title'];
-        }
-      } else {
-        newItem.title = 'N/A';
-      }
-      //price
-      if (itemArray[i].hasOwnProperty('sellingStatus') == true) {
-        if (itemArray[i]['sellingStatus'][0].hasOwnProperty('currentPrice') == true) {
-          newItem.price = '$ '  + itemArray[i]['sellingStatus'][0]['currentPrice'][0]['__value__'];
-        } else {
-          newItem.price = 'N/A';
-        }
-      } else {
-        newItem.price = 'N/A';
-      }
-      //shipping
-      if (itemArray[i].hasOwnProperty('shippingInfo') == true) {
-        if (itemArray[i]['shippingInfo'][0].hasOwnProperty('shippingServiceCost')== true) {
-          if (itemArray[i]['shippingInfo'][0]['shippingServiceCost'][0]['__value__'] == "0.0") {
-            newItem.shippingOption = 'Free Shipping';
-          } else if (itemArray[i]['shippingInfo'][0]['shippingServiceCost'][0]['__value__'] != "" &&
-            itemArray[i]['shippingInfo'][0]['shippingServiceCost'][0]['__value__'] != null) {
-            newItem.shippingOption =  itemArray[i]['shippingInfo'][0]['shippingServiceCost'][0]['__value__'];
-          } else {
-            newItem.shippingOption = 'N/A';
-          }
-        } else {
-          newItem.shippingOption = 'N/A';
-        }
-      } else {
-        newItem.shippingOption = 'N/A';
-      }
-      //zip
-      if (itemArray[i].hasOwnProperty('postalCode') == true) {
-        newItem.zip = itemArray[i]['postalCode'][0];
-      } else {
-        newItem.zip = 'N/A';
-      }
-      //seller
-      if (itemArray[i].hasOwnProperty('sellerInfo') == true) {
-        if (itemArray[i]['sellerInfo'][0].hasOwnProperty('sellerUserName') == true) {
-          newItem.seller = itemArray[i]['sellerInfo'][0]['sellerUserName'][0];
-        } else {
-          newItem.seller = 'N/A';
-        }
-      } else {
-        newItem.seller = 'N/A';
-      }
-      //itemID
-      if (itemArray[i].hasOwnProperty('itemId') == true) {
-        newItem.itemID = itemArray[i]['itemId'][0];
-      } else {
-        newItem.itemID = 'noID';
-      }
-      newItem.inList = 'add_shopping_cart';
-      this.items.push(newItem);
-    }
-    this.showResultTab = true;
-  }
-
-  //progress bar
-  showProgressBar: boolean = false;
   //Results & Wish List Button
   resultWishListButton: boolean = true;
-  //no records
-  noRecords: boolean = false;
-  showErrorMessage: boolean = false;
 
   onSearchButtonClick() {
-    this.showErrorMessage = false;
-    this.showProgressBar = true;
     console.log('Search Button Clicked');
-    setTimeout(() => this.showProgressBar = false, 500);
-
   }
 
   onResultsBtnClicked() {
@@ -363,15 +220,6 @@ export class AppComponent   {
 
   onWishListBtnClicked() {
     this.resultWishListButton = false;
-  }
-
-  onShowErrorMessage() {
-    if (this.noRecords) {
-      setTimeout(()=> this.showErrorMessage = true, 50);
-      return;
-    } else {
-      console.log('good');
-    }
   }
 
 }
