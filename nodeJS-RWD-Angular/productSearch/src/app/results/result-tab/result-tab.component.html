@@ -14,16 +14,7 @@
   </div>
 </div>
 <!-- Progress Bar -->
-<div class="row">
-  <div class="col-sm-2"></div>
-  <div *ngIf="showProgressBar" class="col-sm-8 mt-5">
-    <div class="progress">
-      <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated"
-           style="width:50%;"></div>
-    </div>
-  </div>
-  <div class="col-sm-2"></div>
-</div>
+<app-progress-bar *ngIf="showProgressBar" ></app-progress-bar>
 
 <div class="row" *ngIf="showResultTab">
   <div class="col-sm-12">
@@ -55,6 +46,7 @@
                   type="button"
                   matTooltip="{{item.title}}"
                   (click)="onTitleClicked(item)"
+                  [routerLink]="['/product-detail', item.itemID]"
           >
             {{item.titleCutted}}
           </button>
@@ -67,7 +59,9 @@
           <button class="btn btn-light"
                   [ngStyle]="{'color': item.inListFlag ? '#b6c10f' : 'black'}"
                   style="height:35px"
-                  (click)="onWishListClicked(item)">
+                  (click)="onWishListClicked(item)"
+
+          >
             <i class="material-icons ">{{item.inList}}</i>
           </button>
         </td>

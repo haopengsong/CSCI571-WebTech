@@ -15,10 +15,14 @@ import {MatInputModule} from "@angular/material";
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatPaginatorModule} from '@angular/material/paginator';
 
+import {ProgressBarComponent} from "../progress-bar/progress-bar.component";
+
 @NgModule({
   declarations: [
     ResultTabComponent,
-    ProductDetailComponent],
+    ProductDetailComponent,
+    ProgressBarComponent
+  ],
   imports: [
     CommonModule,
     ResultsRoutingModule,

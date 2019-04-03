@@ -22,7 +22,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 import { RouterModule, Routes } from '@angular/router';
 
-import { ProgressBarComponent } from './progress-bar/progress-bar.component';
+
 
 import { ResultsModule } from './results/results.module';
 import {ResultTabComponent} from "./results/result-tab/result-tab.component";
@@ -41,7 +41,7 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
 
-    ProgressBarComponent,
+
 
     HomeComponent
   ],
