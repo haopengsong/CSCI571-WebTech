@@ -17,6 +17,10 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 
 import {ProgressBarComponent} from "../progress-bar/progress-bar.component";
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
+
+
 @NgModule({
   declarations: [
     ResultTabComponent,
@@ -32,7 +36,8 @@ import {ProgressBarComponent} from "../progress-bar/progress-bar.component";
     MatFormFieldModule,
     MatInputModule,
     MatTooltipModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    NgbModule
 
   ]
 })

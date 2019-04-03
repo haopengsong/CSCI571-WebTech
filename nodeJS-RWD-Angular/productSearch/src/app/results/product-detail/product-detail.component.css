@@ -1,0 +1,23 @@
+.btnListIcon /deep/ {
+  position: absolute;
+  left: 15px;
+  top: 7px;
+  width: 25px;
+}
+
+.btnDetail {
+  float: left;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.tabBtn {
+  border-radius: 0.2em;
+
+}
+
+.btnResultWish {
+  background-color: white;
+  border-color: white;
+}
+

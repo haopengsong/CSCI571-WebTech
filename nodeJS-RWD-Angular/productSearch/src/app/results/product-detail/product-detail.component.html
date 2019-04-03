@@ -1,9 +1,72 @@
 <!-- Progress Bar -->
-<app-progress-bar></app-progress-bar>
+<app-progress-bar *ngIf="!contentLoaded"></app-progress-bar>
+<!-- No Records -->
+<div  class="row mt-3" >
+  <div class="col">
+    <div *ngIf="showErrorMessage" class="noRecords">No Records.</div>
+  </div>
+</div>
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
-      <h1>Detail</h1>
+    <div class="col-sm-12 text-center mt-5">
+      <h3>{{'item.title'}}</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+
+      <button class="btn btn-light btnDetail mb-3">
+        <i class="material-icons btnListIcon">chevron_left</i>
+        List
+      </button>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <button class="btn btn-light mb-2"
+              style="height:35px; float: right">
+        <i class="material-icons ">add_shopping_cart</i>
+        <!-- todo: wish list function -->
+      </button>
+      <button
+        class="btn float-right mb-2" style="padding: 0">
+        <img src="../../../assets/facebook.png" height="35" alt="facebook">
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 float-right">
+      <button type="button"
+              [ngClass]="{'btn-dark' : tabSelector[4], 'btn-light btnResultWish' : !tabSelector[4]}"
+              class="btn float-right"
+              (click)="onTabClicked('4')">
+        Similar Products
+      </button>
+      <button type="button"
+              [ngClass]="{'btn-dark' : tabSelector[3], 'btn-light btnResultWish' : !tabSelector[3]}"
+              class="btn float-right"
+              (click)="onTabClicked('3')">
+        Seller
+      </button>
+      <button type="button"
+              [ngClass]="{'btn-dark' : tabSelector[2], 'btn-light btnResultWish' : !tabSelector[2]}"
+              class="btn float-right"
+              (click)="onTabClicked('2')">
+        Shipping
+      </button>
+      <button type="button"
+              [ngClass]="{'btn-dark' : tabSelector[1], 'btn-light btnResultWish' : !tabSelector[1]}"
+              class="btn float-right"
+              (click)="onTabClicked('1')">
+        Photos
+      </button>
+      <button type="button"
+              [ngClass]="{'btn-dark' : tabSelector[0], 'btn-light btnResultWish' : !tabSelector[0]}"
+              class="btn float-right"
+              (click)="onTabClicked('0')">
+        Product
+      </button>
     </div>
   </div>
 </div>

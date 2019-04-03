@@ -16,17 +16,10 @@ import {MatInputModule} from "@angular/material";
 
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
-
-
-
-
 import { RouterModule, Routes } from '@angular/router';
-
-
 
 import { ResultsModule } from './results/results.module';
 import {ResultTabComponent} from "./results/result-tab/result-tab.component";
-
 import { HomeComponent } from './home/home.component';
 
 
@@ -40,9 +33,6 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-
-
-
     HomeComponent
   ],
   imports: [
@@ -57,7 +47,6 @@ const appRoutes: Routes = [
     FormsModule,
     MatTooltipModule,
     MatPaginatorModule,
-
     ResultsModule,
 
 
@@ -65,4 +54,6 @@ const appRoutes: Routes = [
   providers: [ServerService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+}

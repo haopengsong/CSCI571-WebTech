@@ -19,7 +19,6 @@ tbody {
 .btnDetailIcon /deep/ {
   position: absolute;
   bottom: 23px;
-
   right: 15px;
 }
 
@@ -37,4 +36,8 @@ tbody {
   margin-left: auto;
   margin-right: auto;
   color: #565421;
+}
+
+.BtnSelected {
+
 }

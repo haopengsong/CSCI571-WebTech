@@ -17,7 +17,7 @@ export class ResultTabComponent implements OnInit {
   ];
   page: number = 1;
 
-  isLoad: boolean = false;
+
   userInput: string = '';
   constructor(
     private apiService: ServerService,
@@ -46,6 +46,7 @@ export class ResultTabComponent implements OnInit {
   showErrorMessage: boolean = false;
   showProgressBar: boolean = false;
   noRecords: boolean = false;
+  productDetailSearchTrigger: boolean = false;
 
   onWishListClicked(item: Item) {
     if (!this.wishList.has(item.itemID)) {
@@ -60,16 +61,8 @@ export class ResultTabComponent implements OnInit {
   }
 
   onTitleClicked(item: Item) {
-    this.isLoad = !this.isLoad;
-    this.apiService.getEbayShoppingService(item.itemID)
-      .subscribe(
-        (response) => {
-          console.log(response);
-        },
-        (error) => {
+    this.productDetailSearchTrigger = true;
 
-        }
-      );
   }
 
   onSearchButtonClick() {

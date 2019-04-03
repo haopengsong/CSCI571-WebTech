@@ -4,7 +4,7 @@ import { FormControl} from "@angular/forms";
 import {FormData} from "./formdata";
 
 import {slideInAnimation} from "./animation";
-import {Router} from "@angular/router";
+import {Router, RouterOutlet} from "@angular/router";
 
 //todo: finish wish list
 @Component({
@@ -220,6 +220,10 @@ export class AppComponent   {
 
   onWishListBtnClicked() {
     this.resultWishListButton = false;
+  }
+
+  getAnimationData(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }
 
 }
