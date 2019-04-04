@@ -1,3 +1,5 @@
+import {shippingInfo} from "./shippinginfo.model";
+
 export class Item {
   constructor(
     public indexNumber: number,
@@ -10,6 +12,7 @@ export class Item {
     public titleCutted: string,
     public itemID: string,
     public inList: string,
-    public inListFlag: boolean
+    public inListFlag: boolean,
+    public shippingInfo: shippingInfo
   ) {}
 }

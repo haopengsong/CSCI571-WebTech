@@ -21,7 +21,7 @@
   border-color: white;
 }
 
-.itemDetails th {
+.itemDetails th , .shippingDetails th {
   width: 300px;
 }
 
@@ -40,3 +40,4 @@
   padding: 5px;
 
 }
+

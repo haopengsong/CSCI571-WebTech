@@ -147,7 +147,6 @@
   <div class="row">
     <div class="col-sm-12"
          *ngIf="tabSelector[1]">
-
       <!-- CARD COLUMNS -->
       <div class="card-columns">
         <div class="card" *ngFor="let photo of photoTab">
@@ -160,7 +159,47 @@
   </div>
   <div class="row">
     <div class="col-sm-12" *ngIf="tabSelector[2]">
-
+      <table class="table table-dark table-striped shippingDetails">
+        <tbody>
+          <tr *ngIf="shippingInfo.cost != '' ">
+            <th>Shipping Cost</th>
+            <td>{{shippingInfo.cost}}</td>
+          </tr>
+          <tr *ngIf="shippingInfo.location != '' ">
+            <th>Shipping Locations</th>
+            <td>{{shippingInfo.location[0]}}</td>
+          </tr>
+          <tr *ngIf="shippingInfo.handling != ''">
+            <th>Handling Time</th>
+            <td>{{shippingInfo.handling}}</td>
+          </tr>
+          <tr *ngIf="shippingInfo.expediated != ''">
+            <th>Expedited Time</th>
+            <td>
+              <i class="material-icons" [ngStyle]="{'color': shippingInfo.expediated == 'false' ? 'red' : 'green'}">
+                {{ shippingInfo.expediated == 'false' ? 'clear' : 'done'}}
+              </i>
+            </td>
+          </tr>
+          <tr *ngIf="shippingInfo.oneDay != ''">
+            <th>One Day Shipping</th>
+            <td>
+              <i class="material-icons" [ngStyle]="{'color': shippingInfo.oneDay == 'false' ? 'red' : 'green'}">
+                {{ shippingInfo.oneDay == 'false' ? 'clear' : 'done'}}
+              </i>
+            </td>
+          </tr>
+          <tr *ngIf="shippingInfo.returnAccept != ''" >
+            <th>Return Accepted</th>
+            <td>
+              <i class="material-icons"
+                 [ngStyle]="{'color': shippingInfo.returnAccept == 'false' ? 'red' : 'green'}">
+                {{ shippingInfo.returnAccept == 'false' ? 'clear' : 'done'}}
+              </i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   <div class="row">

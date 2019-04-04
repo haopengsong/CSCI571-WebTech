@@ -2,7 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ServerService} from "../../server.service";
 import {Item} from "./item.model";
 import {slideInAnimation} from "../../animation";
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
+import {shippingInfo} from "./shippinginfo.model";
 
 @Component({
   selector: 'app-result-tab',
@@ -10,6 +11,7 @@ import {ActivatedRoute, Params} from "@angular/router";
   styleUrls: ['./result-tab.component.css'],
   animations: [slideInAnimation]
 })
+
 export class ResultTabComponent implements OnInit {
   items: Item[] = [
     // new Item(0,'','asdf','1111','asf',
@@ -22,6 +24,7 @@ export class ResultTabComponent implements OnInit {
   constructor(
     private apiService: ServerService,
     private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -62,6 +65,7 @@ export class ResultTabComponent implements OnInit {
 
   onTitleClicked(item: Item) {
     this.productDetailSearchTrigger = true;
+    this.router.navigate(['/product-detail',{shippingInfo : JSON.stringify(item.shippingInfo), id : item.itemID}]);
   }
 
   onSearchButtonClick() {
@@ -114,7 +118,8 @@ export class ResultTabComponent implements OnInit {
     const itemArray = response['findItemsAdvancedResponse'][0]['searchResult'][0]['item'];
     for (let i = 0; i < itemArray.length; i++) {
       let newItem = new Item(0,'','','','',
-        '','','','','', false);
+        '','','','','', false, null);
+      let shippinginfo = new shippingInfo('','','','','','');
       //index
       newItem.indexNumber = i+1;
       //image
@@ -154,17 +159,39 @@ export class ResultTabComponent implements OnInit {
         if (itemArray[i]['shippingInfo'][0].hasOwnProperty('shippingServiceCost')== true) {
           if (itemArray[i]['shippingInfo'][0]['shippingServiceCost'][0]['__value__'] == "0.0") {
             newItem.shippingOption = 'Free Shipping';
+            shippinginfo.cost = 'Free Shipping';
           } else if (itemArray[i]['shippingInfo'][0]['shippingServiceCost'][0]['__value__'] != "" &&
             itemArray[i]['shippingInfo'][0]['shippingServiceCost'][0]['__value__'] != null) {
             newItem.shippingOption =  itemArray[i]['shippingInfo'][0]['shippingServiceCost'][0]['__value__'];
+            shippinginfo.cost ='$ ' + itemArray[i]['shippingInfo'][0]['shippingServiceCost'][0]['__value__'];
           } else {
             newItem.shippingOption = 'N/A';
           }
         } else {
           newItem.shippingOption = 'N/A';
         }
+        if (itemArray[i]['shippingInfo'][0]['shipToLocations'] != undefined) {
+          shippinginfo.location = itemArray[i]['shippingInfo'][0]['shipToLocations'];
+        }
+        if (itemArray[i]['shippingInfo'][0]['handlingTime'] != undefined) {
+         if (+itemArray[i]['shippingInfo'][0]['handlingTime'][0] > 1) {
+           shippinginfo.handling = itemArray[i]['shippingInfo'][0]['handlingTime'][0] + ' Days';
+         } else {
+           shippinginfo.handling = itemArray[i]['shippingInfo'][0]['handlingTime'][0] + ' Day';
+         }
+        }
+        if (itemArray[i]['shippingInfo'][0]['expeditedShipping'] != undefined) {
+          shippinginfo.expediated = itemArray[i]['shippingInfo'][0]['expeditedShipping'];
+        }
+        if (itemArray[i]['shippingInfo'][0]['oneDayShippingAvailable'] != undefined) {
+          shippinginfo.oneDay = itemArray[i]['shippingInfo'][0]['oneDayShippingAvailable'];
+        }
       } else {
         newItem.shippingOption = 'N/A';
+      }
+      //returns
+      if (itemArray[i]['returnsAccepted'] != undefined) {
+        shippinginfo.returnAccept = itemArray[i]['returnsAccepted'];
       }
       //zip
       if (itemArray[i].hasOwnProperty('postalCode') == true) {
@@ -189,6 +216,7 @@ export class ResultTabComponent implements OnInit {
         newItem.itemID = 'noID';
       }
       newItem.inList = 'add_shopping_cart';
+      newItem.shippingInfo = shippinginfo;
       this.items.push(newItem);
     }
     this.showResultTab = true;

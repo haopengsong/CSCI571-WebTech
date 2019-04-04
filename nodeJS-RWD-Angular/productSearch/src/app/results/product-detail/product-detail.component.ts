@@ -22,7 +22,6 @@ export class ItemDetails {
 
 }
 
-
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
@@ -39,6 +38,8 @@ export class ProductDetailComponent implements OnInit {
   tabSelector: boolean[] = [true, false, false, false, false];
   //gcse photo
   photoTab: string[] = [];
+  //shipping info
+  shippingInfo: any;
   constructor(
     private apiService: ServerService,
     private route: ActivatedRoute
@@ -63,6 +64,9 @@ export class ProductDetailComponent implements OnInit {
                 }
               );
           }
+          if (params['shippingInfo'] != undefined) {
+            this.shippingInfo = JSON.parse(params['shippingInfo']) ;
+          }
         }
       );
   }
@@ -75,6 +79,7 @@ export class ProductDetailComponent implements OnInit {
     this.itemDetail = new ItemDetails();
     this.itemDetail.itemSpecs = [];
 
+    console.log(jsonData);
 
     let itemData = jsonData['Item'];
     if (itemData['PictureURL'] != undefined) {
