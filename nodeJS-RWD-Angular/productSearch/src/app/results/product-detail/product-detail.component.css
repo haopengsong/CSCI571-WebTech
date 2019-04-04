@@ -21,8 +21,8 @@
   border-color: white;
 }
 
-.itemDetails th , .shippingDetails th {
-  width: 300px;
+.itemDetails th , .shippingDetails th , .sellerInfo th {
+  width: 400px;
 }
 
 .modalBtn {

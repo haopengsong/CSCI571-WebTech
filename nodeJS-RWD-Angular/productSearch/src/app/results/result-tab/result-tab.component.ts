@@ -4,6 +4,7 @@ import {Item} from "./item.model";
 import {slideInAnimation} from "../../animation";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {shippingInfo} from "./shippinginfo.model";
+import {Sellerinfo} from "./sellerinfo.model";
 
 @Component({
   selector: 'app-result-tab',
@@ -33,9 +34,14 @@ export class ResultTabComponent implements OnInit {
         (params: Params) => {
           this.userInput = params['userInput'];
           if (this.userInput != undefined) {
+            this.showResultTab = false;
+            this.showProgressBar = true;
+            this.showErrorMessage = false;
             this.serviceFinding(JSON.parse(this.userInput));
+            setTimeout(() => this.showProgressBar = false, 500);
+          } else {
+            return;
           }
-          this.onSearchButtonClick();
           console.log(this.userInput);
         },
       );
@@ -65,14 +71,9 @@ export class ResultTabComponent implements OnInit {
 
   onTitleClicked(item: Item) {
     this.productDetailSearchTrigger = true;
-    this.router.navigate(['/product-detail',{shippingInfo : JSON.stringify(item.shippingInfo), id : item.itemID}]);
-  }
-
-  onSearchButtonClick() {
-    this.showErrorMessage = false;
-    this.showProgressBar = true;
-    console.log('Search Button Clicked');
-    setTimeout(() => this.showProgressBar = false, 500);
+    this.router.navigate(
+      ['/product-detail',{shippingInfo : JSON.stringify(item.shippingInfo), sellerInfo : JSON.stringify(item.sellerInfo) ,id : item.itemID}
+      ]);
   }
 
   //data collected, parse data, call api
@@ -118,8 +119,9 @@ export class ResultTabComponent implements OnInit {
     const itemArray = response['findItemsAdvancedResponse'][0]['searchResult'][0]['item'];
     for (let i = 0; i < itemArray.length; i++) {
       let newItem = new Item(0,'','','','',
-        '','','','','', false, null);
+        '','','','','', false, null, null);
       let shippinginfo = new shippingInfo('','','','','','');
+      let sellerInfo = new Sellerinfo('','','','','','', '');
       //index
       newItem.indexNumber = i+1;
       //image
@@ -206,6 +208,22 @@ export class ResultTabComponent implements OnInit {
         } else {
           newItem.seller = 'N/A';
         }
+        if (itemArray[i]['sellerInfo'][0]['feedbackScore'] != undefined) {
+          sellerInfo.feedbackScore = itemArray[i]['sellerInfo'][0]['feedbackScore'][0];
+        }
+        if (itemArray[i]['sellerInfo'][0]['positiveFeedbackPercent'] != undefined) {
+          sellerInfo.popularity = itemArray[i]['sellerInfo'][0]['positiveFeedbackPercent'][0];
+        }
+        if (itemArray[i]['sellerInfo'][0]['feedbackRatingStar'] != undefined) {
+          sellerInfo.feedbackRatingStar = itemArray[i]['sellerInfo'][0]['feedbackRatingStar'][0];
+        }
+        if (itemArray[i]['sellerInfo'][0]['topRatedSeller'] != undefined) {
+          sellerInfo.topRated = itemArray[i]['sellerInfo'][0]['topRatedSeller'][0];
+        }
+        if (itemArray[i]['sellerInfo'][0]['sellerUserName'] != undefined) {
+          sellerInfo.userID = itemArray[i]['sellerInfo'][0]['sellerUserName'][0];
+        }
+
       } else {
         newItem.seller = 'N/A';
       }
@@ -217,6 +235,7 @@ export class ResultTabComponent implements OnInit {
       }
       newItem.inList = 'add_shopping_cart';
       newItem.shippingInfo = shippinginfo;
+      newItem.sellerInfo = sellerInfo;
       this.items.push(newItem);
     }
     this.showResultTab = true;

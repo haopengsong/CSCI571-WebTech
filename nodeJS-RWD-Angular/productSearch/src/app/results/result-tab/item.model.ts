@@ -1,4 +1,5 @@
 import {shippingInfo} from "./shippinginfo.model";
+import {Sellerinfo} from "./sellerinfo.model";
 
 export class Item {
   constructor(
@@ -13,6 +14,7 @@ export class Item {
     public itemID: string,
     public inList: string,
     public inListFlag: boolean,
-    public shippingInfo: shippingInfo
+    public shippingInfo: shippingInfo,
+    public sellerInfo: Sellerinfo
   ) {}
 }

@@ -21,6 +21,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {NorecordsComponent} from "../norecords/norecords.component";
 
+import {RoundProgressModule} from 'angular-svg-round-progressbar';
+
 
 @NgModule({
   declarations: [
@@ -40,8 +42,7 @@ import {NorecordsComponent} from "../norecords/norecords.component";
     MatTooltipModule,
     MatPaginatorModule,
     NgbModule,
-
-
+    RoundProgressModule
   ]
 })
 export class ResultsModule { }

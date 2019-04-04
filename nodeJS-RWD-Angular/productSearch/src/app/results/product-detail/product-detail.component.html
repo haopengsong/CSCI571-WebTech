@@ -204,7 +204,47 @@
   </div>
   <div class="row">
     <div class="col-sm-12" *ngIf="tabSelector[3]">
-
+      <table class="table table-dark table-striped sellerInfo">
+        <tbody>
+          <tr class="text-center">
+            <th colspan="2">
+              <h3>{{sellerInfo.userID}}</h3>
+            </th>
+          </tr>
+          <tr *ngIf="sellerInfo.feedbackScore != ''">
+            <th>Feedback Score</th>
+            <td>{{sellerInfo.feedbackScore}}</td>
+          </tr>
+          <tr *ngIf="sellerInfo.popularity != ''">
+            <th>Popularity</th>
+            <td>{{sellerInfo.popularity}}</td>
+          </tr>
+          <tr *ngIf="sellerInfo.feedbackRatingStar != ''">
+            <th>Feedback Rating Star</th>
+            <td>{{sellerInfo.feedbackRatingStar}}</td>
+          </tr>
+          <tr *ngIf="sellerInfo.topRated != ''">
+            <th>Top Rated</th>
+            <td>{{sellerInfo.topRated}}</td>
+          </tr>
+          <tr *ngIf="sellerInfo.storeName != ''">
+            <th>Store Nmae</th>
+            <td>{{sellerInfo.storeName}}</td>
+          </tr>
+          <tr *ngIf="sellerInfo.storeUrl != ''">
+            <th>Buy Product At</th>
+            <td>
+              <a href="{{sellerInfo.storeUrl}}"
+                class="btn btn-link modalBtn"
+                style="color: #898a90"
+                 target="_blank"
+              >
+                Store
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   <div class="row">

@@ -40,6 +40,8 @@ export class ProductDetailComponent implements OnInit {
   photoTab: string[] = [];
   //shipping info
   shippingInfo: any;
+  //seller info
+  sellerInfo: any;
   constructor(
     private apiService: ServerService,
     private route: ActivatedRoute
@@ -50,6 +52,12 @@ export class ProductDetailComponent implements OnInit {
       .subscribe(
         (params: Params) => {
           this.itemId = params['id'];
+          if (params['shippingInfo'] != undefined) {
+            this.shippingInfo = JSON.parse(params['shippingInfo']) ;
+          }
+          if (params['sellerInfo'] != undefined) {
+            this.sellerInfo = JSON.parse((params['sellerInfo']));
+          }
           if (this.itemId != undefined) {
             this.apiService.getEbayShoppingService(this.itemId)
               .subscribe(
@@ -64,9 +72,7 @@ export class ProductDetailComponent implements OnInit {
                 }
               );
           }
-          if (params['shippingInfo'] != undefined) {
-            this.shippingInfo = JSON.parse(params['shippingInfo']) ;
-          }
+
         }
       );
   }
@@ -78,6 +84,7 @@ export class ProductDetailComponent implements OnInit {
     }
     this.itemDetail = new ItemDetails();
     this.itemDetail.itemSpecs = [];
+
 
     console.log(jsonData);
 
@@ -110,6 +117,15 @@ export class ProductDetailComponent implements OnInit {
       }
     }
 
+    if (itemData['Storefront'] != undefined) {
+      if (itemData['Storefront']['StoreName'] != undefined) {
+        this.sellerInfo.storeName = itemData['Storefront']['StoreName'];
+      }
+      if (itemData['Storefront']['StoreURL'] != undefined) {
+        this.sellerInfo.storeUrl = itemData['Storefront']['StoreURL'];
+      }
+    }
+
     if (itemData['ItemSpecifics'] != undefined) {
       let itemSpec = itemData['ItemSpecifics']['NameValueList'];
       let itemSpecLen = itemSpec.length;
@@ -125,7 +141,6 @@ export class ProductDetailComponent implements OnInit {
       }
     }
   }
-
 
   onTabClicked(id: any) {
     this.tabSelector.fill(false);
