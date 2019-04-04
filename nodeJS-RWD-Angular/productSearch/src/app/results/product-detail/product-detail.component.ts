@@ -12,7 +12,7 @@ export class Entry {
 
 export class ItemDetails {
 
-
+    title: string;
     picArray: any;
      subTitle: string;
      price: string;
@@ -69,11 +69,15 @@ export class ProductDetailComponent implements OnInit {
     }
     this.itemDetail = new ItemDetails();
     this.itemDetail.itemSpecs = [];
-    let htmlContent = '';
+
 
     let itemData = jsonData['Item'];
     if (itemData['PictureURL'] != undefined) {
       this.itemDetail.picArray = itemData['PictureURL'];
+    }
+
+    if (itemData['Title'] != undefined) {
+      this.itemDetail.title = itemData['Title'];
     }
 
     if (itemData['Subtitle'] != undefined) {
@@ -92,7 +96,7 @@ export class ProductDetailComponent implements OnInit {
       if (itemData['ReturnPolicy']['ReturnsAccepted'] == "Returns Accepted") {
          this.itemDetail.returnPolicy = itemData['ReturnPolicy']['ReturnsAccepted'] + " within " + itemData['ReturnPolicy']['ReturnsWithin'];
       } else {
-        this.itemDetail.returnPolicy = itemData['ReturnPolicybtn']['ReturnsAccepted'];
+        this.itemDetail.returnPolicy = itemData['ReturnPolicy']['ReturnsAccepted'];
       }
     }
 
@@ -100,7 +104,6 @@ export class ProductDetailComponent implements OnInit {
       let itemSpec = itemData['ItemSpecifics']['NameValueList'];
       let itemSpecLen = itemSpec.length;
       for (let i = 0; i < itemSpecLen; i++) {
-
         let entryName = itemSpec[i]['Name'];
         let entryValue = itemSpec[i]['Value'];
         if (entryValue.length > 0) {
@@ -114,11 +117,13 @@ export class ProductDetailComponent implements OnInit {
   }
 
   //tab implementation
-  tabSelector: boolean[] = [false, false, false, false, false];
+  tabSelector: boolean[] = [true, false, false, false, false];
   onTabClicked(id: any) {
     this.tabSelector.fill(false);
     this.tabSelector[ +id ] = true;
   }
+
+
 
 
 

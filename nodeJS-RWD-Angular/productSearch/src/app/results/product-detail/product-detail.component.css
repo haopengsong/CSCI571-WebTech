@@ -21,3 +21,22 @@
   border-color: white;
 }
 
+.itemDetails th {
+  width: 300px;
+}
+
+.modalBtn {
+  padding: 0;
+  cursor: pointer;
+
+}
+
+.modal-title, .modal-body {
+  color: black;
+}
+
+.carousel-item img {
+  border: solid 10px black;
+  padding: 5px;
+
+}

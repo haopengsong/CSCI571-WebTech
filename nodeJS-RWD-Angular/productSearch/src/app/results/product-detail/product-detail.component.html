@@ -1,3 +1,4 @@
+
 <!-- Progress Bar -->
 <app-progress-bar *ngIf="!contentLoaded"></app-progress-bar>
 <!-- No Records -->
@@ -6,20 +7,18 @@
     <div *ngIf="showErrorMessage" class="noRecords">No Records.</div>
   </div>
 </div>
-<div class="container">
+<div class="container" *ngIf="contentLoaded">
   <div class="row">
     <div class="col-sm-12 text-center mt-5">
-      <h3>{{'item.title'}}</h3>
+      <h4>{{itemDetail.title}}</h4>
     </div>
   </div>
   <div class="row">
     <div class="col-sm-12">
-
       <button class="btn btn-light btnDetail mb-3">
         <i class="material-icons btnListIcon">chevron_left</i>
         List
       </button>
-
     </div>
   </div>
   <div class="row">
@@ -67,6 +66,107 @@
               (click)="onTabClicked('0')">
         Product
       </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12" *ngIf="tabSelector[0]">
+      <table class="table table-striped table-dark itemDetails">
+        <tbody>
+          <tr>
+            <th> <strong>Product Images </strong> </th>
+            <td>
+              <!-- MODAL TRIGGER -->
+              <a
+                class="btn btn-link modalBtn"
+                data-toggle="modal"
+                data-target="#myModal"
+                style="color: #898a90"
+              >
+                View Product Images Here
+              </a>
+              <!-- MODAL -->
+              <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Product Images</h5>
+                      <button class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                      <div id="carouselExampleControls"
+                           class="carousel slide"
+                           data-ride="false"
+                           data-interval="false">
+                        <div class="carousel-inner">
+                          <div class="carousel-item active"
+                               *ngFor="let imgsrc of itemDetail.picArray; let i = index"
+                               [ngClass]="{'active': i == 0}">
+                            <a href="{{imgsrc}}" target="_blank">
+                              <img src="{{imgsrc}}" class="d-block img-fluid" alt="...">
+                            </a>
+                          </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="sr-only">Next</span>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="itemDetail.subTitle != undefined">
+            <th> <strong>Subtitle </strong> </th>
+            <td>{{itemDetail.subTitle}}</td>
+          </tr>
+          <tr *ngIf="itemDetail.price != undefined">
+            <th> <strong>Price </strong> </th>
+            <td>{{'$' + itemDetail.price}}</td>
+          </tr>
+          <tr *ngIf="itemDetail.location != undefined">
+            <th> <strong>Location </strong> </th>
+            <td>{{itemDetail.location}}</td>
+          </tr>
+          <tr *ngIf="itemDetail.returnPolicy != undefined">
+            <th> <strong>Return Policy (US) </strong> </th>
+            <td>{{itemDetail.returnPolicy}}</td>
+          </tr>
+          <tr *ngFor="let spec of itemDetail.itemSpecs">
+            <th><strong>{{spec.entryName}}</strong></th>
+            <td>{{spec.entryValue}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12" *ngIf="tabSelector[1]">
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12" *ngIf="tabSelector[2]">
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12" *ngIf="tabSelector[3]">
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12" *ngIf="tabSelector[4]">
+
     </div>
   </div>
 </div>

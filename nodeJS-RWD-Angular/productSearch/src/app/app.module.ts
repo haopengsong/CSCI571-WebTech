@@ -25,8 +25,9 @@ import { HomeComponent } from './home/home.component';
 
 
 const appRoutes: Routes = [
-  {path: '', redirectTo : '/result-tab', pathMatch: 'full'},
+
   {path: 'result-tab', component: ResultTabComponent},
+  {path: '', redirectTo : '/result-tab', pathMatch: 'full'},
 
 ];
 

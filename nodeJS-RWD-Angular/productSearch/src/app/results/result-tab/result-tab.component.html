@@ -1,75 +1,78 @@
-<div class="row" >
-  <div class="col-sm-12">
-    <!-- todo : Detail button behavior needs implementation-->
-    <button class="btn btn-light btnDetail mb-3" [disabled]="!productDetailSearchTrigger">
-      Detail
-      <i class="material-icons btnDetailIcon">chevron_right</i>
-    </button>
+<div class="container">
+  <div class="row" >
+    <div class="col-sm-12">
+      <!-- todo : Detail button behavior needs implementation-->
+      <button class="btn btn-light btnDetail mb-3" [disabled]="!productDetailSearchTrigger">
+        Detail
+        <i class="material-icons btnDetailIcon">chevron_right</i>
+      </button>
+    </div>
   </div>
-</div>
-<!-- No Records -->
-<div  class="row mt-3" >
-  <div class="col">
-    <div *ngIf="showErrorMessage" class="noRecords">No Records.</div>
+  <!-- No Records -->
+  <div  class="row mt-3" >
+    <div class="col">
+      <div *ngIf="showErrorMessage" class="noRecords">No Records.</div>
+    </div>
   </div>
-</div>
-<!-- Progress Bar -->
-<app-progress-bar *ngIf="showProgressBar" ></app-progress-bar>
+  <!-- Progress Bar -->
+  <app-progress-bar *ngIf="showProgressBar" ></app-progress-bar>
 
-<div class="row" *ngIf="showResultTab">
-  <div class="col-sm-12">
-    <table class="table table-dark table-hover">
-      <thead>
-      <tr>
-        <th>#</th>
-        <th>Image</th>
-        <th>Title</th>
-        <th>Price</th>
-        <th>Shipping</th>
-        <th>Zip</th>
-        <th>Seller</th>
-        <th style="padding-left: 16px;"> Wish List</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let item of items | paginate: {itemsPerPage: 10, currentPage: page};
+  <div class="row" *ngIf="showResultTab">
+    <div class="col-sm-12">
+      <table class="table table-dark table-hover">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Image</th>
+          <th>Title</th>
+          <th>Price</th>
+          <th>Shipping</th>
+          <th>Zip</th>
+          <th>Seller</th>
+          <th style="padding-left: 16px;"> Wish List</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of items | paginate: {itemsPerPage: 10, currentPage: page};
       let i = index;
       let odd = odd;
       let even = even;
       "
-          [ngClass]="{'lightRow': even}"
-      >
-        <th scope="row">{{item.indexNumber}}</th>
-        <td><img src="{{item.imagePath}}" width="100" height="110"></td>
-        <td width="350">
-          <button class="btn btn-link"
-                  type="button"
-                  matTooltip="{{item.title}}"
-                  (click)="onTitleClicked(item)"
-                  [routerLink]="['/product-detail', item.itemID]"
-          >
-            {{item.titleCutted}}
-          </button>
-        </td>
-        <td>{{item.price}}</td>
-        <td>{{item.shippingOption}}</td>
-        <td>{{item.zip}}</td>
-        <td>{{item.seller}}</td>
-        <td width="100" style="padding-left: 40px;">
-          <button class="btn btn-light"
-                  [ngStyle]="{'color': item.inListFlag ? '#b6c10f' : 'black'}"
-                  style="height:35px"
-                  (click)="onWishListClicked(item)">
-            <i class="material-icons ">{{item.inList}}</i>
-          </button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-    <pagination-controls class="my-pagination" (pageChange)="page = $event"
-                         style="text-align: center"></pagination-controls>
+            [ngClass]="{'lightRow': even}"
+        >
+          <th scope="row">{{item.indexNumber}}</th>
+          <td><img src="{{item.imagePath}}" width="100" height="110"></td>
+          <td width="350">
+            <button class="btn btn-link"
+                    type="button"
+                    matTooltip="{{item.title}}"
+                    (click)="onTitleClicked(item)"
+                    [routerLink]="['/product-detail', item.itemID]"
+            >
+              {{item.titleCutted}}
+            </button>
+          </td>
+          <td>{{item.price}}</td>
+          <td>{{item.shippingOption}}</td>
+          <td>{{item.zip}}</td>
+          <td>{{item.seller}}</td>
+          <td width="100" style="padding-left: 40px;">
+            <button class="btn btn-light"
+                    [ngStyle]="{'color': item.inListFlag ? '#b6c10f' : 'black'}"
+                    style="height:35px"
+                    (click)="onWishListClicked(item)">
+              <i class="material-icons ">{{item.inList}}</i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <pagination-controls class="my-pagination" (pageChange)="page = $event"
+                           style="text-align: center"></pagination-controls>
+    </div>
   </div>
 </div>
+
 
 
 

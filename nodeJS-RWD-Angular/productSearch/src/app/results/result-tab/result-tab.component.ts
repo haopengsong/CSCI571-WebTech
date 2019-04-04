@@ -62,7 +62,6 @@ export class ResultTabComponent implements OnInit {
 
   onTitleClicked(item: Item) {
     this.productDetailSearchTrigger = true;
-
   }
 
   onSearchButtonClick() {
