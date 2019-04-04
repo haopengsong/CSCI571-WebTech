@@ -91,14 +91,12 @@ export class ServerService {
     return this.http.get(serviceShopping);
   }
 
-}
-
-class itemFilter {
-  name : string;
-  option : string[];
-  constructor(filterName: string) {
-    this.name = filterName;
-    this.option = [];
+  getGCSE(itemTitle) {
+    itemTitle = encodeURI(itemTitle);
+    let serviceGCSE = 'http://localhost:3000/api/gcse?q=' + itemTitle;
+    console.log(serviceGCSE);
+    return this.http.get(serviceGCSE);
   }
+
 }
 

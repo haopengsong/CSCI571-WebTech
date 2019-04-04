@@ -35,7 +35,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12 float-right">
+    <div class="col-sm-12 float-right mb-1">
       <button type="button"
               [ngClass]="{'btn-dark' : tabSelector[4], 'btn-light btnResultWish' : !tabSelector[4]}"
               class="btn float-right"
@@ -57,7 +57,8 @@
       <button type="button"
               [ngClass]="{'btn-dark' : tabSelector[1], 'btn-light btnResultWish' : !tabSelector[1]}"
               class="btn float-right"
-              (click)="onTabClicked('1')">
+              (click)="onTabClicked('1')"
+              (click)="onPhotoTab()">
         Photos
       </button>
       <button type="button"
@@ -150,7 +151,8 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12" *ngIf="tabSelector[1]">
+    <div class="col-sm-12"
+         *ngIf="tabSelector[1]">
 
     </div>
   </div>

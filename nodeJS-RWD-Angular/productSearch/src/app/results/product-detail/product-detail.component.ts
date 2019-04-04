@@ -124,9 +124,15 @@ export class ProductDetailComponent implements OnInit {
   }
 
 
+  onPhotoTab() {
+    this.apiService.getGCSE(this.itemDetail.title)
+      .subscribe(
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
 
-
-
-
-
+        }
+      );
+  }
 }
