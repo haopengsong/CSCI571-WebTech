@@ -43,6 +43,7 @@ import {RoundProgressModule} from 'angular-svg-round-progressbar';
     MatPaginatorModule,
     NgbModule,
     RoundProgressModule
-  ]
+  ],
+
 })
 export class ResultsModule { }

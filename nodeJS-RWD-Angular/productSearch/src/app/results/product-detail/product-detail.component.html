@@ -217,15 +217,34 @@
           </tr>
           <tr *ngIf="sellerInfo.popularity != ''">
             <th>Popularity</th>
-            <td>{{sellerInfo.popularity}}</td>
+            <td>
+              <div class="roundProgressContainer">
+                <round-progress
+                  [current]="sellerInfo.popularity"
+                  [max]="100"
+                  [color]="'green'"
+                  [responsive]="true">
+                </round-progress>
+                <div class="roundProgressText">
+                  {{sellerInfo.popularity}}
+                </div>
+              </div>
+            </td>
           </tr>
           <tr *ngIf="sellerInfo.feedbackRatingStar != ''">
             <th>Feedback Rating Star</th>
-            <td>{{sellerInfo.feedbackRatingStar}}</td>
+            <td>
+              <i class="material-icons md-18 ratingStar"
+                 [ngStyle]="{'background-color' : sellerInfo.feedbackRatingStar}" >star</i>
+            </td>
           </tr>
           <tr *ngIf="sellerInfo.topRated != ''">
             <th>Top Rated</th>
-            <td>{{sellerInfo.topRated}}</td>
+            <td>
+              <i class="material-icons" [ngStyle]="{'color': shippingInfo.topRated == 'false' ? 'red' : 'green'}">
+                {{ shippingInfo.topRated == 'false' ? 'clear' : 'done'}}
+              </i>
+            </td>
           </tr>
           <tr *ngIf="sellerInfo.storeName != ''">
             <th>Store Nmae</th>
@@ -236,7 +255,7 @@
             <td>
               <a href="{{sellerInfo.storeUrl}}"
                 class="btn btn-link modalBtn"
-                style="color: #898a90"
+                style="color: #898a90; text-decoration: none"
                  target="_blank"
               >
                 Store

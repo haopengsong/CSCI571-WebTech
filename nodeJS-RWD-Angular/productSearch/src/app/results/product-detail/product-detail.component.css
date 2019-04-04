@@ -41,3 +41,24 @@
 
 }
 
+.roundProgressContainer {
+  position: relative;
+  width: 35px;
+  padding: 0;
+  margin: 0;
+}
+
+.roundProgressText {
+  position: absolute;
+  top: 9px;
+  font-size: 11px;
+  left: 3px;
+}
+
+.ratingStar {
+  font-size: 20px;
+  border-radius: 50%;
+  padding: 4px;
+  margin: 0;
+  color: #1a1a23;
+}
