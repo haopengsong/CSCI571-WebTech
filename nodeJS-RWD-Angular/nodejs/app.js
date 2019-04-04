@@ -18,7 +18,6 @@ function ItemFilter(name) {
 
 app.use(cors());
 
-
 app.get('/api/zipauto/:prefix', (req, res) => {
     //call geonames.org
     let zipCodeStart = req.params.prefix;
@@ -65,7 +64,6 @@ app.get('/api/finding?', (req, res) => {
         filterData.push(condition_filter);
     }
 
-
     //shipping
     if (req.query.shipping.freeshipping !== 'NoShippingOption') {
         if (req.query.shipping.freeshipping === 'true') {
@@ -79,7 +77,6 @@ app.get('/api/finding?', (req, res) => {
             filterData.push(shipping_filter_local);
         }
     }
-
 
     //distance
     let distance_filter = new ItemFilter('distance');
@@ -128,7 +125,6 @@ app.get('/api/finding?', (req, res) => {
         return;
     }
     res.send(xhr.responseText);
-
 });
 
 app.get('/api/shopping?', (req, res) => {
@@ -150,10 +146,32 @@ app.get('/api/shopping?', (req, res) => {
         return;
     }
     res.send(xhr.responseText);
-
 });
 
+app.get('/api/gcse?', (req, res) => {
+
+    let q = req.query.q;
+    console.log(q);
+    let customSearch = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyC8mE_ovX9tn1GQQNAAr2mmF40QrBwMH-o';
+    customSearch += '&cx=009040521061041562740:2pm4lt6jkpc';
+    customSearch += '&imgSize=huge&imgType=news&num=8&searchType=image';
+    customSearch += '&q=' + encodeURI(q) ;
+    console.log(customSearch);
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", customSearch, false);
+    try {
+        xhr.send();
+    } catch (error) {
+        res.send('ERROR');
+        return;
+    }
+    res.send(xhr.responseText);
+
+});
 
 // PORT
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`listening on port : ${port}`));
+
+// AIzaSyC8mE_ovX9tn1GQQNAAr2mmF40QrBwMH-o
+// https://www.googleapis.com/customsearch/v1?key=AIzaSyAHdRV43o6dmPEHzwxIKzEVHyQlJ9TYo9A&cx=000969532654912861886:9tcs2kbchhw&q=lectures
