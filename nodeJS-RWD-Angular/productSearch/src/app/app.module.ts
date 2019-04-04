@@ -24,6 +24,7 @@ import { HomeComponent } from './home/home.component';
 
 
 
+
 const appRoutes: Routes = [
 
   {path: 'result-tab', component: ResultTabComponent},
@@ -34,7 +35,8 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -53,6 +55,9 @@ const appRoutes: Routes = [
 
   ],
   providers: [ServerService],
+  exports: [
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

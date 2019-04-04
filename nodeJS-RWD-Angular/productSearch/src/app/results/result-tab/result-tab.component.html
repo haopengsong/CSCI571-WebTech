@@ -9,11 +9,7 @@
     </div>
   </div>
   <!-- No Records -->
-  <div  class="row mt-3" >
-    <div class="col">
-      <div *ngIf="showErrorMessage" class="noRecords">No Records.</div>
-    </div>
-  </div>
+  <app-norecords *ngIf="showErrorMessage"></app-norecords>
   <!-- Progress Bar -->
   <app-progress-bar *ngIf="showProgressBar" ></app-progress-bar>
 

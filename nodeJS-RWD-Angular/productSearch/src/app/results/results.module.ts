@@ -19,13 +19,15 @@ import {ProgressBarComponent} from "../progress-bar/progress-bar.component";
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
+import {NorecordsComponent} from "../norecords/norecords.component";
 
 
 @NgModule({
   declarations: [
     ResultTabComponent,
     ProductDetailComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    NorecordsComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +39,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     MatInputModule,
     MatTooltipModule,
     MatPaginatorModule,
-    NgbModule
+    NgbModule,
+
 
   ]
 })

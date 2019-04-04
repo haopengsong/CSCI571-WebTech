@@ -34,6 +34,11 @@ export class ProductDetailComponent implements OnInit {
   contentLoaded: boolean = false;
   showErrorMessage: boolean = false;
   entry: Entry;
+  noRecords: boolean = false;
+  //tab implementation
+  tabSelector: boolean[] = [true, false, false, false, false];
+  //gcse photo
+  photoTab: string[] = [];
   constructor(
     private apiService: ServerService,
     private route: ActivatedRoute
@@ -116,23 +121,35 @@ export class ProductDetailComponent implements OnInit {
     }
   }
 
-  //tab implementation
-  tabSelector: boolean[] = [true, false, false, false, false];
+
   onTabClicked(id: any) {
     this.tabSelector.fill(false);
     this.tabSelector[ +id ] = true;
+
+    //photo tab
+    if ( +id == 1) {
+      this.apiService.getGCSE(this.itemDetail.title)
+        .subscribe(
+          (response) => {
+            if (response['items'].length == 0) {
+              this.noRecords = true;
+              return;
+            }
+            this.photoDataExtractor(response);
+          },
+          (error) => {
+
+          }
+        );
+    }
   }
 
-
-  onPhotoTab() {
-    this.apiService.getGCSE(this.itemDetail.title)
-      .subscribe(
-        (response) => {
-          console.log(response);
-        },
-        (error) => {
-
-        }
-      );
+  photoDataExtractor(response) {
+    console.log(response)
+    this.photoTab = [];
+    let photoItems = response['items'];
+    for (let i = 0; i < photoItems.length; i++) {
+      this.photoTab.push(photoItems[i]['link']);
+    }
   }
 }

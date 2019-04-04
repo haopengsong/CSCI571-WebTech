@@ -35,8 +35,8 @@
   color: black;
 }
 
-.carousel-item img {
-  border: solid 10px black;
+.carousel-item img, .cardPhoto {
+  border: solid 5px black;
   padding: 5px;
 
 }
