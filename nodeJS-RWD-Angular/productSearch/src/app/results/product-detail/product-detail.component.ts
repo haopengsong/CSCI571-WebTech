@@ -22,6 +22,15 @@ export class ItemDetails {
 
 }
 
+export class SimilarItem {
+  constructor(
+    public productName: string,
+    public buyitNowprice: string,
+    public shippingCost: string,
+    public daysLeft: string
+  ){}
+}
+
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
@@ -33,7 +42,7 @@ export class ProductDetailComponent implements OnInit {
   contentLoaded: boolean = false;
   showErrorMessage: boolean = false;
   entry: Entry;
-  noRecords: boolean = false;
+
   //tab implementation
   tabSelector: boolean[] = [true, false, false, false, false];
   //gcse photo
@@ -42,6 +51,8 @@ export class ProductDetailComponent implements OnInit {
   shippingInfo: any;
   //seller info
   sellerInfo: any;
+  //similar items
+  similarItems: SimilarItem[];
   constructor(
     private apiService: ServerService,
     private route: ActivatedRoute
@@ -71,12 +82,15 @@ export class ProductDetailComponent implements OnInit {
 
                 }
               );
+
           }
 
         }
       );
   }
 
+
+  //item details
   itemDataExtractor(jsonData) {
     if (jsonData['Ack'] != 'Success') {
       this.showErrorMessage = true;
@@ -143,6 +157,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   onTabClicked(id: any) {
+    this.showErrorMessage = false;
     this.tabSelector.fill(false);
     this.tabSelector[ +id ] = true;
 
@@ -151,25 +166,108 @@ export class ProductDetailComponent implements OnInit {
       this.apiService.getGCSE(this.itemDetail.title)
         .subscribe(
           (response) => {
-            if (response['items'].length == 0) {
-              this.noRecords = true;
-              return;
-            }
+
             this.photoDataExtractor(response);
           },
           (error) => {
-
+            this.onNoRecords(1);
           }
         );
     }
+
+    //shipping
+    if ( +id == 2) {
+      if (this.shippingInfo.cost == '' &&  this.shippingInfo.location == ''
+        && this.shippingInfo.handling == '' && this.shippingInfo.expediated == ''
+        && this.shippingInfo.oneDay == '' && this.shippingInfo.returnAccept == '') {
+
+        this.onNoRecords(2);
+      }
+    }
+
+    //similar
+    if ( +id == 4) {
+      this.apiService.getSimilarItems(this.itemId)
+        .subscribe(
+          (response2) => {
+            console.log(response2);
+            this.itemSimilarExtractor(response2);
+          },
+          (error) => {
+            this.onNoRecords(4);
+          }
+        );
+    }
+
+  }
+
+  //item similar
+  itemSimilarExtractor(similarData) {
+    this.similarItems = [];
+
+
+    if (similarData["getSimilarItemsResponse"]['ack'] != 'Success') {
+      this.onNoRecords(4);
+      return;
+    }
+
+    let itemsArray = similarData["getSimilarItemsResponse"]['itemRecommendations']['item'];
+    if (itemsArray == undefined || itemsArray == null || itemsArray.length == 0) {
+      this.onNoRecords(4);
+      return;
+    }
+
+    for (let i = 0; i < itemsArray.length; i++) {
+      let si = new SimilarItem('','','','');
+      if (itemsArray['title'] != undefined) {
+        si.productName = itemsArray['title'];
+      }
+      if (itemsArray[i].hasOwnProperty('buyItNowPrice')) {
+        if (itemsArray[i]['buyItNowPrice']['__value__'] == "0.00") {
+          if (itemsArray[i].hasOwnProperty('currentPrice') && itemsArray[i]['currentPrice']['__value__'] != "0.00") {
+            si.buyitNowprice = itemsArray[i]['currentPrice']['__value__'] ;
+          } else {
+            si.buyitNowprice = itemsArray[i]['buyItNowPrice']['__value__'] ;
+          }
+        } else {
+          si.buyitNowprice =itemsArray[i]['buyItNowPrice']['__value__'] ;
+        }
+      }
+
+      if (itemsArray[i]['shippingCost'] != undefined) {
+        si.shippingCost = itemsArray[i]['shippingCost'];
+      }
+
+      if (itemsArray[i]['timeLeft'] != undefined) {
+        let dl = itemsArray[i]['timeLeft'];
+        si.daysLeft = dl.substring(1,2);
+      }
+
+    }
+
   }
 
   photoDataExtractor(response) {
-    console.log(response)
+    console.log(response);
     this.photoTab = [];
     let photoItems = response['items'];
+    if ( photoItems == undefined || photoItems.length == 0 ) {
+      //photo tab error
+      this.onNoRecords(1);
+      return;
+    }
     for (let i = 0; i < photoItems.length; i++) {
       this.photoTab.push(photoItems[i]['link']);
     }
+  }
+
+  onNoRecords(tabID) {
+    this.showErrorMessage = true;
+    this.tabSelector[tabID] = false;
+  }
+
+  defaultOrder: boolean = false;
+  onOrderSelect($event: Event) {
+
   }
 }

@@ -98,5 +98,10 @@ export class ServerService {
     return this.http.get(serviceGCSE);
   }
 
+  getSimilarItems(itemId) {
+    let serviceSimilar = 'http://localhost:3000/api/similar?' + 'itemId=' + itemId;
+    return this.http.get(serviceSimilar);
+  }
+
 }
 

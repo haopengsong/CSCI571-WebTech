@@ -1,6 +1,6 @@
 <!-- Progress Bar -->
 <app-progress-bar *ngIf="!contentLoaded"></app-progress-bar>
-<app-norecords *ngIf="showErrorMessage"></app-norecords>
+
 <div class="container" *ngIf="contentLoaded">
   <div class="row">
     <div class="col-sm-12 text-center mt-5">
@@ -64,6 +64,7 @@
 
   </div>
   <hr style="margin: 4px; padding: 0">
+  <app-norecords *ngIf="showErrorMessage"></app-norecords>
   <div class="row">
     <div class="col-sm-12" *ngIf="tabSelector[0]">
       <table class="table table-striped table-dark itemDetails">
@@ -266,10 +267,20 @@
       </table>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-12" *ngIf="tabSelector[4]">
-
+  <div class="row" *ngIf="tabSelector[4]">
+    <div class="col-sm-12 float-left ">
+      <select name="" class="btn btn-light btn-lg mr-2" (change)="onOrderSelect($event)">
+        <option value="default">Default</option>
+        <option value="productName">Product Name</option>
+        <option value="daysLeft">Days Left</option>
+        <option value="price">Price</option>
+        <option value="shippingCost">Shipping Cost</option>
+      </select>
+      <select name="" class="btn btn-light btn-lg" [disabled]="!defaultOrder">
+        <option value="asc">Ascending</option>
+        <option value="des">Descending</option>
+      </select>
     </div>
   </div>
-  <app-norecords *ngIf="noRecords"></app-norecords>
+
 </div>
