@@ -169,9 +169,26 @@ app.get('/api/gcse?', (req, res) => {
 
 });
 
+app.get('/api/similar?', (req, res) => {
+    let itemID = req.query.itemId;
+    let serviceSimilar =  "http://svcs.ebay.com/MerchandisingService?";
+    serviceSimilar += "OPERATION-NAME=getSimilarItems&SERVICE-NAME=MerchandisingService&SERVICE-VERSION=1.1.0";
+    serviceSimilar += "&CONSUMER-ID=jasonson-571hw-PRD-016e08212-81d2fca4";
+    serviceSimilar += "&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&itemId=" + itemID;
+    serviceSimilar += "&maxResults=20";
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", serviceSimilar, false);
+    try {
+        xhr.send();
+    } catch (error) {
+        res.send('ERROR');
+        return;
+    }
+    res.send(xhr.responseText);
+
+});
+
 // PORT
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`listening on port : ${port}`));
-
-// AIzaSyC8mE_ovX9tn1GQQNAAr2mmF40QrBwMH-o
-// https://www.googleapis.com/customsearch/v1?key=AIzaSyAHdRV43o6dmPEHzwxIKzEVHyQlJ9TYo9A&cx=000969532654912861886:9tcs2kbchhw&q=lectures
