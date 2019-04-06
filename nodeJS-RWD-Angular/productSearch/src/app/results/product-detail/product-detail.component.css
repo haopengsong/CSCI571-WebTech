@@ -62,3 +62,11 @@
   margin: 0;
   color: #1a1a23;
 }
+
+.card-img {
+
+  padding: 19px;
+}
+.card-body p {
+  margin: 0;
+}

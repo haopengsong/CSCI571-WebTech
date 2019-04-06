@@ -257,8 +257,7 @@
               <a href="{{sellerInfo.storeUrl}}"
                 class="btn btn-link modalBtn"
                 style="color: #898a90; text-decoration: none"
-                 target="_blank"
-              >
+                 target="_blank">
                 Store
               </a>
             </td>
@@ -267,20 +266,65 @@
       </table>
     </div>
   </div>
-  <div class="row" *ngIf="tabSelector[4]">
-    <div class="col-sm-12 float-left ">
-      <select name="" class="btn btn-light btn-lg mr-2" (change)="onOrderSelect($event)">
-        <option value="default">Default</option>
-        <option value="productName">Product Name</option>
-        <option value="daysLeft">Days Left</option>
-        <option value="price">Price</option>
-        <option value="shippingCost">Shipping Cost</option>
-      </select>
-      <select name="" class="btn btn-light btn-lg" [disabled]="!defaultOrder">
-        <option value="asc">Ascending</option>
-        <option value="des">Descending</option>
-      </select>
+
+  <div class="container" *ngIf="tabSelector[4]">
+    <div class="row mb-2">
+      <div class="col-sm-12 float-left ">
+        <select name="" class="btn btn-light btn-lg mr-2" (change)="onOrderSelect($event)">
+          <option value="default">Default</option>
+          <option value="productName">Product Name</option>
+          <option value="daysLeft">Days Left</option>
+          <option value="price">Price</option>
+          <option value="shippingCost">Shipping Cost</option>
+        </select>
+        <select name="" class="btn btn-light btn-lg"
+                [disabled]="defaultOrder" (change)="onSortOption($event)">
+          <option value="asc">Ascending</option>
+          <option value="des">Descending</option>
+        </select>
+      </div>
     </div>
+    <div class="row mb-1"
+         *ngFor="let si of similarItemsSorted | slice: startPage : PageLimit">
+      <div class="col-sm-12">
+        <div class="card mb-3">
+          <div class="row no-gutters" style="background-color: #2a2f33;">
+            <div class="col-sm-2">
+              <img src="{{si.imgUrl}}" class="card-img" alt="...">
+            </div>
+            <div class="col-sm-10">
+              <div class="card-body">
+                <p class="card-text">
+                  <button style=" color: #898a90; padding: 0"
+                          class="btn btn-link btn-sm">{{si.title}}</button></p>
+                <p class="card-text"
+                   style="color: #9fdc34"> Price: ${{si.buyitNowprice}} </p>
+                <p class="card-text"
+                   style="color: #97942c" > Shipping Cost: ${{si.shippingCost}} </p>
+                <p class="card-text"
+                   style="color: white" > Days Left: {{si.daysLeft}} </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="isLessFive > 5">
+      <div class="col-sm-12 text-center">
+        <button class="btn btn-dark"
+                (click)="onShowMore()"
+                *ngIf="PageLimit < itemLength">
+          Show More
+        </button>
+        <button class="btn btn-dark"
+                (click)="onShowLess()"
+                *ngIf="PageLimit > 5">
+          Show Less
+        </button>
+      </div>
+    </div>
+
   </div>
+
 
 </div>

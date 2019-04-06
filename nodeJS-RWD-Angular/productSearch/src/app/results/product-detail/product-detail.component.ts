@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Params} from "@angular/router";
 import {ServerService} from "../../server.service";
 import {Item} from "../result-tab/item.model";
@@ -25,9 +25,11 @@ export class ItemDetails {
 export class SimilarItem {
   constructor(
     public productName: string,
-    public buyitNowprice: string,
-    public shippingCost: string,
-    public daysLeft: string
+    public buyitNowprice: number,
+    public shippingCost: number,
+    public daysLeft: string,
+    public imgUrl: string,
+    public title: string
   ){}
 }
 
@@ -37,6 +39,7 @@ export class SimilarItem {
   styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent implements OnInit {
+  @ViewChild('orderSelection') select: ElementRef;
   itemId: string = '';
   itemDetail: ItemDetails;
   contentLoaded: boolean = false;
@@ -53,10 +56,14 @@ export class ProductDetailComponent implements OnInit {
   sellerInfo: any;
   //similar items
   similarItems: SimilarItem[];
+  //order selected
+
   constructor(
     private apiService: ServerService,
     private route: ActivatedRoute
   ) { }
+
+
 
   ngOnInit() {
     this.route.params
@@ -218,33 +225,44 @@ export class ProductDetailComponent implements OnInit {
     }
 
     for (let i = 0; i < itemsArray.length; i++) {
-      let si = new SimilarItem('','','','');
-      if (itemsArray['title'] != undefined) {
-        si.productName = itemsArray['title'];
+      let si = new SimilarItem('',-1,-1,'','','');
+      if (itemsArray[i]['title'] != undefined) {
+        si.productName = itemsArray[i]['title'];
       }
       if (itemsArray[i].hasOwnProperty('buyItNowPrice')) {
         if (itemsArray[i]['buyItNowPrice']['__value__'] == "0.00") {
           if (itemsArray[i].hasOwnProperty('currentPrice') && itemsArray[i]['currentPrice']['__value__'] != "0.00") {
-            si.buyitNowprice = itemsArray[i]['currentPrice']['__value__'] ;
+            si.buyitNowprice = +itemsArray[i]['currentPrice']['__value__'] ;
           } else {
-            si.buyitNowprice = itemsArray[i]['buyItNowPrice']['__value__'] ;
+            si.buyitNowprice = +itemsArray[i]['buyItNowPrice']['__value__'] ;
           }
         } else {
-          si.buyitNowprice =itemsArray[i]['buyItNowPrice']['__value__'] ;
+          si.buyitNowprice = +itemsArray[i]['buyItNowPrice']['__value__'] ;
         }
       }
 
       if (itemsArray[i]['shippingCost'] != undefined) {
-        si.shippingCost = itemsArray[i]['shippingCost'];
+        si.shippingCost = +itemsArray[i]['shippingCost']['__value__'];
+      }
+
+      if (itemsArray[i]['imageURL'] != undefined) {
+        si.imgUrl = itemsArray[i]['imageURL'];
+      }
+
+      if (itemsArray[i]['title'] != undefined) {
+        si.title = itemsArray[i]['title'];
       }
 
       if (itemsArray[i]['timeLeft'] != undefined) {
         let dl = itemsArray[i]['timeLeft'];
         si.daysLeft = dl.substring(1,2);
       }
+      this.similarItems.push(si);
 
     }
-
+    this.similarItemsSorted = JSON.parse(JSON.stringify(this.similarItems)) ;
+    this.itemLength = this.similarItemsSorted.length;
+    this.isLessFive = this.similarItemsSorted.length;
   }
 
   photoDataExtractor(response) {
@@ -266,8 +284,82 @@ export class ProductDetailComponent implements OnInit {
     this.tabSelector[tabID] = false;
   }
 
-  defaultOrder: boolean = false;
-  onOrderSelect($event: Event) {
+  defaultOrder: boolean = true;
+  isAsc: boolean = true;
+  similarItemsSorted: any;
+  currCategories: string = '';
 
+  onOrderSelect(event: any) {
+    let index = event.target.selectedIndex;
+    let option = event.target.options[index].value;
+
+    //sort
+    if (option == 'default') {
+      this.similarItemsSorted = JSON.parse(JSON.stringify(this.similarItems)) ;
+      if (this.currCategories != 'default') {
+        this.currCategories = 'default';
+      } else {
+
+        this.isAsc = true;
+      }
+      this.defaultOrder = true;
+    } else {
+      this.currCategories = option;
+      this.defaultOrder = false;
+      this.onSorting(option);
+    }
+  }
+
+  onSorting(option) {
+    if (this.defaultOrder) {
+      this.onSortAsc(option);
+
+    } else {
+      if (this.isAsc) {
+        this.onSortAsc(option);
+      } else {
+        this.onSortDes(option);
+      }
+    }
+  }
+
+  onSortDes(option) {
+    if (option == 'price') option = 'buyitNowprice';
+    this.similarItemsSorted.sort((a, b) => {
+      return a[option] === b[option] ? 0 : a[option] > b[option] ? -1 : 1;
+    });
+  }
+
+  onSortAsc(option) {
+    if (option == 'price') option = 'buyitNowprice';
+    this.similarItemsSorted.sort((a, b) => {
+      return a[option] === b[option] ? 0 : a[option] > b[option] ? 1 : -1;
+    });
+  }
+
+  onSortOption(event: any) {
+    let index = event.target.selectedIndex;
+    let option = event.target.options[index].value;
+    if (option == 'asc') {
+      this.isAsc = true;
+    } else {
+      this.isAsc = false;
+    }
+    this.onSorting(this.currCategories);
+  }
+
+
+  showButtonText: string = 'Show More';
+  showMoreOrLess: boolean = true;
+  startPage: number = 0;
+  PageLimit: number = 5;
+  itemLength: number;
+  isLessFive: number;
+  onShowMore() {
+    this.PageLimit = +this.similarItemsSorted.length;
+  }
+
+  onShowLess() {
+    this.PageLimit = 5;
   }
 }
