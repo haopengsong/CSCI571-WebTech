@@ -22,6 +22,7 @@ export class ResultTabComponent implements OnInit {
 
 
   userInput: string = '';
+  itemIdSelectedfromDetailPage: string;
   constructor(
     private apiService: ServerService,
     private route: ActivatedRoute,
@@ -33,6 +34,9 @@ export class ResultTabComponent implements OnInit {
       .subscribe(
         (params: Params) => {
           this.userInput = params['userInput'];
+          if (params['id'] != undefined) {
+            this.itemIdSelectedfromDetailPage = params['id'];
+          }
           if (this.userInput != undefined) {
             this.showResultTab = false;
             this.showProgressBar = true;
@@ -72,7 +76,7 @@ export class ResultTabComponent implements OnInit {
   onTitleClicked(item: Item) {
     this.productDetailSearchTrigger = true;
     this.router.navigate(
-      ['/product-detail',{shippingInfo : JSON.stringify(item.shippingInfo), sellerInfo : JSON.stringify(item.sellerInfo) ,id : item.itemID}
+      ['/product-detail',{userInput: this.userInput ,shippingInfo : JSON.stringify(item.shippingInfo), sellerInfo : JSON.stringify(item.sellerInfo) ,id : item.itemID}
       ]);
   }
 

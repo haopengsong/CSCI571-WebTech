@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {ServerService} from "../../server.service";
 import {Item} from "../result-tab/item.model";
 
@@ -57,10 +57,13 @@ export class ProductDetailComponent implements OnInit {
   //similar items
   similarItems: SimilarItem[];
   //order selected
+  //userInput back to result-tab
+  userInput: string;
 
   constructor(
     private apiService: ServerService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
 
@@ -72,6 +75,9 @@ export class ProductDetailComponent implements OnInit {
           this.itemId = params['id'];
           if (params['shippingInfo'] != undefined) {
             this.shippingInfo = JSON.parse(params['shippingInfo']) ;
+          }
+          if (params['userInput'] != undefined) {
+            this.userInput = params['userInput'];
           }
           if (params['sellerInfo'] != undefined) {
             this.sellerInfo = JSON.parse((params['sellerInfo']));
@@ -361,5 +367,10 @@ export class ProductDetailComponent implements OnInit {
 
   onShowLess() {
     this.PageLimit = 5;
+  }
+
+  onListButtonClicked() {
+    console.log(this.router.config);
+    this.router.navigate(['/result-tab', {id : this.itemId, userInput : this.userInput}]);
   }
 }
