@@ -24,7 +24,7 @@ export class ResultTabComponent implements OnInit {
   userInput: string = '';
   itemIdSelectedfromDetailPage: string = '';
   idDetailed: string = '';
-  constructor(
+  constructor (
     private apiService: ServerService,
     private route: ActivatedRoute,
     private router: Router
@@ -65,12 +65,14 @@ export class ResultTabComponent implements OnInit {
   productDetailSearchTrigger: boolean = false;
 
   onWishListClicked(item: Item) {
-    if (!this.wishList.has(item.itemID)) {
-      this.wishList.set(item.itemID, item);
+   // console.log(item);
+
+    if (!this.wishListHas(item)) {
+      this.addToLocalStorage(item);
       item.inList = 'remove_shopping_cart';
       item.inListFlag = true;
     } else {
-      this.wishList.delete(item.itemID);
+      this.deleteFromLocalStorage(item);
       item.inList = 'add_shopping_cart';
       item.inListFlag = false;
     }
@@ -78,7 +80,7 @@ export class ResultTabComponent implements OnInit {
 
   onTitleClicked(item: Item) {
     this.productDetailSearchTrigger = true;
-    this.router.navigate(
+    this.router.navigate (
       [
         '/product-detail',
         {
@@ -89,6 +91,60 @@ export class ResultTabComponent implements OnInit {
         }
       ]
     );
+  }
+
+  wishListHas(item: Item) {
+    if (localStorage.wishlistItems) {
+      let inwishList = [];
+      inwishList = JSON.parse(localStorage.wishlistItems);
+      for (let i = 0; i < inwishList.length; i++) {
+        if (inwishList[i].itemID == item.itemID) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  deleteFromLocalStorage(item: Item) {
+    if (localStorage.wishlistItems) {
+      let inwishList = JSON.parse( localStorage.wishlistItems );
+      for (let i = 0; i < inwishList.length; i++) {
+        if (item.itemID == inwishList[i].itemID) {
+          inwishList.splice(i, 1);
+          break;
+        }
+      }
+      localStorage.wishlistItems = JSON.stringify(inwishList);
+    }
+  }
+
+  addToLocalStorage(item: Item) {
+    let wishListArr = [];
+    if (localStorage.wishlistItems) {
+        wishListArr = JSON.parse(localStorage.wishlistItems);
+        wishListArr.push(item);
+        localStorage.wishlistItems = JSON.stringify(wishListArr);
+    } else {
+      wishListArr.push(item);
+      localStorage.wishlistItems = JSON.stringify(wishListArr);
+    }
+    console.log(localStorage);
+  }
+
+  checkLocalStorageBeforeDisplayItems() {
+    if (localStorage.wishlistItems) {
+      let inwishList = [];
+      inwishList = JSON.parse(localStorage.wishlistItems);
+      this.items.forEach((a) => {
+        inwishList.forEach((b) => {
+          if (a.itemID == b.itemID) {
+            a.inListFlag = true;
+            a.inList = 'remove_shopping_cart';
+          }
+        });
+      });
+    }
   }
 
   //data collected, parse data, call api
@@ -253,6 +309,7 @@ export class ResultTabComponent implements OnInit {
       newItem.sellerInfo = sellerInfo;
       this.items.push(newItem);
     }
+    this.checkLocalStorageBeforeDisplayItems();
     this.showResultTab = true;
   }
 
@@ -275,6 +332,7 @@ export class ResultTabComponent implements OnInit {
     }
   }
   findItemByID(itemID: string) {
+
     return this.items.find( (obj) => {
       return obj.itemID == itemID;
     });

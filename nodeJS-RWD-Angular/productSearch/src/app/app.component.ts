@@ -29,6 +29,7 @@ export class AppComponent   {
     private router: Router
   ) {}
 
+
   formInput = new FormData(
     '',
     '',
@@ -38,7 +39,6 @@ export class AppComponent   {
     ''
 
     );
-
 
   locationAcquired: boolean = false;
   currentZipCode = "";
@@ -232,6 +232,7 @@ export class AppComponent   {
   }
 
   onWishListBtnClicked() {
+
     this.resultWishListButton = false;
     this.router.navigate([
         '/wish-list',
