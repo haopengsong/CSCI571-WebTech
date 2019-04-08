@@ -85,7 +85,9 @@ export class ResultTabComponent implements OnInit {
           userInput: this.userInput ,
           shippingInfo : JSON.stringify(item.shippingInfo),
           sellerInfo : JSON.stringify(item.sellerInfo) ,
-          id : item.itemID
+          id : item.itemID,
+          inlist: item.inList,
+          inlistflag: item.inListFlag ? 'true' : 'false'
         }
       ]
     );

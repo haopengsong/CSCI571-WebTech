@@ -22,8 +22,10 @@
   <div class="row">
     <div class="col-sm-12">
       <button class="btn btn-light mb-2"
-              style="height:35px; float: right">
-        <i class="material-icons ">add_shopping_cart</i>
+              style="height:35px; float: right"
+              [ngStyle]="{'color': itemDetail.inlistflag == 'true' ? '#b6c10f' : 'black'}"
+              (click)="onWishListClicked()">
+        <i class="material-icons ">{{itemDetail.inlist}}</i>
         <!-- todo: wish list function -->
       </button>
       <button id="shareBtn"
@@ -71,6 +73,7 @@
 
   </div>
   <hr style="margin: 4px; padding: 0">
+  <!-- No Records -->
   <app-norecords *ngIf="showErrorMessage"></app-norecords>
   <div class="row">
     <div class="col-sm-12" *ngIf="tabSelector[0]">
@@ -286,7 +289,7 @@
 
   <div class="container" *ngIf="tabSelector[4]">
     <div class="row mb-2">
-      <div class="col-sm-12 float-left ">
+      <div class="col-sm-12 float-left" *ngIf="sortButton">
         <select name="" class="btn btn-light btn-lg mr-2" (change)="onOrderSelect($event)">
           <option value="default">Default</option>
           <option value="productName">Product Name</option>

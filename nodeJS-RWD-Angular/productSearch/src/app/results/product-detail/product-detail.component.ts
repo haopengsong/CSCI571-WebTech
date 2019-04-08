@@ -12,14 +12,16 @@ export class Entry {
 
 export class ItemDetails {
 
-    title: string;
-    picArray: any;
-     subTitle: string;
-     price: string;
-     location: string;
-    returnPolicy: string;
+  title: string;
+  picArray: any;
+  subTitle: string;
+  price: string;
+  location: string;
+  returnPolicy: string;
   ViewItemURLForNaturalSearch: string;
-   itemSpecs: Entry[];
+  inlist: string;
+  inlistflag: string;
+  itemSpecs: Entry[];
 
 }
 
@@ -63,6 +65,9 @@ export class ProductDetailComponent implements OnInit {
   userInput: string;
   //where
   where: string = '';
+  //wish list spec
+  inlist: string = '';
+  inlistflag: string = '';
 
   constructor(
     private apiService: ServerService,
@@ -96,6 +101,12 @@ export class ProductDetailComponent implements OnInit {
           }
           if (params['sellerInfo'] != undefined) {
             this.sellerInfo = JSON.parse((params['sellerInfo']));
+          }
+          if (params['inlist'] != undefined) {
+            this.inlist = params['inlist'];
+          }
+          if (params['inlistflag'] != undefined) {
+            this.inlistflag = params['inlistflag'];
           }
           if (this.itemId != undefined) {
             this.apiService.getEbayShoppingService(this.itemId)
@@ -186,6 +197,9 @@ export class ProductDetailComponent implements OnInit {
         }
       }
     }
+
+    this.itemDetail.inlist = this.inlist;
+    this.itemDetail.inlistflag = this.inlistflag;
   }
 
   onTabClicked(id: any) {
@@ -223,6 +237,7 @@ export class ProductDetailComponent implements OnInit {
         .subscribe(
           (response2) => {
             console.log(response2);
+            this.sortButton = true;
             this.itemSimilarExtractor(response2);
           },
           (error) => {
@@ -232,7 +247,7 @@ export class ProductDetailComponent implements OnInit {
     }
 
   }
-
+  sortButton: boolean = true;
   //item similar
   itemSimilarExtractor(similarData) {
     this.similarItems = [];
@@ -240,12 +255,14 @@ export class ProductDetailComponent implements OnInit {
 
     if (similarData["getSimilarItemsResponse"]['ack'] != 'Success') {
       this.onNoRecords(4);
+      this.sortButton = false;
       return;
     }
 
     let itemsArray = similarData["getSimilarItemsResponse"]['itemRecommendations']['item'];
     if (itemsArray == undefined || itemsArray == null || itemsArray.length == 0) {
       this.onNoRecords(4);
+      this.sortButton = false;
       return;
     }
 
@@ -306,7 +323,8 @@ export class ProductDetailComponent implements OnInit {
 
   onNoRecords(tabID) {
     this.showErrorMessage = true;
-    this.tabSelector[tabID] = false;
+    //this.tabSelector[tabID] = false;
+    this.sortButton = false;
   }
 
   defaultOrder: boolean = true;
@@ -419,5 +437,9 @@ export class ProductDetailComponent implements OnInit {
     this.fb.ui(params)
       .then((res: UIResponse) => console.log(res))
       .catch((e: any) => console.error(e));
+  }
+
+  onWishListClicked() {
+
   }
 }
