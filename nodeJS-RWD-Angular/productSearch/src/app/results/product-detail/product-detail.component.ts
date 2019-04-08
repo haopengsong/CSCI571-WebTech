@@ -1,8 +1,8 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Injectable, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {ServerService} from "../../server.service";
 import {Item} from "../result-tab/item.model";
-
+import {FacebookService, InitParams, UIParams, UIResponse} from "ngx-facebook";
 
 
 export class Entry {
@@ -18,6 +18,7 @@ export class ItemDetails {
      price: string;
      location: string;
     returnPolicy: string;
+  ViewItemURLForNaturalSearch: string;
    itemSpecs: Entry[];
 
 }
@@ -38,6 +39,7 @@ export class SimilarItem {
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.css']
 })
+
 export class ProductDetailComponent implements OnInit {
   @ViewChild('orderSelection') select: ElementRef;
   itemId: string = '';
@@ -63,10 +65,16 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private apiService: ServerService,
     private route: ActivatedRoute,
-    private router: Router
-  ) { }
-
-
+    private router: Router,
+    private fb: FacebookService
+  ) {
+    let initParams: InitParams = {
+      appId            : '363321984511702',
+      xfbml            : true,
+      version          : 'v3.2'
+    };
+    fb.init(initParams);
+  }
 
   ngOnInit() {
     this.route.params
@@ -151,6 +159,10 @@ export class ProductDetailComponent implements OnInit {
       if (itemData['Storefront']['StoreURL'] != undefined) {
         this.sellerInfo.storeUrl = itemData['Storefront']['StoreURL'];
       }
+    }
+
+    if (itemData['ViewItemURLForNaturalSearch'] != undefined) {
+      this.itemDetail.ViewItemURLForNaturalSearch = itemData['ViewItemURLForNaturalSearch'];
     }
 
     if (itemData['ItemSpecifics'] != undefined) {
@@ -371,6 +383,25 @@ export class ProductDetailComponent implements OnInit {
 
   onListButtonClicked() {
     console.log(this.router.config);
-    this.router.navigate(['/result-tab', {id : this.itemId, userInput : this.userInput}]);
+    this.router.navigate(
+      [
+        '/result-tab',
+        {id : this.itemId, userInput : this.userInput}
+        ]
+    );
+  }
+
+  quoteFBshare: string = '';
+  onShareBtn() {
+    this.quoteFBshare = `Buy ${this.itemDetail.title} at $${this.itemDetail.price} from link below`;
+    let params: UIParams = {
+      href: this.itemDetail.ViewItemURLForNaturalSearch,
+      method: 'share',
+      display: 'popup',
+      quote: this.quoteFBshare
+    }
+    this.fb.ui(params)
+      .then((res: UIResponse) => console.log(res))
+      .catch((e: any) => console.error(e));
   }
 }

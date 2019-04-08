@@ -203,7 +203,13 @@ export class AppComponent   {
     myform.value.keyword = encodeURI( this.formInput.keyword );
     console.log(myform);
     //send form data to result-tab
-    this.router.navigate(['/result-tab', {userInput : JSON.stringify(myform.value)}]);
+    this.router.navigate([
+      '/result-tab',
+      {
+        userInput : JSON.stringify(myform.value)
+      }
+      ]
+    );
 
   }
 

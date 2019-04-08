@@ -1,7 +1,10 @@
+
+
 <!-- Progress Bar -->
 <app-progress-bar *ngIf="!contentLoaded"></app-progress-bar>
 
 <div class="container" *ngIf="contentLoaded">
+
   <div class="row">
     <div class="col-sm-12 text-center mt-5">
       <h4>{{itemDetail.title}}</h4>
@@ -9,7 +12,8 @@
   </div>
   <div class="row">
     <div class="col-sm-12">
-      <button class="btn btn-light btnDetail mb-3" (click)="onListButtonClicked()" >
+      <button class="btn btn-light btnDetail mb-3"
+              (click)="onListButtonClicked()" >
         <i class="material-icons btnListIcon">chevron_left</i>
         List
       </button>
@@ -22,9 +26,12 @@
         <i class="material-icons ">add_shopping_cart</i>
         <!-- todo: wish list function -->
       </button>
-      <button
-        class="btn float-right mb-2" style="padding: 0">
-        <img src="../../../assets/facebook.png" height="35" alt="facebook">
+      <button id="shareBtn"
+        class="btn float-right mb-2"
+        style="padding: 0" (click)="onShareBtn()">
+        <img src="../../../assets/facebook.png"
+             height="35"
+             alt="facebook">
       </button>
     </div>
   </div>
@@ -103,18 +110,26 @@
                             </a>
                           </div>
                         </div>
-                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <a class="carousel-control-prev"
+                           href="#carouselExampleControls"
+                           role="button"
+                           data-slide="prev">
+                          <span class="carousel-control-prev-icon"
+                                aria-hidden="true"></span>
                           <span class="sr-only">Previous</span>
                         </a>
-                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <a class="carousel-control-next"
+                           href="#carouselExampleControls"
+                           role="button" data-slide="next">
+                          <span class="carousel-control-next-icon"
+                                aria-hidden="true"></span>
                           <span class="sr-only">Next</span>
                         </a>
                       </div>
                     </div>
                     <div class="modal-footer">
-                      <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button class="btn btn-secondary"
+                              data-dismiss="modal">Close</button>
                     </div>
                   </div>
                 </div>
@@ -177,7 +192,8 @@
           <tr *ngIf="shippingInfo.expediated != ''">
             <th>Expedited Time</th>
             <td>
-              <i class="material-icons" [ngStyle]="{'color': shippingInfo.expediated == 'false' ? 'red' : 'green'}">
+              <i class="material-icons"
+                 [ngStyle]="{'color': shippingInfo.expediated == 'false' ? 'red' : 'green'}">
                 {{ shippingInfo.expediated == 'false' ? 'clear' : 'done'}}
               </i>
             </td>
@@ -185,7 +201,8 @@
           <tr *ngIf="shippingInfo.oneDay != ''">
             <th>One Day Shipping</th>
             <td>
-              <i class="material-icons" [ngStyle]="{'color': shippingInfo.oneDay == 'false' ? 'red' : 'green'}">
+              <i class="material-icons"
+                 [ngStyle]="{'color': shippingInfo.oneDay == 'false' ? 'red' : 'green'}">
                 {{ shippingInfo.oneDay == 'false' ? 'clear' : 'done'}}
               </i>
             </td>
@@ -325,6 +342,4 @@
     </div>
 
   </div>
-
-
 </div>

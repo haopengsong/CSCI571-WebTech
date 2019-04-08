@@ -22,7 +22,8 @@ export class ResultTabComponent implements OnInit {
 
 
   userInput: string = '';
-  itemIdSelectedfromDetailPage: string;
+  itemIdSelectedfromDetailPage: string = '';
+  idDetailed: string = '';
   constructor(
     private apiService: ServerService,
     private route: ActivatedRoute,
@@ -34,8 +35,10 @@ export class ResultTabComponent implements OnInit {
       .subscribe(
         (params: Params) => {
           this.userInput = params['userInput'];
+
           if (params['id'] != undefined) {
             this.itemIdSelectedfromDetailPage = params['id'];
+            this.productDetailSearchTrigger = true;
           }
           if (this.userInput != undefined) {
             this.showResultTab = false;
@@ -76,8 +79,16 @@ export class ResultTabComponent implements OnInit {
   onTitleClicked(item: Item) {
     this.productDetailSearchTrigger = true;
     this.router.navigate(
-      ['/product-detail',{userInput: this.userInput ,shippingInfo : JSON.stringify(item.shippingInfo), sellerInfo : JSON.stringify(item.sellerInfo) ,id : item.itemID}
-      ]);
+      [
+        '/product-detail',
+        {
+          userInput: this.userInput ,
+          shippingInfo : JSON.stringify(item.shippingInfo),
+          sellerInfo : JSON.stringify(item.sellerInfo) ,
+          id : item.itemID
+        }
+      ]
+    );
   }
 
   //data collected, parse data, call api
@@ -243,5 +254,29 @@ export class ResultTabComponent implements OnInit {
       this.items.push(newItem);
     }
     this.showResultTab = true;
+  }
+
+  onDetailButtonClicked() {
+    let detailedItem = this.findItemByID(this.itemIdSelectedfromDetailPage);
+    if (detailedItem != undefined) {
+      this.router.navigate(
+        [
+          '/product-detail',
+          {
+            userInput: this.userInput ,
+            shippingInfo : JSON.stringify(detailedItem.shippingInfo),
+            sellerInfo : JSON.stringify(detailedItem.sellerInfo) ,
+            id : detailedItem.itemID
+          }
+        ]
+      );
+    } else {
+      console.log('no such element');
+    }
+  }
+  findItemByID(itemID: string) {
+    return this.items.find( (obj) => {
+      return obj.itemID == itemID;
+    });
   }
 }

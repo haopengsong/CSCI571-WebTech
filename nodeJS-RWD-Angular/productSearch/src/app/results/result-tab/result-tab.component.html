@@ -2,7 +2,10 @@
   <div class="row" >
     <div class="col-sm-12">
       <!-- todo : Detail button behavior needs implementation-->
-      <button class="btn btn-light btnDetail mb-3" [disabled]="!productDetailSearchTrigger">
+      <button class="btn btn-light btnDetail mb-3"
+              [disabled]="!productDetailSearchTrigger"
+              (click)="onDetailButtonClicked()"
+      >
         Detail
         <i class="material-icons btnDetailIcon">chevron_right</i>
       </button>
@@ -15,7 +18,7 @@
 
   <div class="row" *ngIf="showResultTab">
     <div class="col-sm-12">
-      <table class="table table-dark table-hover">
+      <table class="table table-dark table-hover table-striped">
         <thead>
         <tr>
           <th>#</th>
@@ -29,13 +32,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of items | paginate: {itemsPerPage: 10, currentPage: page};
-      let i = index;
-      let odd = odd;
-      let even = even;
-      "
-            [ngClass]="{'lightRow': even}"
-        >
+        <tr *ngFor="let item of items | paginate: {itemsPerPage: 10, currentPage: page};"
+            [ngClass]="{'lightRow': item.itemID === itemIdSelectedfromDetailPage}">
           <th scope="row">{{item.indexNumber}}</th>
           <td><img src="{{item.imagePath}}" width="100" height="110"></td>
           <td width="350">

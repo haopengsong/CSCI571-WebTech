@@ -23,6 +23,8 @@ import {NorecordsComponent} from "../norecords/norecords.component";
 
 import {RoundProgressModule} from 'angular-svg-round-progressbar';
 
+import {FacebookModule} from "ngx-facebook";
+
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import {RoundProgressModule} from 'angular-svg-round-progressbar';
     MatTooltipModule,
     MatPaginatorModule,
     NgbModule,
-    RoundProgressModule
+    RoundProgressModule,
+    FacebookModule.forRoot()
   ],
 
 })
