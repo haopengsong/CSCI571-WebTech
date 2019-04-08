@@ -26,6 +26,7 @@ import {RoundProgressModule} from 'angular-svg-round-progressbar';
 import {FacebookModule} from "ngx-facebook";
 
 
+
 @NgModule({
   declarations: [
     ResultTabComponent,

@@ -220,12 +220,26 @@ export class AppComponent   {
     console.log('Search Button Clicked');
   }
 
-  onResultsBtnClicked() {
+  onResultsBtnClicked(myform: any) {
     this.resultWishListButton = true;
+    this.router.navigate([
+        '/result-tab',
+        {
+          userInput : JSON.stringify(myform.value)
+        }
+      ]
+    );
   }
 
   onWishListBtnClicked() {
     this.resultWishListButton = false;
+    this.router.navigate([
+        '/wish-list',
+        {
+          userInput : 'none'
+        }
+      ]
+    );
   }
 
   getAnimationData(outlet: RouterOutlet) {

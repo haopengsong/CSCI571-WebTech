@@ -21,6 +21,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ResultsModule } from './results/results.module';
 import {ResultTabComponent} from "./results/result-tab/result-tab.component";
 import { HomeComponent } from './home/home.component';
+import {WishListComponent} from "./results/wish-list/wish-list.component";
 
 
 
@@ -28,6 +29,7 @@ import { HomeComponent } from './home/home.component';
 const appRoutes: Routes = [
 
   {path: 'result-tab', component: ResultTabComponent},
+  {path: 'wish-list', component: WishListComponent },
   {path: '', redirectTo : '/result-tab', pathMatch: 'full'},
 
 ];
@@ -36,7 +38,7 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     HomeComponent,
-
+    WishListComponent
   ],
   imports: [
     BrowserModule,
@@ -51,8 +53,6 @@ const appRoutes: Routes = [
     MatTooltipModule,
     MatPaginatorModule,
     ResultsModule,
-
-
   ],
   providers: [ServerService],
   exports: [
