@@ -218,7 +218,7 @@ export class ResultTabComponent implements OnInit {
       //price
       if (itemArray[i].hasOwnProperty('sellingStatus') == true) {
         if (itemArray[i]['sellingStatus'][0].hasOwnProperty('currentPrice') == true) {
-          newItem.price = '$ '  + itemArray[i]['sellingStatus'][0]['currentPrice'][0]['__value__'];
+          newItem.price = itemArray[i]['sellingStatus'][0]['currentPrice'][0]['__value__'];
         } else {
           newItem.price = 'N/A';
         }
@@ -233,8 +233,8 @@ export class ResultTabComponent implements OnInit {
             shippinginfo.cost = 'Free Shipping';
           } else if (itemArray[i]['shippingInfo'][0]['shippingServiceCost'][0]['__value__'] != "" &&
             itemArray[i]['shippingInfo'][0]['shippingServiceCost'][0]['__value__'] != null) {
-            newItem.shippingOption =  itemArray[i]['shippingInfo'][0]['shippingServiceCost'][0]['__value__'];
-            shippinginfo.cost ='$ ' + itemArray[i]['shippingInfo'][0]['shippingServiceCost'][0]['__value__'];
+            newItem.shippingOption = '$'+ itemArray[i]['shippingInfo'][0]['shippingServiceCost'][0]['__value__'];
+            shippinginfo.cost = itemArray[i]['shippingInfo'][0]['shippingServiceCost'][0]['__value__'];
           } else {
             newItem.shippingOption = 'N/A';
           }
@@ -329,6 +329,7 @@ export class ResultTabComponent implements OnInit {
       console.log('no such element');
     }
   }
+
   findItemByID(itemID: string) {
 
     return this.items.find( (obj) => {

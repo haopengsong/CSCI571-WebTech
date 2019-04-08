@@ -218,6 +218,7 @@ export class AppComponent   {
 
   onSearchButtonClick() {
     console.log('Search Button Clicked');
+    this.resultWishListButton = true;
   }
 
   onResultsBtnClicked(myform: any) {

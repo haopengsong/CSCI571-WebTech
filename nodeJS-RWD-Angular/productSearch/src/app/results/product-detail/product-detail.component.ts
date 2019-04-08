@@ -61,6 +61,8 @@ export class ProductDetailComponent implements OnInit {
   //order selected
   //userInput back to result-tab
   userInput: string;
+  //where
+  where: string = '';
 
   constructor(
     private apiService: ServerService,
@@ -80,6 +82,11 @@ export class ProductDetailComponent implements OnInit {
     this.route.params
       .subscribe(
         (params: Params) => {
+          if (params['where'] != undefined) {
+            this.where = params['where'];
+          } else {
+            this.where = '';
+          }
           this.itemId = params['id'];
           if (params['shippingInfo'] != undefined) {
             this.shippingInfo = JSON.parse(params['shippingInfo']) ;
@@ -383,12 +390,21 @@ export class ProductDetailComponent implements OnInit {
 
   onListButtonClicked() {
     console.log(this.router.config);
-    this.router.navigate(
-      [
-        '/result-tab',
-        {id : this.itemId, userInput : this.userInput}
+    if (this.where == 'wishList') {
+      this.router.navigate(
+        [
+          '/wish-list',
+          {id : this.itemId, userInput : this.userInput}
         ]
-    );
+      );
+    } else {
+      this.router.navigate(
+        [
+          '/result-tab',
+          {id : this.itemId, userInput : this.userInput}
+        ]
+      );
+    }
   }
 
   quoteFBshare: string = '';
