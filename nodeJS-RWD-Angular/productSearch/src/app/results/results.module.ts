@@ -49,5 +49,8 @@ import {FacebookModule} from "ngx-facebook";
     FacebookModule.forRoot()
   ],
 
+  exports: [
+    NorecordsComponent
+  ]
 })
 export class ResultsModule { }

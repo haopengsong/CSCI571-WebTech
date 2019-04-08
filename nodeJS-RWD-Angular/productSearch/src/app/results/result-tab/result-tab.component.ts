@@ -19,11 +19,9 @@ export class ResultTabComponent implements OnInit {
     //   '111','asdf','a','2','', false)
   ];
   page: number = 1;
-
-
   userInput: string = '';
   itemIdSelectedfromDetailPage: string = '';
-  idDetailed: string = '';
+
   constructor (
     private apiService: ServerService,
     private route: ActivatedRoute,
@@ -68,13 +66,13 @@ export class ResultTabComponent implements OnInit {
    // console.log(item);
 
     if (!this.wishListHas(item)) {
-      this.addToLocalStorage(item);
       item.inList = 'remove_shopping_cart';
       item.inListFlag = true;
+      this.addToLocalStorage(item);
     } else {
-      this.deleteFromLocalStorage(item);
       item.inList = 'add_shopping_cart';
       item.inListFlag = false;
+      this.deleteFromLocalStorage(item);
     }
   }
 

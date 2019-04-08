@@ -231,13 +231,13 @@ export class AppComponent   {
     );
   }
 
-  onWishListBtnClicked() {
+  onWishListBtnClicked(myform: any) {
 
     this.resultWishListButton = false;
     this.router.navigate([
         '/wish-list',
         {
-          userInput : 'none'
+          userInput : JSON.stringify(myform.value)
         }
       ]
     );
