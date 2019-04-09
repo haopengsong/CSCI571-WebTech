@@ -436,8 +436,14 @@ export class ProductDetailComponent implements OnInit {
 
   quoteFBshare: string = '';
   onShareBtn() {
-    //window.open()
     this.quoteFBshare = `Buy ${this.itemDetail.title} at $${this.itemDetail.price} from link below`;
+    let fburl = 'https://www.facebook.com/dialog/share?';
+    fburl += 'app_id=363321984511702';
+    fburl += '&display=popup';
+    fburl += '&href=' + encodeURI(this.itemDetail.ViewItemURLForNaturalSearch);
+    fburl += '&quote=' + encodeURI(this.quoteFBshare);
+    window.open(fburl);
+
     let params: UIParams = {
       href: this.itemDetail.ViewItemURLForNaturalSearch,
       method: 'share',
