@@ -32,7 +32,8 @@ export class SimilarItem {
     public shippingCost: number,
     public daysLeft: string,
     public imgUrl: string,
-    public title: string
+    public title: string,
+    public viewItemURL: string
   ){}
 }
 
@@ -271,7 +272,7 @@ export class ProductDetailComponent implements OnInit {
     }
 
     for (let i = 0; i < itemsArray.length; i++) {
-      let si = new SimilarItem('',-1,-1,'','','');
+      let si = new SimilarItem('',-1,-1,'','','','');
       if (itemsArray[i]['title'] != undefined) {
         si.productName = itemsArray[i]['title'];
       }
@@ -297,6 +298,10 @@ export class ProductDetailComponent implements OnInit {
 
       if (itemsArray[i]['title'] != undefined) {
         si.title = itemsArray[i]['title'];
+      }
+
+      if (itemsArray[i]['viewItemURL'] != undefined) {
+        si.viewItemURL = itemsArray[i]['viewItemURL'];
       }
 
       if (itemsArray[i]['timeLeft'] != undefined) {
