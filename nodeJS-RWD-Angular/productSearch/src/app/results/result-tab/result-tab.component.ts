@@ -43,7 +43,7 @@ export class ResultTabComponent implements OnInit {
             this.showProgressBar = true;
             this.showErrorMessage = false;
             this.serviceFinding(JSON.parse(this.userInput));
-            setTimeout(() => this.showProgressBar = false, 500);
+            setTimeout(() => this.showProgressBar = false, 200);
           } else {
             return;
           }
@@ -186,7 +186,7 @@ export class ResultTabComponent implements OnInit {
   //show result tab
   showResultTab: boolean = false;
   itemExtractor(response) {
-
+    this.noRecords = false;
     this.items = [];
     const itemArray = response['findItemsAdvancedResponse'][0]['searchResult'][0]['item'];
     for (let i = 0; i < itemArray.length; i++) {
@@ -316,7 +316,17 @@ export class ResultTabComponent implements OnInit {
 
   onDetailButtonClicked() {
     let detailedItem = this.findItemByID(this.itemIdSelectedfromDetailPage);
+    let inlist = '';
+    let inlistflag = '';
     if (detailedItem != undefined) {
+      let inwishlist = this.wishListHas(detailedItem);
+      if (inwishlist) {
+        inlist = 'remove_shopping_cart';
+        inlistflag = 'true';
+      } else {
+        inlist = 'add_shopping_cart';
+        inlistflag = 'false';
+      }
       this.router.navigate(
         [
           '/product-detail',
@@ -324,7 +334,9 @@ export class ResultTabComponent implements OnInit {
             userInput: this.userInput ,
             shippingInfo : JSON.stringify(detailedItem.shippingInfo),
             sellerInfo : JSON.stringify(detailedItem.sellerInfo) ,
-            id : detailedItem.itemID
+            id : detailedItem.itemID,
+            inlist: inlist,
+            inlistflag: inlistflag
           }
         ]
       );

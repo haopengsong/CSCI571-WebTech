@@ -43,28 +43,63 @@ export class WishListComponent implements OnInit {
           }
         },
       );
-    this.wishListItems = JSON.parse( localStorage.wishlistItems );
-    if (this.wishListItems.length > 0) {
+    if (localStorage.wishlistItems) {
       this.showErrorMessage = false;
       this.showResultTab = true;
+      this.wishListItems = JSON.parse( localStorage.wishlistItems );
+      if (this.wishListItems.length > 0) {
+        this.showErrorMessage = false;
+        this.showResultTab = true;
+      } else {
+        this.showErrorMessage = true;
+        this.showResultTab = false;
+      }
+      this.totalSum(this.wishListItems);
+    } else {
+      this.showErrorMessage = true;
+      this.showResultTab = false;
     }
-    this.totalSum(this.wishListItems);
   }
-
+  totalshoppingRes: string = '';
   totalSum(items: Item[]) {
     for (let i = 0; i < items.length; i++) {
       this.totalShopping += +items[i].price;
     }
+    this.totalshoppingRes = this.totalShopping.toFixed(2);
+
   }
 
   decreaseSum(item: Item) {
     this.totalShopping -= +item.price;
+    this.totalshoppingRes = this.totalShopping.toFixed(2);
+  }
+
+  wishListHas(item: Item) {
+    if (localStorage.wishlistItems) {
+      let inwishList = [];
+      inwishList = JSON.parse(localStorage.wishlistItems);
+      for (let i = 0; i < inwishList.length; i++) {
+        if (inwishList[i].itemID == item.itemID) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   onDetailButtonClicked() {
     let detailedItem: Item;
+    let inlist = '';
+    let inlistflag = '';
     detailedItem = this.findItemByID(this.itemIdSelectedfromDetailPage);
     if (detailedItem != undefined) {
+      if (this.wishListHas(detailedItem)) {
+        inlist = 'remove_shopping_cart';
+        inlistflag = 'true';
+      } else {
+        inlist = 'add_shopping_cart';
+        inlistflag = 'false';
+      }
       this.router.navigate(
         [
           '/product-detail',
@@ -73,7 +108,9 @@ export class WishListComponent implements OnInit {
             shippingInfo : JSON.stringify(detailedItem.shippingInfo),
             sellerInfo : JSON.stringify(detailedItem.sellerInfo) ,
             id : detailedItem.itemID,
-            where: 'wishList'
+            where: 'wishList',
+            inlist: inlist,
+            inlistflag: inlistflag
           }
         ]
       );
@@ -129,7 +166,8 @@ export class WishListComponent implements OnInit {
           id : item.itemID,
           where: 'wishList',
           inlist: 'remove_shopping_cart',
-          inlistflag: 'true'
+          inlistflag: 'true',
+          itemData: JSON.stringify(item)
         }
       ]
     );

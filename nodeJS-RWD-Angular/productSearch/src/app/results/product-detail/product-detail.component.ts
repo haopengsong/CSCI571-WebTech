@@ -116,7 +116,7 @@ export class ProductDetailComponent implements OnInit {
                   //console.log(response);
                   //extract info for item
                   this.itemDataExtractor(response);
-                  setTimeout(()=> this.contentLoaded = !this.contentLoaded, 1000);
+                  setTimeout(()=> this.contentLoaded = !this.contentLoaded, 300);
                 },
                 (error) => {
 
@@ -436,6 +436,7 @@ export class ProductDetailComponent implements OnInit {
 
   quoteFBshare: string = '';
   onShareBtn() {
+    //window.open()
     this.quoteFBshare = `Buy ${this.itemDetail.title} at $${this.itemDetail.price} from link below`;
     let params: UIParams = {
       href: this.itemDetail.ViewItemURLForNaturalSearch,
@@ -458,7 +459,6 @@ export class ProductDetailComponent implements OnInit {
       this.itemDetail.inlist = 'add_shopping_cart';
       this.deleteFromLocalStorage();
       this.itemDeleted = true;
-
     } else {
       this.itemDetail.inlistflag = 'true';
       this.itemDetail.inlist = 'remove_shopping_cart';
