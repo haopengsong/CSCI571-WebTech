@@ -117,7 +117,7 @@ export class ProductDetailComponent implements OnInit {
                   //console.log(response);
                   //extract info for item
                   this.itemDataExtractor(response);
-                  setTimeout(()=> this.contentLoaded = !this.contentLoaded, 300);
+                  setTimeout(()=> this.contentLoaded = !this.contentLoaded, 400);
                 },
                 (error) => {
 

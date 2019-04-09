@@ -43,7 +43,7 @@ export class ResultTabComponent implements OnInit {
             this.showProgressBar = true;
             this.showErrorMessage = false;
             this.serviceFinding(JSON.parse(this.userInput));
-            setTimeout(() => this.showProgressBar = false, 200);
+            setTimeout(() => this.showProgressBar = false, 300);
           } else {
             return;
           }
@@ -150,6 +150,8 @@ export class ResultTabComponent implements OnInit {
 
   //data collected, parse data, call api
   serviceFinding(myform) {
+    this.showResultTab = false;
+    this.showErrorMessage = false;
     this.apiService.getEbayFindingService(myform)
       .subscribe(
         (response) => {
@@ -165,7 +167,11 @@ export class ResultTabComponent implements OnInit {
             this.noRecords = true;
             this.onShowErrorMessage();
           } else {
+
+            this.noRecords = false;
+            this.showErrorMessage = false;
             this.itemExtractor(response);
+            this.showResultTab = true;
           }
         },
         (error) => {
@@ -176,7 +182,9 @@ export class ResultTabComponent implements OnInit {
 
   onShowErrorMessage() {
     if (this.noRecords) {
-      setTimeout(()=> this.showErrorMessage = true, 50);
+      this.showResultTab = false;
+      setTimeout(()=> this.showErrorMessage = true, 10);
+
       return;
     } else {
      // console.log('good');
@@ -186,7 +194,7 @@ export class ResultTabComponent implements OnInit {
   //show result tab
   showResultTab: boolean = false;
   itemExtractor(response) {
-    this.noRecords = false;
+
     this.items = [];
     const itemArray = response['findItemsAdvancedResponse'][0]['searchResult'][0]['item'];
     for (let i = 0; i < itemArray.length; i++) {
@@ -310,8 +318,10 @@ export class ResultTabComponent implements OnInit {
       newItem.sellerInfo = sellerInfo;
       this.items.push(newItem);
     }
+
     this.checkLocalStorageBeforeDisplayItems();
-    this.showResultTab = true;
+
+
   }
 
   onDetailButtonClicked() {
@@ -336,7 +346,8 @@ export class ResultTabComponent implements OnInit {
             sellerInfo : JSON.stringify(detailedItem.sellerInfo) ,
             id : detailedItem.itemID,
             inlist: inlist,
-            inlistflag: inlistflag
+            inlistflag: inlistflag,
+            itemData: JSON.stringify(detailedItem)
           }
         ]
       );

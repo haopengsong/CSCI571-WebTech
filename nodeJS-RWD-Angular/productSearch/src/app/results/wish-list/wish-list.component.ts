@@ -110,7 +110,8 @@ export class WishListComponent implements OnInit {
             id : detailedItem.itemID,
             where: 'wishList',
             inlist: inlist,
-            inlistflag: inlistflag
+            inlistflag: inlistflag,
+            itemData: JSON.stringify(detailedItem)
           }
         ]
       );
