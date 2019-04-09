@@ -69,6 +69,7 @@ export class AppComponent   {
   onKeyWordValidation(event: any) {
   //  console.log(event);
    // console.log('here :' + this.keywordInput);
+    this.keywordInput = event.target.value;
     if (this.keywordInput != "") {
       this.keywordValidation = false;
     } else {
@@ -88,21 +89,26 @@ export class AppComponent   {
       this.zipCodeSelect = false;
       this.zipValid = true;
       this.selectedZipCode = "";
+      this.whichZipOtherZip = false;
       this.myControl.disable();
-    //  console.log("selected zip code : " + this.selectedZipCode);
     }
     this.zipCodeEntered = false;
     this.whichZip = false;
   }
 
-
-  onZipSelect(event : any) {
+  userEnteredValidZip: boolean = false;
+  onZipSelect(myform: any) {
    // console.log(event);
     if (!this.keywordValidation) {
       this.zipCodeSelect = true;
       this.whichZip = true;
     }
     this.myControl.enable();
+    if (this.userEnteredValidZip) {
+      this.zipCodeSelect = false;
+      this.validZipInput = this.formInput.Zip;
+      this.selectedZipCode = this.formInput.Zip;
+    }
   }
 
   onReset(event: any) {
@@ -112,6 +118,7 @@ export class AppComponent   {
     this.zipCodeEntered = false;
     this.resultWishListButton = true;
     this.contentLoaded = false;
+    this.userEnteredValidZip = false;
    // console.log(event);
   }
 
@@ -160,10 +167,12 @@ export class AppComponent   {
     const validatorZip = /^[0-9]{5}$/;
     if (!validatorZip.test(this.zipPrefix)) {
       this.zipValid = false;
+      this.userEnteredValidZip = false;
     } else {
      // console.log('valid zip entered');
       this.validZipInput = event.target.value;
       this.zipValid = true;
+      this.userEnteredValidZip = true;
       this.zipCodeSelect = false;
     }
   }
@@ -180,9 +189,10 @@ export class AppComponent   {
       this.zipValid = true;
       this.zipCodeEntered = false;
       this.whichZipOtherZip = true;
+      this.userEnteredValidZip = true;
     }
   }
-  onZipCodeEntered() {
+  onZipCodeEntered(event: any) {
     if (this.zipPrefix == "" && this.selectedZipCode == "") {
       this.zipCodeEntered = true;
       this.zipCodeSelect = true;
@@ -190,6 +200,10 @@ export class AppComponent   {
       this.zipCodeEntered = false;
       // todo : check zip code validity
     }
+    if (event.target.value == "") {
+      this.zipCodeEntered = true;
+    }
+
   }
 
   //fix the distance radio issue

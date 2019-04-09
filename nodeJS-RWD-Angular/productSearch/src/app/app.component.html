@@ -138,17 +138,19 @@
             <input type="radio"
                    class="form-check-input"
                    name="Location"
-                   (change)="onZipSelect($event)">
+                   (change)="onZipSelect(myform)">
             <label class="form-check-label">Other. Please specify zip code:</label>
           </div>
 
             <input type="text"
                    class="form-control"
+                   name="zipCode"
                    disabled
+                   [(ngModel)]="formInput.Zip"
                    (input)="onZipInput($event)"
                    [formControl]="myControl"
                    [matAutocomplete]="auto"
-                   (blur) = "onZipCodeEntered()"
+                   (blur) = "onZipCodeEntered($event)"
                    [ngStyle]="zipCodeEntered == true && {'border-color': 'red'}">
             <mat-autocomplete #auto="matAutocomplete"
                               (optionSelected) = "onZipCodeSelected($event)">
