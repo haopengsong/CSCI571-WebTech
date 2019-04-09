@@ -12,3 +12,9 @@
 .lightRow {
   background-color: #88969c !important;
 }
+
+@media screen and (max-width: 400px) {
+  .wishResultTab {
+    overflow: scroll;
+  }
+}

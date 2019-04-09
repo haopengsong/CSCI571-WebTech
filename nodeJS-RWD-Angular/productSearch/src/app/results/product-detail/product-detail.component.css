@@ -102,5 +102,17 @@
     padding: 0;
   }
 
+  .itemDetails th {
+     width: 180px;
+  }
 
+  .itemDetails {
+    font-size: 15px;
+  }
+
+  .modalBtn {
+    margin-right: 40px;
+  }
 }
+
+

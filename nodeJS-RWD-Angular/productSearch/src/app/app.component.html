@@ -212,7 +212,8 @@
       <!--</div>-->
     <!--</div>-->
   <!--animation trigger here !!!-->
-  <div [@routeAnimation]="getAnimationData(routerOutlet)" *ngIf="contentLoaded">
+  <div [@routeAnimation]="getAnimationData(routerOutlet)"
+       *ngIf="contentLoaded" class="displayTab">
     <router-outlet #routerOutlet="outlet"></router-outlet>
   </div>
 
