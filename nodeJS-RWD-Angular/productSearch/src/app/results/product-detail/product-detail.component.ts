@@ -444,16 +444,7 @@ export class ProductDetailComponent implements OnInit {
     fburl += '&quote=' + encodeURI(this.quoteFBshare);
     window.open(fburl);
 
-    let params: UIParams = {
-      href: this.itemDetail.ViewItemURLForNaturalSearch,
-      method: 'share',
-      display: 'popup',
-      quote: this.quoteFBshare
-    }
-    this.fb.ui(params)
-      .then((res: UIResponse) => {console.log(res);
-      })
-      .catch((e) => {});
+
   }
 
 
