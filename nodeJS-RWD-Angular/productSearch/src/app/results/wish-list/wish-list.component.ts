@@ -21,7 +21,7 @@ export class WishListComponent implements OnInit {
   showErrorMessage: boolean = true;
   showResultTab: boolean = false;
   totalShopping: number = 0;
-
+  itemDeleted: string = '';
   ngOnInit() {
     this.route.params
       .subscribe(
@@ -32,6 +32,14 @@ export class WishListComponent implements OnInit {
           if (params['id'] != undefined) {
             this.itemIdSelectedfromDetailPage = params['id'];
             this.productDetailSearchTrigger = true;
+          }
+          if (params['itemDeleted'] != undefined) {
+            this.itemDeleted = params['itemDeleted'];
+            if (this.itemDeleted == 'true') {
+              this.productDetailSearchTrigger = false;
+            } else {
+              this.productDetailSearchTrigger = true;
+            }
           }
         },
       );
@@ -70,7 +78,7 @@ export class WishListComponent implements OnInit {
         ]
       );
     } else {
-      console.log('no such element');
+     // console.log('no such element');
     }
   }
   findItemByID(itemID: string) {

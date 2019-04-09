@@ -44,7 +44,7 @@ export class AppComponent   {
   currentZipCode = "";
 
   onUserInput(event : any) {
-    console.log(event);
+  //  console.log(event);
     this.keywordInput = event.target.value;
     if (this.keywordInput != "") {
       this.keywordValidation = false;
@@ -59,15 +59,16 @@ export class AppComponent   {
         (response) => {
           this.currentZipCode = response['zip'];
           this.locationAcquired = true;
-          console.log('focus');
+         // console.log('focus');
         },
         //todo #1: error message when unable to get zipcode
         (error) => console.log(error)
       );
   }
 
-  onKeyWordValidation() {
-    console.log('here :' + this.keywordInput);
+  onKeyWordValidation(event: any) {
+  //  console.log(event);
+   // console.log('here :' + this.keywordInput);
     if (this.keywordInput != "") {
       this.keywordValidation = false;
     } else {
@@ -88,7 +89,7 @@ export class AppComponent   {
       this.zipValid = true;
       this.selectedZipCode = "";
       this.myControl.disable();
-      console.log("selected zip code : " + this.selectedZipCode);
+    //  console.log("selected zip code : " + this.selectedZipCode);
     }
     this.zipCodeEntered = false;
     this.whichZip = false;
@@ -96,7 +97,7 @@ export class AppComponent   {
 
 
   onZipSelect(event : any) {
-    console.log(event);
+   // console.log(event);
     if (!this.keywordValidation) {
       this.zipCodeSelect = true;
       this.whichZip = true;
@@ -104,9 +105,14 @@ export class AppComponent   {
     this.myControl.enable();
   }
 
-  onReset() {
+  onReset(event: any) {
     //todo #2: on reset has more actions to perform
     this.SearchButton = false;
+    this.keywordValidation = false;
+    this.zipCodeEntered = false;
+    this.resultWishListButton = true;
+    this.contentLoaded = false;
+   // console.log(event);
   }
 
 
@@ -125,7 +131,7 @@ export class AppComponent   {
     if (this.zipPrefix == "") {
       this.selectedZipCode = "";
     }
-    console.log(this.zipPrefix);
+   // console.log(this.zipPrefix);
 
     if (this.zipPrefix.length >= 3) {
       const validatorZipAPI = /^[0-9]{3,5}$/;
@@ -134,16 +140,16 @@ export class AppComponent   {
         this.apiService.getAutoCompleteZip(this.zipPrefix)
           .subscribe(
             (response) => {
-              console.log('api: ');
-              console.log(response);
+             // console.log('api: ');
+              //console.log(response);
               this.zipCodeOptions = [];
               for (let i = 0; i < response['postalCodes'].length; i++) {
                 this.zipCodeOptions.push(response['postalCodes'][i].postalCode);
               }
             },
             (error) => {
-              console.log('error: ');
-              console.log(error);
+             // console.log('error: ');
+             // console.log(error);
             }
           );
       }
@@ -155,7 +161,7 @@ export class AppComponent   {
     if (!validatorZip.test(this.zipPrefix)) {
       this.zipValid = false;
     } else {
-      console.log('valid zip entered');
+     // console.log('valid zip entered');
       this.validZipInput = event.target.value;
       this.zipValid = true;
       this.zipCodeSelect = false;
@@ -166,10 +172,10 @@ export class AppComponent   {
   selectedZipCode : string = "";
 
   onZipCodeSelected(event : any) {
-    console.log(event);
+   // console.log(event);
     if (event.option.value.length == 5) {
       this.selectedZipCode = event.option.value;
-      console.log("selected zip code : " + this.selectedZipCode);
+     // console.log("selected zip code : " + this.selectedZipCode);
       this.zipCodeSelect = false;
       this.zipValid = true;
       this.zipCodeEntered = false;
@@ -201,7 +207,7 @@ export class AppComponent   {
     }
 
     myform.value.keyword = encodeURI( this.formInput.keyword );
-    console.log(myform);
+   // console.log(myform);
     //send form data to result-tab
     this.router.navigate([
       '/result-tab',
@@ -215,10 +221,12 @@ export class AppComponent   {
 
   //Results & Wish List Button
   resultWishListButton: boolean = true;
+  contentLoaded: boolean = true;
 
   onSearchButtonClick() {
-    console.log('Search Button Clicked');
+   // console.log('Search Button Clicked');
     this.resultWishListButton = true;
+    this.contentLoaded = true;
   }
 
   onResultsBtnClicked(myform: any) {

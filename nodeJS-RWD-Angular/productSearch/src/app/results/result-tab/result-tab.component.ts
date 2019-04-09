@@ -47,7 +47,7 @@ export class ResultTabComponent implements OnInit {
           } else {
             return;
           }
-          console.log(this.userInput);
+         // console.log(this.userInput);
         },
       );
   }
@@ -130,7 +130,7 @@ export class ResultTabComponent implements OnInit {
       wishListArr.push(item);
       localStorage.wishlistItems = JSON.stringify(wishListArr);
     }
-    console.log(localStorage);
+   // / console.log(localStorage);
   }
 
   checkLocalStorageBeforeDisplayItems() {
@@ -154,7 +154,7 @@ export class ResultTabComponent implements OnInit {
       .subscribe(
         (response) => {
           //receive json result
-          console.log(response);
+         // console.log(response);
           if (response.hasOwnProperty('findItemsAdvancedResponse') == false) {
             this.noRecords = true;
             this.onShowErrorMessage();
@@ -179,7 +179,7 @@ export class ResultTabComponent implements OnInit {
       setTimeout(()=> this.showErrorMessage = true, 50);
       return;
     } else {
-      console.log('good');
+     // console.log('good');
     }
   }
 
@@ -328,8 +328,6 @@ export class ResultTabComponent implements OnInit {
           }
         ]
       );
-    } else {
-      console.log('no such element');
     }
   }
 

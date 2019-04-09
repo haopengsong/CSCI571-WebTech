@@ -113,7 +113,7 @@ export class ProductDetailComponent implements OnInit {
             this.apiService.getEbayShoppingService(this.itemId)
               .subscribe(
                 (response) => {
-                  console.log(response);
+                  //console.log(response);
                   //extract info for item
                   this.itemDataExtractor(response);
                   setTimeout(()=> this.contentLoaded = !this.contentLoaded, 1000);
@@ -143,7 +143,7 @@ export class ProductDetailComponent implements OnInit {
     this.itemDetail.itemSpecs = [];
 
 
-    console.log(jsonData);
+   // console.log(jsonData);
 
     let itemData = jsonData['Item'];
     if (itemData['PictureURL'] != undefined) {
@@ -240,7 +240,7 @@ export class ProductDetailComponent implements OnInit {
       this.apiService.getSimilarItems(this.itemId)
         .subscribe(
           (response2) => {
-            console.log(response2);
+           // console.log(response2);
             this.sortButton = true;
             this.itemSimilarExtractor(response2);
           },
@@ -312,7 +312,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   photoDataExtractor(response) {
-    console.log(response);
+   // console.log(response);
     this.photoTab = [];
     let photoItems = response['items'];
     if ( photoItems == undefined || photoItems.length == 0 ) {
@@ -412,12 +412,16 @@ export class ProductDetailComponent implements OnInit {
   }
 
   onListButtonClicked() {
-    console.log(this.router.config);
+   // console.log(this.router.config);
     if (this.where == 'wishList') {
       this.router.navigate(
         [
           '/wish-list',
-          {id : this.itemId, userInput : this.userInput, itemDeleted: this.itemDeleted ? 'true' : 'false'}
+          {
+            id : this.itemId,
+            userInput : this.userInput,
+            itemDeleted: this.itemDeleted ? 'true' : 'false'
+          }
         ]
       );
     } else {
@@ -440,9 +444,13 @@ export class ProductDetailComponent implements OnInit {
       quote: this.quoteFBshare
     }
     this.fb.ui(params)
-      .then((res: UIResponse) => console.log(res))
-      .catch((e: any) => console.error(e));
+      .then((res: UIResponse) => {console.log(res);
+      })
+      .catch((e) => {});
   }
+
+
+
 
   onWishListClicked() {
     if (this.itemDetail.inlistflag == 'true') {
@@ -485,6 +493,6 @@ export class ProductDetailComponent implements OnInit {
       wishListArr.push(item);
       localStorage.wishlistItems = JSON.stringify(wishListArr);
     }
-    console.log(localStorage);
+    //console.log(localStorage);
   }
 }

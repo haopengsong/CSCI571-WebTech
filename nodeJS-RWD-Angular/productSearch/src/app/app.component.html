@@ -29,7 +29,7 @@
                  type="text"
                  placeholder="Enter Product Name (eg. iPhone 8)"
                  (input)="onUserInput($event)"
-                 (focusout)="onKeyWordValidation()"
+                 (focusout)="onKeyWordValidation($event)"
                  (focus)="onKeywordFocus()"
                  [ngStyle]="keywordValidation == true && {'border-color': 'red'}"
                   [(ngModel)]="formInput.keyword"
@@ -175,7 +175,7 @@
         </button>
         <button class="btn btn-light btnSearchClear"
                 type="reset"
-                (click)="onReset()">
+                (click)="onReset($event)">
           <i class="material-icons md-24 btnIcon" >clear_all</i>
           Clear
         </button>
@@ -210,7 +210,7 @@
       <!--</div>-->
     <!--</div>-->
   <!--animation trigger here !!!-->
-  <div [@routeAnimation]="getAnimationData(routerOutlet)">
+  <div [@routeAnimation]="getAnimationData(routerOutlet)" *ngIf="contentLoaded">
     <router-outlet #routerOutlet="outlet"></router-outlet>
   </div>
 

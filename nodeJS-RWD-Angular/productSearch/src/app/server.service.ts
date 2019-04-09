@@ -6,9 +6,9 @@ import {HttpClient} from "@angular/common/http";
 @Injectable()
 export class ServerService {
   ipApiUrl: string = 'http://ip-api.com/json';
-  serverZip: string = 'http://localhost:3000/api/zipauto/'; // needs prefix zip here
-  serverFinding : string = 'http://localhost:3000/api/finding?';
-  serverFindingFlag : string =  'http://localhost:3000/api/finding?';
+  serverZip: string = 'http://571webhw7nodejs-env.myyyz4mkdb.us-west-2.elasticbeanstalk.com/api/zipauto/'; // needs prefix zip here
+  serverFinding : string = 'http://571webhw7nodejs-env.myyyz4mkdb.us-west-2.elasticbeanstalk.com/api/finding?';
+  serverFindingFlag : string =  'http://571webhw7nodejs-env.myyyz4mkdb.us-west-2.elasticbeanstalk.com/api/finding?';
 
 
 
@@ -74,32 +74,37 @@ export class ServerService {
       }
     }
 
-
-    if (formData.Distance != "") {
-      this.serverFinding += 'distance=' + formData.Distance + '&';
-    } else {
+    if (formData.Distance == null) {
       this.serverFinding += 'distance=10';
+    } else {
+      if (formData.Distance != "") {
+        this.serverFinding += 'distance=' + formData.Distance + '&';
+      } else {
+        this.serverFinding += 'distance=10';
+      }
     }
 
-    console.log(this.serverFinding);
+
+
+  //  console.log(this.serverFinding);
     return this.http.get(this.serverFinding);
   }
 
   getEbayShoppingService(itemId) {
-    let serviceShopping = 'http://localhost:3000/api/shopping?' + 'itemId=' + itemId;
-    console.log(serviceShopping);
+    let serviceShopping = 'http://571webhw7nodejs-env.myyyz4mkdb.us-west-2.elasticbeanstalk.com/api/shopping?' + 'itemId=' + itemId;
+    //console.log(serviceShopping);
     return this.http.get(serviceShopping);
   }
 
   getGCSE(itemTitle) {
     itemTitle = encodeURI(itemTitle);
-    let serviceGCSE = 'http://localhost:3000/api/gcse?q=' + itemTitle;
-    console.log(serviceGCSE);
+    let serviceGCSE = 'http://571webhw7nodejs-env.myyyz4mkdb.us-west-2.elasticbeanstalk.com/api/gcse?q=' + itemTitle;
+    //console.log(serviceGCSE);
     return this.http.get(serviceGCSE);
   }
 
   getSimilarItems(itemId) {
-    let serviceSimilar = 'http://localhost:3000/api/similar?' + 'itemId=' + itemId;
+    let serviceSimilar = 'http://571webhw7nodejs-env.myyyz4mkdb.us-west-2.elasticbeanstalk.com/api/similar?' + 'itemId=' + itemId;
     return this.http.get(serviceSimilar);
   }
 
