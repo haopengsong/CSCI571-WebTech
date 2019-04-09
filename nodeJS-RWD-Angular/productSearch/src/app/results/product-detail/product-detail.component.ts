@@ -68,6 +68,7 @@ export class ProductDetailComponent implements OnInit {
   //wish list spec
   inlist: string = '';
   inlistflag: string = '';
+  itemData: string = '';
 
   constructor(
     private apiService: ServerService,
@@ -122,6 +123,9 @@ export class ProductDetailComponent implements OnInit {
                 }
               );
 
+          }
+          if (params['itemData'] != undefined) {
+            this.itemData = params['itemData'];
           }
 
         }
@@ -398,6 +402,7 @@ export class ProductDetailComponent implements OnInit {
   PageLimit: number = 5;
   itemLength: number;
   isLessFive: number;
+  itemDeleted: boolean = false;
   onShowMore() {
     this.PageLimit = +this.similarItemsSorted.length;
   }
@@ -412,7 +417,7 @@ export class ProductDetailComponent implements OnInit {
       this.router.navigate(
         [
           '/wish-list',
-          {id : this.itemId, userInput : this.userInput}
+          {id : this.itemId, userInput : this.userInput, itemDeleted: this.itemDeleted ? 'true' : 'false'}
         ]
       );
     } else {
@@ -440,6 +445,46 @@ export class ProductDetailComponent implements OnInit {
   }
 
   onWishListClicked() {
+    if (this.itemDetail.inlistflag == 'true') {
+      this.itemDetail.inlistflag = 'false';
+      this.itemDetail.inlist = 'add_shopping_cart';
+      this.deleteFromLocalStorage();
+      this.itemDeleted = true;
 
+    } else {
+      this.itemDetail.inlistflag = 'true';
+      this.itemDetail.inlist = 'remove_shopping_cart';
+      this.addToLocalStorage(JSON.parse(this.itemData));
+      this.itemDeleted = false;
+    }
+  }
+
+
+  deleteFromLocalStorage() {
+    if (localStorage.wishlistItems) {
+      let inwishList = JSON.parse( localStorage.wishlistItems );
+      for (let i = 0; i < inwishList.length; i++) {
+        if (this.itemId == inwishList[i].itemID) {
+          inwishList.splice(i, 1);
+          break;
+        }
+      }
+      localStorage.wishlistItems = JSON.stringify(inwishList);
+    }
+  }
+
+  addToLocalStorage(item: Item) {
+    item.inListFlag = true;
+    item.inList = 'remove_shopping_cart';
+    let wishListArr = [];
+    if (localStorage.wishlistItems) {
+      wishListArr = JSON.parse(localStorage.wishlistItems);
+      wishListArr.push(item);
+      localStorage.wishlistItems = JSON.stringify(wishListArr);
+    } else {
+      wishListArr.push(item);
+      localStorage.wishlistItems = JSON.stringify(wishListArr);
+    }
+    console.log(localStorage);
   }
 }

@@ -100,8 +100,8 @@ export class AppComponent   {
     if (!this.keywordValidation) {
       this.zipCodeSelect = true;
       this.whichZip = true;
-      this.myControl.enable();
     }
+    this.myControl.enable();
   }
 
   onReset() {

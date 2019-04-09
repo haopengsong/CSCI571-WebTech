@@ -70,3 +70,31 @@
 .card-body p {
   margin: 0;
 }
+
+.btnReText {
+  display: none;
+}
+
+@media screen and (max-width: 400px) {
+  .detailBtn {
+    font-size: 14px;
+    width: 65px;
+    padding: 0;
+  }
+
+  .btnReText {
+    display: inline;
+  }
+
+  .btnSimText {
+    display: none;
+  }
+
+  .sortBtn {
+    display: block;
+    width: 100%;
+    font-size: 15px;
+    padding: 5px;
+    margin-bottom: 1px;
+  }
+}

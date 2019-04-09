@@ -87,7 +87,8 @@ export class ResultTabComponent implements OnInit {
           sellerInfo : JSON.stringify(item.sellerInfo) ,
           id : item.itemID,
           inlist: item.inList,
-          inlistflag: item.inListFlag ? 'true' : 'false'
+          inlistflag: item.inListFlag ? 'true' : 'false',
+          itemData: JSON.stringify(item)
         }
       ]
     );

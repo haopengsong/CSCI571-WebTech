@@ -119,7 +119,9 @@ export class WishListComponent implements OnInit {
           shippingInfo : JSON.stringify(item.shippingInfo),
           sellerInfo : JSON.stringify(item.sellerInfo) ,
           id : item.itemID,
-          where: 'wishList'
+          where: 'wishList',
+          inlist: 'remove_shopping_cart',
+          inlistflag: 'true'
         }
       ]
     );
